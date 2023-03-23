@@ -1,18 +1,16 @@
-const colors = require("colors");
-const { UserInfo_service } = require("../services");
+const { Users_service } = require("../services");
 
-const userInfoService = new UserInfo_service();
+const usersService = new Users_service();
 
 // -----------------------------------
 // insert into table
 // -----------------------------------
 const create = async (req, res) => {
-	// console.log(colors.bgGreen("userData in controller------->>>>>>", req.body));
 	try {
-		const userInfo = await userInfoService.createUserInfo(req.body);
-		console.log("wrng in controller", userInfo);
+		const user = await usersService.createUser(req.body);
+		console.log("wrng in controller", user);
 		return res.status(201).json({
-			data: userInfo,
+			data: user,
 			success: true,
 			message: "Successfully Inserted User Info",
 			err: {},
@@ -33,7 +31,7 @@ const create = async (req, res) => {
 // -----------------------------------
 const destroy = async (req, res) => {
 	try {
-		const response = await userInfoService.deleteUserInfo(req.params.id);
+		const response = await usersService.deleteUser(req.params.id);
 		return res.status(201).json({
 			data: response,
 			success: true,
@@ -56,10 +54,7 @@ const destroy = async (req, res) => {
 // -----------------------------------
 const update = async (req, res) => {
 	try {
-		const response = await userInfoService.updateUserInfo(
-			req.params.id,
-			req.body
-		);
+		const response = await usersService.updateUser(req.params.id, req.body);
 		return res.status(201).json({
 			data: response,
 			success: true,
@@ -82,7 +77,7 @@ const update = async (req, res) => {
 // -----------------------------------
 const get = async (req, res) => {
 	try {
-		const response = await userInfoService.getUserInfo(req.params.id);
+		const response = await usersService.getUser(req.params.id);
 		return res.status(201).json({
 			data: response,
 			success: true,
@@ -99,29 +94,6 @@ const get = async (req, res) => {
 		});
 	}
 };
-
-// -----------------------------------
-// get from table
-// -----------------------------------
-// const getAll = async (req, res) => {
-// 	try {
-// 		const response = await userInfoService.getUserInfo(req.query);
-// 		return res.status(201).json({
-// 			data: response,
-// 			success: true,
-// 			message: "Successfully fetched User Info",
-// 			err: {},
-// 		});
-// 	} catch (error) {
-// 		console.log(error);
-// 		return res.status(500).json({
-// 			data: {},
-// 			success: false,
-// 			message: "Not able fetch data from User Info",
-// 			err: error,
-// 		});
-// 	}
-// };
 
 module.exports = {
 	create,

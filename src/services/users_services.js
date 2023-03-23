@@ -1,19 +1,17 @@
-const { UserInfo_repository } = require("../repository");
-const colors = require("colors");
+const { Users_repository } = require("../repository");
 
-class UserInfo_service {
+class Users_service {
 	constructor() {
-		this.userinfoRepository = new UserInfo_repository();
+		this.usersRepository = new Users_repository();
 	}
 
 	// -----------------------------------
 	// insert into table
 	// -----------------------------------
-	async createUserInfo(data) {
-		// console.log(colors.bgBlue("userData in services------->>>>>>", data));
+	async createUser(data) {
+		console.log("service called");
 		try {
-			const result = await this.userinfoRepository.createUserInfo(data);
-			console.log(result);
+			const result = await this.usersRepository.createUser(data);
 			return result;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
@@ -24,9 +22,9 @@ class UserInfo_service {
 	// -----------------------------------
 	// delete from table
 	// -----------------------------------
-	async deleteUserInfo(userId) {
+	async deleteUser(userId) {
 		try {
-			const response = await this.userinfoRepository.deleteUserInfo(userId);
+			const response = await this.usersRepository.deleteUser(userId);
 			return response;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
@@ -37,9 +35,9 @@ class UserInfo_service {
 	// -----------------------------------
 	// update table
 	// -----------------------------------
-	async updateUserInfo(userId, data) {
+	async updateUser(userId, data) {
 		try {
-			const result = await this.userinfoRepository.updateUserInfo(userId, data);
+			const result = await this.usersRepository.updateUser(userId, data);
 			return result;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
@@ -50,9 +48,9 @@ class UserInfo_service {
 	// -----------------------------------
 	// get data from table
 	// -----------------------------------
-	async getUserInfo(userId) {
+	async getUser(userId) {
 		try {
-			const result = await this.userinfoRepository.getUserInfo(userId);
+			const result = await this.usersRepository.getUser(userId);
 			return result;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
@@ -61,4 +59,4 @@ class UserInfo_service {
 	}
 }
 
-module.exports = UserInfo_service;
+module.exports = Users_service;
