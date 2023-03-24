@@ -55,6 +55,20 @@ class Users_repository {
 			throw { error };
 		}
 	}
+
+	// -----------------------------------
+	// get data from table
+	// -----------------------------------
+	async getAllUser() {
+		try {
+			const user = await users.findAll();
+			console.log(user.brightCyan);
+			return user;
+		} catch (error) {
+			console.log("Something went wrong in repository layer".magenta);
+			throw { error };
+		}
+	}
 }
 
 module.exports = Users_repository;

@@ -57,6 +57,19 @@ class Users_service {
 			throw { error };
 		}
 	}
+
+	// -----------------------------------
+	// get all data from table
+	// -----------------------------------
+	async getAllUser() {
+		try {
+			const result = await this.usersRepository.getAllUser();
+			return result;
+		} catch (error) {
+			console.log("Something went wrong in userInfo services".magenta);
+			throw { error };
+		}
+	}
 }
 
 module.exports = Users_service;

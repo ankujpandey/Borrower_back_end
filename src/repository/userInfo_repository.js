@@ -60,18 +60,18 @@ class UserInfo_repository {
 	}
 
 	// -----------------------------------
-	// get data from table
+	// get all data from table
 	// -----------------------------------
-	// async getAllUserInfo() {
-	// 	try {
-	// 		const userInfo = await user_info.find();
-	// 		console.log(userInfo.brightCyan);
-	// 		return userInfo;
-	// 	} catch (error) {
-	// 		console.log("Something went wrong in repository layer".magenta);
-	// 		throw { error };
-	// 	}
-	// }
+	async getAllUserInfo() {
+		try {
+			const userInfo = await user_info.findAll();
+			console.log(userInfo.brightCyan);
+			return userInfo;
+		} catch (error) {
+			console.log("Something went wrong in repository layer".magenta);
+			throw { error };
+		}
+	}
 }
 
 module.exports = UserInfo_repository;
