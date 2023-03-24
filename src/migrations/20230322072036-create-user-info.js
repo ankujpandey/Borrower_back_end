@@ -29,14 +29,17 @@ module.exports = {
 				type: Sequelize.BIGINT,
 			},
 			email: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
 			pan: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
 			aadhaar: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: Sequelize.BIGINT,
 			},

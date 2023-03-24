@@ -36,14 +36,17 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.BIGINT,
 			},
 			email: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
 			pan: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
 			aadhaar: {
+				//we will make it uniqe once we completed.
 				allowNull: false,
 				type: DataTypes.BIGINT,
 			},
