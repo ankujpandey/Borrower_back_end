@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 			this.belongsTo(models.users, {
 				foreignKey: "uid",
 				onDelete: "CASCADE",
+				onUpdate: "CASCADE",
 			});
 		}
 	}
@@ -32,48 +33,48 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 			},
 			contact: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.BIGINT,
 			},
-			email: {
+			OfficeEmail: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 			},
 			pan: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 			},
 			aadhaar: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.BIGINT,
 			},
 			pin: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.INTEGER,
 			},
 			state: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 			},
 			city: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 			},
 			createdBy: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 				defaultValue: "user",
 			},
 			updatedBy: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.STRING,
 				defaultValue: "user",
 			},
 			isDeleted: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.BOOLEAN,
 				defaultValue: false,
 			},

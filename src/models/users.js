@@ -19,14 +19,14 @@ module.exports = (sequelize, DataTypes) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER,
 			},
-			firstName: {
-				allowNull: false,
-				type: DataTypes.STRING,
-			},
-			lastName: {
-				allowNull: true,
-				type: DataTypes.STRING,
-			},
+			// firstName: {
+			// 	allowNull: false,
+			// 	type: DataTypes.STRING,
+			// },
+			// lastName: {
+			// 	allowNull: true,
+			// 	type: DataTypes.STRING,
+			// },
 			email: {
 				//we will make it uniqe once we completed.
 				allowNull: false,

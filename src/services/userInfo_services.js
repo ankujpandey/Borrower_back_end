@@ -72,6 +72,19 @@ class UserInfo_service {
 			throw { error };
 		}
 	}
+
+	// -----------------------------------
+	// get all data from table by Admin
+	// -----------------------------------
+	async getAllUserInfoByAdmin(query) {
+		try {
+			const result = await this.userinfoRepository.getAllUserInfoByAdmin();
+			return result;
+		} catch (error) {
+			console.log("Something went wrong in userInfo services".magenta);
+			throw { error };
+		}
+	}
 }
 
 module.exports = UserInfo_service;

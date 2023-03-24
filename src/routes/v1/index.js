@@ -16,6 +16,7 @@ router.get("/user_info/:id", UserInfoController.get);
 router.delete("/user_info/:id", UserInfoController.destroy);
 router.patch("/user_info/:id", UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
+router.get("/user_info/admin/admin", UserInfoController.getAllByAdmin);
 
 // ------------------------------------------
 // route for Users Table
@@ -26,5 +27,6 @@ router.get("/user/:id", UsersController.get);
 router.delete("/user/:id", UsersController.destroy);
 router.patch("/user/:id", UsersController.update);
 router.get("/user", UsersController.getAll);
+router.get("/user/admin/admin", UsersController.getAllByAdmin);
 
 module.exports = router;

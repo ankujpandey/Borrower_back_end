@@ -18,64 +18,66 @@ module.exports = {
 			},
 			firstName: {
 				allowNull: false,
+				onUpdate: "CASCADE",
 				type: Sequelize.STRING,
 			},
 			lastName: {
 				allowNull: true,
+				onUpdate: "CASCADE",
 				type: Sequelize.STRING,
 			},
 			contact: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.BIGINT,
 			},
-			email: {
+			OfficeEmail: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 			},
 			pan: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 			},
 			aadhaar: {
 				//we will make it uniqe once we completed.
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.BIGINT,
 			},
 			pin: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.INTEGER,
 			},
 			state: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 			},
 			city: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 			},
 			createdBy: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 				defaultValue: "user",
 			},
 			updatedBy: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 				defaultValue: "user",
 			},
 			isDeleted: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.BOOLEAN,
 				defaultValue: false,
 			},
 			createdAt: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.DATE,
 			},
 			updatedAt: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.DATE,
 			},
 		});
