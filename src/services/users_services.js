@@ -70,6 +70,19 @@ class Users_service {
 			throw { error };
 		}
 	}
+
+	// -----------------------------------
+	// get all data from table for admin
+	// -----------------------------------
+	async getAllUserByAdmin() {
+		try {
+			const result = await this.usersRepository.getAllUserByAdmin();
+			return result;
+		} catch (error) {
+			console.log("Something went wrong in userInfo services".magenta);
+			throw { error };
+		}
+	}
 }
 
 module.exports = Users_service;
