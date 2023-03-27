@@ -25,7 +25,7 @@ class UserInfo_repository {
 	// -----------------------------------
 	async deleteUserInfo(userId) {
 		try {
-			await user_info.destroy({ where: { uid: userId } });
+			await user_info.update({ isDeleted: true }, { where: { uid: userId } });
 		} catch (error) {
 			console.log("Something went wrong in repository layer".magenta);
 			throw { error };
@@ -37,7 +37,9 @@ class UserInfo_repository {
 	// -----------------------------------
 	async updateUserInfo(userId, data) {
 		try {
-			const userInfo = await user_info.update(data, { where: { uid: userId } });
+			const userInfo = await user_info.update(data, {
+				where: { uid: userId, isDeleted: false },
+			});
 			return userInfo;
 		} catch (error) {
 			console.log("Something went wrong in repository layer".magenta);
@@ -50,7 +52,12 @@ class UserInfo_repository {
 	// -----------------------------------
 	async getUserInfo(userId) {
 		try {
-			const userInfo = await user_info.findByPk(userId);
+			const userInfo = await user_info.findOne({
+				where: {
+					uid: userId,
+					isDeleted: false,
+				},
+			});
 			console.log(userInfo.brightCyan);
 			return userInfo;
 		} catch (error) {
@@ -63,6 +70,20 @@ class UserInfo_repository {
 	// get all data from table
 	// -----------------------------------
 	async getAllUserInfo() {
+		try {
+			const userInfo = await user_info.findAll({ where: { isDeleted: false } });
+			console.log(userInfo.brightCyan);
+			return userInfo;
+		} catch (error) {
+			console.log("Something went wrong in repository layer".magenta);
+			throw { error };
+		}
+	}
+
+	// -----------------------------------
+	// get all data from table
+	// -----------------------------------
+	async getAllUserInfoByAdmin() {
 		try {
 			const userInfo = await user_info.findAll();
 			console.log(userInfo.brightCyan);

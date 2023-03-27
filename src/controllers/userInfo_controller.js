@@ -123,10 +123,34 @@ const getAll = async (req, res) => {
 	}
 };
 
+// -----------------------------------
+// get all data from table
+// -----------------------------------
+const getAllByAdmin = async (req, res) => {
+	try {
+		const response = await userInfoService.getAllUserInfoByAdmin(req.query);
+		return res.status(201).json({
+			data: response,
+			success: true,
+			message: "Successfully fetched User Info",
+			err: {},
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			data: {},
+			success: false,
+			message: "Not able fetch data from User Info",
+			err: error,
+		});
+	}
+};
+
 module.exports = {
 	create,
 	destroy,
 	get,
 	update,
 	getAll,
+	getAllByAdmin,
 };
