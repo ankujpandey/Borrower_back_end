@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+// const { Op } = require("sequelize");
 
 const { user_info } = require("../models/index");
 const colors = require("colors");

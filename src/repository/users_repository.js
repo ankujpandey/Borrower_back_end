@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+// const { Op } = require("sequelize");
 
 const { users } = require("../models/index");
 const { user_info } = require("../models/index");
@@ -17,6 +17,7 @@ class Users_repository {
 				lastName: data.lastName,
 				createdBy: data.createdBy,
 				updatedBy: data.updatedBy,
+				uid: user.uid,
 			});
 			obj.signUp = user;
 			obj.userName = userInfo;
@@ -59,14 +60,24 @@ class Users_repository {
 	// -----------------------------------
 	async getUser(userId) {
 		try {
+			let obj = {};
 			const user = await users.findOne({
 				where: {
 					uid: userId,
 					isDeleted: false,
 				},
 			});
-			console.log(user.brightCyan);
-			return user;
+
+			const userInfo = await users.findOne({
+				where: {
+					uid: userId,
+					isDeleted: false,
+				},
+			});
+
+			obj.signUp = user;
+			obj.userName = userInfo;
+			return obj;
 		} catch (error) {
 			console.log("Something went wrong in repository layer".magenta);
 			throw { error };
