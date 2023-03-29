@@ -17,6 +17,7 @@ class Users_repository {
 				lastName: data.lastName,
 				createdBy: data.createdBy,
 				updatedBy: data.updatedBy,
+				uid: user.uid,
 			});
 			obj.signUp = user;
 			obj.userName = userInfo;
