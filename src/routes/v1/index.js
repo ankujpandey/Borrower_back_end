@@ -7,6 +7,12 @@ const router = express.Router();
 
 const { UsersController, UserInfoController } = require("../../controllers");
 
+// ----------------------------------------
+// jwt token
+// ----------------------------------------
+const Jwt = require("jsonwebtoken");
+const jwtKey = "aaa";
+
 // ------------------------------------------
 // route for User_Info Table
 // ------------------------------------------

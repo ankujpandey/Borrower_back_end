@@ -1,5 +1,11 @@
 const { Users_repository } = require("../repository");
 
+// ----------------------------------------
+// jwt token
+// ----------------------------------------
+const Jwt = require("jsonwebtoken");
+const jwtKey = "aaa";
+
 class Users_service {
 	constructor() {
 		this.usersRepository = new Users_repository();
@@ -10,11 +16,34 @@ class Users_service {
 	// -----------------------------------
 	async createUser(data) {
 		console.log("service called");
+		let createUserData = {};
 		try {
 			const result = await this.usersRepository.createUser(data);
-			return result;
+			const token = await this.createToken({
+				email: result.email,
+				uid: result.uid,
+			});
+
+			createUserData.result = result;
+			createUserData.auth = token;
+
+			return createUserData;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
+			throw { error };
+		}
+	}
+
+	// -----------------------------------
+	// create token
+	// -----------------------------------
+
+	async createToken(result) {
+		try {
+			const token = Jwt.sign(result, jwtKey, { expiresIn: "2h" });
+			return token;
+		} catch (error) {
+			console.log("Something went wrong, please try again!!!!!!!!!!");
 			throw { error };
 		}
 	}
