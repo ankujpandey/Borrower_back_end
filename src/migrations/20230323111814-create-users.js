@@ -19,6 +19,7 @@ module.exports = {
 			// },
 			email: {
 				//we will make it uniqe once we completed.
+				unique: true,
 				allowNull: false,
 				type: Sequelize.STRING,
 			},

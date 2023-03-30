@@ -48,9 +48,9 @@ class Users_service {
 	// -----------------------------------
 	// get data from table
 	// -----------------------------------
-	async getUser(userId) {
+	async getUser(userLogin) {
 		try {
-			const result = await this.usersRepository.getUser(userId);
+			const result = await this.usersRepository.getUser(userLogin);
 			return result;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);

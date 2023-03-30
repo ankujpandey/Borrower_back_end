@@ -22,8 +22,8 @@ router.get("/user_info/admin/admin", UserInfoController.getAllByAdmin);
 // route for Users Table
 // ------------------------------------------
 
-router.post("/user", UsersController.create);
-router.get("/user/:id", UsersController.get);
+router.post("/signUp", UsersController.create);
+router.get("/logIn/", UsersController.get);
 router.delete("/user/:id", UsersController.destroy);
 router.patch("/user/:id", UsersController.update);
 router.get("/user", UsersController.getAll);

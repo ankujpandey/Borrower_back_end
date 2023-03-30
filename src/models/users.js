@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 			// },
 			email: {
 				//we will make it uniqe once we completed.
+				unique: true,
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
