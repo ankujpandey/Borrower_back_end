@@ -45,7 +45,7 @@ module.exports = {
 				allowNull: true,
 				type: Sequelize.BIGINT,
 			},
-			pin: {
+			pinCode: {
 				allowNull: true,
 				type: Sequelize.INTEGER,
 			},
@@ -54,6 +54,10 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			city: {
+				allowNull: true,
+				type: Sequelize.STRING,
+			},
+			postOffice: {
 				allowNull: true,
 				type: Sequelize.STRING,
 			},

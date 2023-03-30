@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: true,
 				type: DataTypes.BIGINT,
 			},
-			pin: {
+			pinCode: {
 				allowNull: true,
 				type: DataTypes.INTEGER,
 			},
@@ -60,6 +60,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 			},
 			city: {
+				allowNull: true,
+				type: DataTypes.STRING,
+			},
+			postOffice: {
 				allowNull: true,
 				type: DataTypes.STRING,
 			},
