@@ -78,9 +78,18 @@ class Users_service {
 	// get data from table
 	// -----------------------------------
 	async getUser(userLogin) {
+		let userLogincheck = {};
 		try {
 			const result = await this.usersRepository.getUser(userLogin);
-			return result;
+			const token = await this.createToken({
+				email: result.email,
+				uid: result.uid,
+			});
+
+			userLogincheck.result = result;
+			userLogincheck.auth = token;
+
+			return userLogincheck;
 		} catch (error) {
 			console.log("Something went wrong in userInfo services".magenta);
 			throw { error };
