@@ -10,6 +10,6 @@ const v1Apiroutes = require("./v1/index.js");
 
 router.use("/v1", v1Apiroutes);
 
-console.log("routes are working".magenta);
+console.log("routes are working".blue);
 
 module.exports = router;
