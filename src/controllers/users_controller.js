@@ -76,8 +76,11 @@ const update = async (req, res) => {
 // get from table
 // -----------------------------------
 const get = async (req, res) => {
+	console.log("req.query", req.query);
+	console.log("req.body", req.body);
+
 	try {
-		const response = await usersService.getUser(req.params.id);
+		const response = await usersService.getUser(req.query);
 		return res.status(201).json({
 			data: response,
 			success: true,

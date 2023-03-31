@@ -7,10 +7,12 @@ class UserInfo_repository {
 	// -----------------------------------
 	// insert into table
 	// -----------------------------------
-	async createUserInfo(data) {
+	async createUserInfo(data, userId) {
 		console.log(colors.bgYellow("userData in repository------->>>>>>", data));
 		try {
-			const userInfo = await user_info.create(data);
+			const userInfo = await user_info.update(data, {
+				where: { uid: userId, isDeleted: false },
+			});
 			// console.log("wrong in repo", userInfo);
 			return userInfo;
 		} catch (error) {

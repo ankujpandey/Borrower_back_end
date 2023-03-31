@@ -9,7 +9,10 @@ const userInfoService = new UserInfo_service();
 const create = async (req, res) => {
 	// console.log(colors.bgGreen("userData in controller------->>>>>>", req.body));
 	try {
-		const userInfo = await userInfoService.createUserInfo(req.body);
+		const userInfo = await userInfoService.createUserInfo(
+			req.body,
+			req.params.id
+		);
 		console.log("wrng in controller", userInfo);
 		return res.status(201).json({
 			data: userInfo,

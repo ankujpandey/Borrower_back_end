@@ -58,19 +58,21 @@ class Users_repository {
 	// -----------------------------------
 	// get data from table
 	// -----------------------------------
-	async getUser(userId) {
+	async getUser(userLogin) {
+		console.log(userLogin);
 		try {
 			let obj = {};
 			const user = await users.findOne({
 				where: {
-					uid: userId,
+					email: userLogin.email,
+					password: userLogin.password,
 					isDeleted: false,
 				},
 			});
 
-			const userInfo = await users.findOne({
+			const userInfo = await user_info.findOne({
 				where: {
-					uid: userId,
+					uid: user.uid,
 					isDeleted: false,
 				},
 			});
