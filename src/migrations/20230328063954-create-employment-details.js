@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       uid: {
+        unique: true,
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",

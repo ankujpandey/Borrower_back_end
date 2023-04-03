@@ -13,7 +13,7 @@ const createBankController = async (req, res) => {
     return res.status(201).json({
       data: bankData,
       success: true,
-      message: "Successfully Inserted Loan Data",
+      message: "Successfully Inserted Bank Data",
       err: {},
     });
   } catch (error) {
@@ -21,7 +21,7 @@ const createBankController = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to insert into Loan Data",
+      message: "Not able to insert into Bank Data",
       err: error,
     });
   }

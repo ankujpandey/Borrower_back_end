@@ -15,7 +15,7 @@ const createEmploymentController = async (req, res) => {
     return res.status(201).json({
       data: employmentData,
       success: true,
-      message: "Successfully Inserted Loan Data",
+      message: "Successfully Inserted Employment Data",
       err: {},
     });
   } catch (error) {
@@ -23,7 +23,7 @@ const createEmploymentController = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to insert into Loan Data",
+      message: "Not able to insert into Employment Data",
       err: error,
     });
   }

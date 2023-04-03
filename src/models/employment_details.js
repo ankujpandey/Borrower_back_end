@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       uid: {
+        unique: true,
         allowNull: false,
         type: DataTypes.INTEGER,
       },
