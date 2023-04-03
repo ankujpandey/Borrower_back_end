@@ -5,4 +5,5 @@ module.exports = {
   Bank_repository: require("./bank_repository"),
   Employment_repository: require("./employment_repository"),
   Company_repository: require("./company_repositry"),
+  Admin_repository: require("./admin_repository"),
 };

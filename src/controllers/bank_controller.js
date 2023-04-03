@@ -6,7 +6,7 @@ const bankService = new Bank_service();
 // insert into table
 // -----------------------------------
 const createBankController = async (req, res) => {
-  console.log("bank contorller");
+  console.log("bank controller");
   try {
     const bankData = await bankService.createBankService(req.body);
 

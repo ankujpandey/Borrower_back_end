@@ -5,4 +5,5 @@ module.exports = {
   BankController: require("./bank_controller"),
   EmploymentController: require("./employment_controller"),
   CompanyController: require("./company_controller"),
+  AdminController: require("./Admin_controller"),
 };
