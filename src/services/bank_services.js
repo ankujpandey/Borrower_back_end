@@ -16,7 +16,7 @@ class Bank_service {
 
       return createBankData;
     } catch (error) {
-      console.log("Something went wrong in Loan services layer".magenta);
+      console.log("Something went wrong in Bank services layer".magenta);
       throw { error };
     }
   }

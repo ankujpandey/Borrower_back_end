@@ -11,6 +11,7 @@ const {
   LoanController,
   BankController,
   EmploymentController,
+  CompanyController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -59,4 +60,8 @@ router.post(
   EmploymentController.createEmploymentController
 );
 
+// ------------------------------------------
+// route for Company Table
+// ------------------------------------------
+router.get("/getAllCompany", CompanyController.getAllCompanyController);
 module.exports = router;

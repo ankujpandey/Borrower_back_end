@@ -12,7 +12,7 @@ module.exports = {
       company_name: {
         type: Sequelize.STRING,
       },
-      domain: {
+      company_domain: {
         type: Sequelize.STRING,
       },
       createdAt: {
