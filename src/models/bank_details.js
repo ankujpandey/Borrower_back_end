@@ -9,33 +9,55 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.users, {
+        foreignKey: "uid",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
   bank_details.init(
     {
+      bankId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       uid: {
+        allowNull: false,
         type: DataTypes.INTEGER,
       },
       account_number: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
       ifsc_code: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
       bank_name: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
       branch_name: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
       createdby: {
+        allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "user",
       },
       updatedby: {
+        allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "user",
       },
       isDeleted: {
+        allowNull: false,
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

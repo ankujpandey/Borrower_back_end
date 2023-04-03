@@ -5,7 +5,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { UsersController, UserInfoController } = require("../../controllers");
+const {
+  UsersController,
+  UserInfoController,
+  LoanController,
+  BankController,
+  EmploymentController,
+} = require("../../controllers");
 
 // ----------------------------------------
 // jwt token
@@ -34,5 +40,23 @@ router.delete("/user/:id", UsersController.destroy);
 router.patch("/user/:id", UsersController.update);
 router.get("/user", UsersController.getAll);
 router.get("/user/admin/admin", UsersController.getAllByAdmin);
+
+// ------------------------------------------
+// route for Loan Table
+// ------------------------------------------
+router.post("/createLoan", LoanController.createLoanController);
+
+// ------------------------------------------
+// route for Bank Table
+// ------------------------------------------
+router.post("/createBank", BankController.createBankController);
+
+// ------------------------------------------
+// route for Employement Table
+// ------------------------------------------
+router.post(
+  "/createEmployment",
+  EmploymentController.createEmploymentController
+);
 
 module.exports = router;
