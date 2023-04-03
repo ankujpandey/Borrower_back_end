@@ -17,7 +17,7 @@ const jwtKey = "aaa";
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info", UserInfoController.create);
+router.post("/user_info/:id", UserInfoController.create);
 router.get("/user_info/:id", UserInfoController.get);
 router.delete("/user_info/:id", UserInfoController.destroy);
 router.patch("/user_info/:id", UserInfoController.update);
