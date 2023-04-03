@@ -6,7 +6,7 @@ const employmentService = new Employment_service();
 // insert into table
 // -----------------------------------
 const createEmploymentController = async (req, res) => {
-  console.log("employemnt contorller");
+  console.log("employement controller");
   try {
     const employmentData = await employmentService.createEmploymentService(
       req.body
@@ -15,7 +15,7 @@ const createEmploymentController = async (req, res) => {
     return res.status(201).json({
       data: employmentData,
       success: true,
-      message: "Successfully Inserted Loan Data",
+      message: "Successfully Inserted Employement Details",
       err: {},
     });
   } catch (error) {
@@ -23,7 +23,7 @@ const createEmploymentController = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to insert into Loan Data",
+      message: "Not able to insert Employement Details",
       err: error,
     });
   }
