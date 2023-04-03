@@ -1,17 +1,19 @@
-const { Bank_service } = require("../services");
+const { Employment_service } = require("../services");
 
-const bankService = new Bank_service();
+const employmentService = new Employment_service();
 
 // -----------------------------------
 // insert into table
 // -----------------------------------
-const createBankController = async (req, res) => {
-  console.log("bank contorller");
+const createEmploymentController = async (req, res) => {
+  console.log("employemnt contorller");
   try {
-    const bankData = await bankService.createBankService(req.body);
+    const employmentData = await employmentService.createEmploymentService(
+      req.body
+    );
 
     return res.status(201).json({
-      data: bankData,
+      data: employmentData,
       success: true,
       message: "Successfully Inserted Loan Data",
       err: {},
@@ -28,5 +30,5 @@ const createBankController = async (req, res) => {
 };
 
 module.exports = {
-  createBankController,
+  createEmploymentController,
 };

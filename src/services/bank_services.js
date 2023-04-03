@@ -8,13 +8,13 @@ class Bank_service {
   // -----------------------------------
   // insert into table
   // -----------------------------------
-  async createUser(data) {
+  async createBankService(data) {
     console.log("service bank");
 
     try {
-      const createUserData = await this.Bank_repository.createUser(data);
+      const createBankData = await this.Bank_repository.createBankRepo(data);
 
-      return createUserData;
+      return createBankData;
     } catch (error) {
       console.log("Something went wrong in Loan services layer".magenta);
       throw { error };

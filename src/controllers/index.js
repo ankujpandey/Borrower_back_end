@@ -3,4 +3,5 @@ module.exports = {
   UsersController: require("./users_controller"),
   LoanController: require("./loan_controller"),
   BankController: require("./bank_controller"),
+  EmploymentController: require("./employment_controller"),
 };

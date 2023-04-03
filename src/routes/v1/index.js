@@ -10,6 +10,7 @@ const {
   UserInfoController,
   LoanController,
   BankController,
+  EmploymentController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -43,11 +44,19 @@ router.get("/user/admin/admin", UsersController.getAllByAdmin);
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
-router.post("/createLoan", LoanController.create);
+router.post("/createLoan", LoanController.createLoanController);
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
-router.post("/createBank", BankController.create);
+router.post("/createBank", BankController.createBankController);
+
+// ------------------------------------------
+// route for Employement Table
+// ------------------------------------------
+router.post(
+  "/createEmployment",
+  EmploymentController.createEmploymentController
+);
 
 module.exports = router;

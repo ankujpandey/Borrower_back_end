@@ -26,7 +26,12 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      company_email: {
+      email: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+
+      bussiness_nature: {
         allowNull: true,
         type: Sequelize.STRING,
       },
@@ -34,10 +39,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      monthly_salary: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
+
       createdby: {
         allowNull: false,
         type: Sequelize.STRING,

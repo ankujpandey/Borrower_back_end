@@ -3,4 +3,5 @@ module.exports = {
   Users_repository: require("./users_repository"),
   Loan_repository: require("./loan_repositry"),
   Bank_repository: require("./bank_repository"),
+  Employment_repository: require("./employment_repository"),
 };

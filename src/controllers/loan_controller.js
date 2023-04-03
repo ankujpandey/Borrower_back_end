@@ -5,10 +5,10 @@ const loanService = new Loan_service();
 // -----------------------------------
 // insert into table
 // -----------------------------------
-const create = async (req, res) => {
+const createLoanController = async (req, res) => {
   console.log("loan contorller");
   try {
-    const loanData = await loanService.createUser(req.body);
+    const loanData = await loanService.createLoanService(req.body);
     console.log("wrng in controller", loanData);
     return res.status(201).json({
       data: loanData,
@@ -28,5 +28,5 @@ const create = async (req, res) => {
 };
 
 module.exports = {
-  create,
+  createLoanController,
 };

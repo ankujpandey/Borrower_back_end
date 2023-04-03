@@ -4,11 +4,11 @@ class Loan_repository {
   // -----------------------------------
   // insert into table
   // -----------------------------------
-  async createUser(data) {
+  async createLoanRepo(data) {
     console.log("Loan repositry");
     try {
-      const createUserData = await loan_details.create(data);
-      return createUserData;
+      const createLoanData = await loan_details.create(data);
+      return createLoanData;
     } catch (error) {
       console.log("Something went wrong in loan repository layer".magenta);
       throw { error };

@@ -4,11 +4,11 @@ class Bank_repository {
   // -----------------------------------
   // insert into table
   // -----------------------------------
-  async createUser(data) {
+  async createBankRepo(data) {
     console.log("Bank repositry");
     try {
-      const createUserData = await bank_details.create(data);
-      return createUserData;
+      const createBankData = await bank_details.create(data);
+      return createBankData;
     } catch (error) {
       console.log("Something went wrong in Bank repository layer".magenta);
       throw { error };
