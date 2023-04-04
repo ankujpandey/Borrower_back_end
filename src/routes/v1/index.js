@@ -19,18 +19,23 @@ const {
 // jwt token
 // ----------------------------------------
 const Jwt = require("jsonwebtoken");
-const jwtKey = "aaa";
-
+const jwtKey = "anakaz";
+// const verifyToken = require("../../middleware/index").verifyToken;
+const { verifyToken } = require("../../middleware/index");
 // ------------------------------------------
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info/:id", UserInfoController.create);
-router.get("/user_info/:id", UserInfoController.get);
-router.delete("/user_info/:id", UserInfoController.destroy);
-router.patch("/user_info/:id", UserInfoController.update);
-router.get("/user_info", UserInfoController.getAll);
-router.get("/user_info/admin/admin", UserInfoController.getAllByAdmin);
+router.post("/user_info", verifyToken, UserInfoController.create);
+router.get("/user_info/:id", verifyToken, UserInfoController.get);
+router.delete("/user_info/:id", verifyToken, UserInfoController.destroy);
+router.patch("/user_info/:id", verifyToken, UserInfoController.update);
+router.get("/user_info", verifyToken, UserInfoController.getAll);
+router.get(
+  "/user_info/admin/admin",
+  verifyToken,
+  UserInfoController.getAllByAdmin
+);
 
 // ------------------------------------------
 // route for Users Table
@@ -38,26 +43,26 @@ router.get("/user_info/admin/admin", UserInfoController.getAllByAdmin);
 
 router.post("/signUp", UsersController.create);
 router.get("/logIn/", UsersController.get);
-router.delete("/user/:id", UsersController.destroy);
-router.patch("/user/:id", UsersController.update);
-router.get("/user", UsersController.getAll);
-router.get("/user/admin/admin", UsersController.getAllByAdmin);
+router.delete("/user/:id", verifyToken, UsersController.destroy);
+router.patch("/user/:id", verifyToken, UsersController.update);
+router.get("/user", verifyToken, UsersController.getAll);
+router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
 
+// ,
 // ------------------------------------------
-// route for Loan Table
-// ------------------------------------------
-router.post("/createLoan", LoanController.createLoanController);
+router.post("/createLoan", verifyToken, LoanController.createLoanController);
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
-router.post("/createBank", BankController.createBankController);
+router.post("/createBank", verifyToken, BankController.createBankController);
 
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
 router.post(
   "/createEmployment",
+  verifyToken,
   EmploymentController.createEmploymentController
 );
 
