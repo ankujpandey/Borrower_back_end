@@ -5,9 +5,8 @@ const companyService = new Company_service();
 
 const getAllCompanyController = async (req, res) => {
   try {
-    const getAllCompanyControllerData = await companyService.getCompanyService(
-      req.query
-    );
+    const getAllCompanyControllerData =
+      await companyService.getCompanyService();
     return res.status(201).json({
       data: getAllCompanyControllerData,
       success: true,

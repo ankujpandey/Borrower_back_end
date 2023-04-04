@@ -1,4 +1,3 @@
-const { Op } = require("sequelize");
 const { company_table } = require("../models/index");
 
 class Company_repository {
@@ -6,21 +5,11 @@ class Company_repository {
   // get into table
   // -----------------------------------
 
-  async getCompanyRepo(filter) {
-    console.log("Company repositry", filter);
+  async getCompanyRepo() {
     try {
-      if (filter) {
-        const getCompanyData = await company_table.findAll({
-          where: {
-            company_name: {
-              [Op.startsWith]: filter.company,
-            },
-          },
-        });
-
-        return getCompanyData;
-      }
-      const getCompanyData = await company_table.findAll();
+      const getCompanyData = await company_table.findAll({
+        attributes: ["company_id", "company_name"],
+      });
       return getCompanyData;
     } catch (error) {
       console.log("Something went wrong in company repository layer".magenta);
