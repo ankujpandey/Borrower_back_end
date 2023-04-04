@@ -1,4 +1,4 @@
-const { Bank_repository } = require("../repository");
+const { Bank_repository } = require("./src/repository");
 
 class Bank_service {
   constructor() {

@@ -11,7 +11,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        company_name: " TCS",
+        company_name: "TCS",
         company_domain: "tcs",
         createdAt: new Date(),
         updatedAt: new Date(),
