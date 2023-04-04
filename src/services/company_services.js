@@ -8,13 +8,9 @@ class Company_service {
   // -----------------------------------
   // get into table
   // -----------------------------------
-  async getCompanyService(filter) {
-    console.log("service company", filter);
-
+  async getCompanyService() {
     try {
-      const getCompanyData = await this.Company_repository.getCompanyRepo(
-        filter
-      );
+      const getCompanyData = await this.Company_repository.getCompanyRepo();
       return getCompanyData;
     } catch (error) {
       console.log("Something went wrong in Company services layer".magenta);
