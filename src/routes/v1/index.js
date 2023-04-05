@@ -25,7 +25,7 @@ const { verifyToken } = require("../../middleware/index");
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info", verifyToken, UserInfoController.create);
+router.post("/user_info/:id", verifyToken, UserInfoController.create);
 router.get("/user_info/:id", verifyToken, UserInfoController.get);
 router.delete("/user_info/:id", verifyToken, UserInfoController.destroy);
 router.patch("/user_info/:id", verifyToken, UserInfoController.update);
@@ -47,7 +47,8 @@ router.patch("/user/:id", verifyToken, UsersController.update);
 router.get("/user", verifyToken, UsersController.getAll);
 router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
 
-// ,
+// ------------------------------------------
+// route for Loan Table
 // ------------------------------------------
 router.post("/createLoan", verifyToken, LoanController.createLoanController);
 
