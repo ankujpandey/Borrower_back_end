@@ -3,9 +3,14 @@
 // ----------------------------------------
 
 const express = require("express");
+const uploadImage = require("../../middleware/uploadImage");
 const router = express.Router();
 
-const { UsersController, UserInfoController } = require("../../controllers");
+const {
+	UsersController,
+	UserInfoController,
+	E_kyc,
+} = require("../../controllers");
 
 // ----------------------------------------
 // jwt token
@@ -34,5 +39,11 @@ router.delete("/user/:id", UsersController.destroy);
 router.patch("/user/:id", UsersController.update);
 router.get("/user", UsersController.getAll);
 router.get("/user/admin/admin", UsersController.getAllByAdmin);
+
+// -------------------------------------------
+//  E- KYC
+// -------------------------------------------
+
+router.post("/uploadImage/:id", uploadImage.upload, E_kyc.checkData);
 
 module.exports = router;
