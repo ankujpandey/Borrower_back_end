@@ -121,6 +121,34 @@ class Users_service {
       throw { error };
     }
   }
+
+  // -----------------------------------
+  // get all data
+  // -----------------------------------
+
+  async getAllData(id) {
+    try {
+      const data = await this.usersRepository.getAllData(id);
+      return data;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // get user data
+  // -----------------------------------
+
+  async getUserData() {
+    try {
+      const data = await this.usersRepository.getUserData();
+      return data;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Users_service;

@@ -144,6 +144,54 @@ const getAllByAdmin = async (req, res) => {
   }
 };
 
+// -----------------------------------
+// get all data of particular user
+// -----------------------------------
+
+const getAllData = async (req, res) => {
+  try {
+    const response = await usersService.getAllData(req.params.id);
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully fetched User Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Not able fetch data from User Info",
+      err: error,
+    });
+  }
+};
+
+// -----------------------------------
+// get user data
+// -----------------------------------
+
+const getUserData = async (req, res) => {
+  try {
+    const response = await usersService.getUserData();
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully fetched User Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Not able fetch data from User Info",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   create,
   destroy,
@@ -151,4 +199,6 @@ module.exports = {
   update,
   getAll,
   getAllByAdmin,
+  getAllData,
+  getUserData,
 };
