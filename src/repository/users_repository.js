@@ -1,7 +1,14 @@
 // const { Op } = require("sequelize");
 
-const { users, sequelize } = require("../models/index");
-const { user_info } = require("../models/index");
+const {
+  users,
+  sequelize,
+  bank_details,
+  employment_details,
+  loan_details,
+  user_info,
+  Admin,
+} = require("../models/index");
 
 class Users_repository {
   // -----------------------------------
@@ -19,6 +26,20 @@ class Users_repository {
         updatedBy: data.updatedBy,
         uid: user.uid,
       });
+
+      await bank_details.create({
+        uid: user.uid,
+      });
+
+      await employment_details.create({
+        uid: user.uid,
+        employment_type: "Salaried",
+      });
+
+      // await loan_details.create({
+      //   uid: user.uid,
+      // });
+
       obj.signUp = user;
       obj.userName = userInfo;
       return obj;
@@ -56,7 +77,7 @@ class Users_repository {
   }
 
   // -----------------------------------
-  // get data from table
+  // get data from table (Login)
   // -----------------------------------
   async getUser(userLogin) {
     console.log(userLogin);
@@ -69,17 +90,29 @@ class Users_repository {
           isDeleted: false,
         },
       });
+      if (user) {
+        const userInfo = await user_info.findOne({
+          where: {
+            uid: user.uid,
+            isDeleted: false,
+          },
+        });
 
-      const userInfo = await user_info.findOne({
+        obj.signUp = user;
+        obj.userName = userInfo;
+        return obj;
+      }
+
+      const admin = await Admin.findOne({
         where: {
-          uid: user.uid,
+          email: userLogin.email,
+          password: userLogin.password,
           isDeleted: false,
         },
       });
 
-      obj.signUp = user;
-      obj.userName = userInfo;
-      return obj;
+      // console.log("admin found--", admin);
+      return admin;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };

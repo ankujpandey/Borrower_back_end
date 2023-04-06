@@ -16,6 +16,26 @@ class Employment_repository {
       throw { error };
     }
   }
+
+  // -----------------------------------
+  // update into table
+  // -----------------------------------
+  async updateEmploymentRepo(data) {
+    console.log("Employment repository");
+    try {
+      const updatedEmploymentData = await employment_details.update(data, {
+        where: {
+          uid: data.uid,
+        },
+      });
+      return updatedEmploymentData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Employment repository layer".magenta
+      );
+      throw { error };
+    }
+  }
 }
 
 module.exports = Employment_repository;

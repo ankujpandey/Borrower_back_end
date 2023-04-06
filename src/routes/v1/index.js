@@ -64,7 +64,7 @@ router.post("/createBank", verifyToken, BankController.createBankController);
 router.post(
   "/createEmployment",
   verifyToken,
-  EmploymentController.createEmploymentController
+  EmploymentController.updateEmploymentController
 );
 
 // ------------------------------------------
