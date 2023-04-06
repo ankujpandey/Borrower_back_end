@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
 
-      bussiness_nature: {
+      business_nature: {
         allowNull: true,
         type: DataTypes.STRING,
       },
