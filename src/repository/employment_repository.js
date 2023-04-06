@@ -18,7 +18,7 @@ class Employment_repository {
   }
 
   // -----------------------------------
-  // update into table
+  // update into table using uid
   // -----------------------------------
   async updateEmploymentRepo(data) {
     console.log("Employment repository");

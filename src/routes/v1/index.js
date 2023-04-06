@@ -18,10 +18,12 @@ const {
 // ----------------------------------------
 // jwt token
 // ----------------------------------------
+
 const Jwt = require("jsonwebtoken");
 const jwtKey = "anakaz";
 // const verifyToken = require("../../middleware/index").verifyToken;
 const { verifyToken } = require("../../middleware/index");
+
 // ------------------------------------------
 // route for User_Info Table
 // ------------------------------------------
@@ -56,7 +58,7 @@ router.post("/createLoan", verifyToken, LoanController.createLoanController);
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
-router.post("/createBank", verifyToken, BankController.createBankController);
+router.post("/createBank", verifyToken, BankController.updateBankController);
 
 // ------------------------------------------
 // route for Employement Table

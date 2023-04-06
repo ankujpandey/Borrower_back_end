@@ -45,6 +45,47 @@ const createBankController = async (req, res) => {
   }
 };
 
+// -----------------------------------
+// update into table using uid
+// -----------------------------------
+const updateBankController = async (req, res) => {
+  console.log("Bank controller");
+  const responseObj = {};
+  responseObj.request = req.body;
+  try {
+    const bankData = await bankService.updateBankService(req.body);
+    responseObj.response = {
+      data: bankData,
+      success: true,
+      message: "Successfully Inserted Bank Details",
+      err: {},
+    };
+    saveReqRes(responseObj);
+    return res.status(201).json({
+      data: bankData,
+      success: true,
+      message: "Successfully Inserted Bank Details",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    responseObj.response = {
+      data: {},
+      success: false,
+      message: "Not able to insert into Bank Details",
+      err: error,
+    };
+    saveReqRes(responseObj);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Not able to insert Bank Details",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createBankController,
+  updateBankController,
 };

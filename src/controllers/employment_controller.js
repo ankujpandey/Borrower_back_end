@@ -46,7 +46,7 @@ const createEmploymentController = async (req, res) => {
 };
 
 // -----------------------------------
-// insert into table
+// update into table using uid
 // -----------------------------------
 const updateEmploymentController = async (req, res) => {
   console.log("employment controller");
