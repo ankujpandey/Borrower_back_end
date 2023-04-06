@@ -48,7 +48,8 @@ router.patch("/user/:id", verifyToken, UsersController.update);
 router.get("/user", UsersController.getAll);
 router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
 
-// ,
+// ------------------------------------------
+// route for Loan Table
 // ------------------------------------------
 router.post("/createLoan", verifyToken, LoanController.createLoanController);
 
