@@ -2,47 +2,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("loan_details", {
-      LoanId: {
+    await queryInterface.createTable("Admins", {
+      adminID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      uid: {
+      firstName: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-          model: "users",
-          key: "uid",
-        },
+        type: Sequelize.STRING,
       },
-      jobAssignees_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      amount: {
+      lastName: {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      rate_of_interest: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
-      tenure: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
-      createdby: {
+      email: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "user",
       },
-      updatedby: {
+      password: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "user",
       },
       isDeleted: {
         allowNull: false,
@@ -57,9 +38,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      createdBy: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "admin",
+      },
+      updatedBy: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "admin",
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("loan_details");
+    await queryInterface.dropTable("Admins");
   },
 };

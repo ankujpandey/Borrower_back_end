@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class bank_details extends Model {
+  class Admin extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,62 +9,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.users, {
-        foreignKey: "uid",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
-      });
     }
   }
-  bank_details.init(
+  Admin.init(
     {
-      bankId: {
+      adminID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      uid: {
-        unique: true,
+      firstName: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
-      account_number: {
+      lastName: {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      ifsc_code: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      bank_name: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      branch_name: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      createdby: {
+      email: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "user",
       },
-      updatedby: {
+      password: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "user",
-      },
-      isDeleted: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
       },
     },
     {
       sequelize,
-      modelName: "bank_details",
+      modelName: "Admin",
     }
   );
-  return bank_details;
+  return Admin;
 };

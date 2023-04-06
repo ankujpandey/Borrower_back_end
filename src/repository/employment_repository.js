@@ -1,0 +1,21 @@
+const { employment_details } = require("../models/index");
+
+class Employment_repository {
+  // -----------------------------------
+  // insert into table
+  // -----------------------------------
+  async createEmploymentRepo(data) {
+    console.log("Employment repositry");
+    try {
+      const createEmploymentData = await employment_details.create(data);
+      return createEmploymentData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Employment repository layer".magenta
+      );
+      throw { error };
+    }
+  }
+}
+
+module.exports = Employment_repository;

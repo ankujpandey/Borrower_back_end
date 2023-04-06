@@ -9,36 +9,62 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.users, {
+        foreignKey: "uid",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
   employment_details.init(
     {
+      Empid: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       uid: {
+        unique: true,
+        allowNull: false,
         type: DataTypes.INTEGER,
       },
       employment_type: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       company_name: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
-      company_email: {
+      email: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+
+      bussiness_nature: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
       monthly_income: {
+        allowNull: true,
         type: DataTypes.STRING,
       },
-      monthly_salary: {
-        type: DataTypes.STRING,
-      },
+
       createdby: {
+        allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "user",
       },
       updatedby: {
+        allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "user",
       },
       isDeleted: {
+        allowNull: false,
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
