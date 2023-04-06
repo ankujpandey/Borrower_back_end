@@ -8,19 +8,22 @@ const employmentService = new Employment_service();
 // -----------------------------------
 const createEmploymentController = async (req, res) => {
   console.log("employemnt contorller");
-  const responseObj = {};
-  responseObj.request = req.body;
+  const storeRequestResponse = {};
+  const requestObj = {};
+  requestObj.body = req.body;
+  requestObj.headers = req.rawHeaders;
+  storeRequestResponse.request = requestObj;
   try {
     const employmentData = await employmentService.createEmploymentService(
       req.body
     );
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: employmentData,
       success: true,
-      message: "Successfully Inserted Employment Data",
+      message: "Successfully Inserted Employement Details",
       err: {},
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(201).json({
       data: employmentData,
       success: true,
@@ -29,13 +32,13 @@ const createEmploymentController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: {},
       success: false,
-      message: "Not able to insert into Employment Data",
+      message: "Not able to insert Employement Details",
       err: error,
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(500).json({
       data: {},
       success: false,
@@ -46,23 +49,26 @@ const createEmploymentController = async (req, res) => {
 };
 
 // -----------------------------------
-// insert into table
+// update into table
 // -----------------------------------
 const updateEmploymentController = async (req, res) => {
   console.log("employment controller");
-  const responseObj = {};
-  responseObj.request = req.body;
+  const storeRequestResponse = {};
+  const requestObj = {};
+  requestObj.body = req.body;
+  requestObj.headers = req.rawHeaders;
+  storeRequestResponse.request = requestObj;
   try {
     const employmentData = await employmentService.updateEmploymentService(
       req.body
     );
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: employmentData,
       success: true,
-      message: "Successfully Inserted Employment Data",
+      message: "Successfully Inserted Employement Details",
       err: {},
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(201).json({
       data: employmentData,
       success: true,
@@ -71,13 +77,13 @@ const updateEmploymentController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: {},
       success: false,
-      message: "Not able to insert into Employment Data",
+      message: "Not able to insert Employement Details",
       err: error,
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(500).json({
       data: {},
       success: false,
