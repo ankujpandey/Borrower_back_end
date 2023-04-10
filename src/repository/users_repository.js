@@ -33,7 +33,6 @@ class Users_repository {
 
       await employment_details.create({
         uid: user.uid,
-        employment_type: "Salaried",
       });
 
       // await loan_details.create({

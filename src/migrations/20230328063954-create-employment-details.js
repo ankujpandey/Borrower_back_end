@@ -20,7 +20,7 @@ module.exports = {
         },
       },
       employment_type: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       company_name: {

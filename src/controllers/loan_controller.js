@@ -8,20 +8,20 @@ const loanService = new Loan_service();
 // -----------------------------------
 const createLoanController = async (req, res) => {
   console.log("loan contorller");
-  console.log("loan==============", req);
-  const responseObj = {};
+  const storeRequestResponse = {};
+  const requestObj = {};
+  requestObj.body = req.body;
+  requestObj.headers = req.rawHeaders;
+  storeRequestResponse.request = requestObj;
   try {
-    responseObj.request = req;
     const loanData = await loanService.createLoanService(req.body);
-    // console.log("wrng in controller", loanData);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: loanData,
       success: true,
       message: "Successfully Inserted Loan Data",
       err: {},
     };
-
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(201).json({
       data: loanData,
       success: true,
@@ -30,14 +30,13 @@ const createLoanController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: {},
       success: false,
       message: "Not able to insert into Loan Data",
       err: error,
     };
-
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(500).json({
       data: {},
       success: false,

@@ -8,19 +8,21 @@ const bankService = new Bank_service();
 // -----------------------------------
 const createBankController = async (req, res) => {
   console.log("bank contorller");
-  console.log(req.body);
-  const responseObj = {};
-  responseObj.request = req.body;
+  const storeRequestResponse = {};
+  const requestObj = {};
+  requestObj.body = req.body;
+  requestObj.headers = req.rawHeaders;
+  storeRequestResponse.request = requestObj;
 
   try {
     const bankData = await bankService.createBankService(req.body);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: bankData,
       success: true,
       message: "Successfully Inserted Bank Data",
       err: {},
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(201).json({
       data: bankData,
       success: true,
@@ -28,14 +30,13 @@ const createBankController = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
-    responseObj.response = {
+    storeRequestResponse.response = {
       data: {},
       success: false,
       message: "Not able to insert into Bank Data",
       err: error,
     };
-    saveReqRes(responseObj);
+    saveReqRes(storeRequestResponse);
     return res.status(500).json({
       data: {},
       success: false,
