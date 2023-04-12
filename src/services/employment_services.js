@@ -21,6 +21,23 @@ class Employment_service {
       throw { error };
     }
   }
+
+  // -----------------------------------
+  // update table
+  // -----------------------------------
+  async updateEmploymentService(data) {
+    console.log("service employment");
+
+    try {
+      const updatedEmploymentData =
+        await this.Employment_repository.updateEmploymentRepo(data);
+
+      return updatedEmploymentData;
+    } catch (error) {
+      console.log("Something went wrong in Employment services layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Employment_service;

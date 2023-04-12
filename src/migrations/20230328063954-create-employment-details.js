@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
 
-      bussiness_nature: {
+      business_nature: {
         allowNull: true,
         type: Sequelize.STRING,
       },

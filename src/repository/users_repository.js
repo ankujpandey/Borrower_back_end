@@ -1,7 +1,14 @@
 // const { Op } = require("sequelize");
 
-const { users, sequelize } = require("../models/index");
-const { user_info } = require("../models/index");
+const {
+  users,
+  sequelize,
+  bank_details,
+  employment_details,
+  loan_details,
+  user_info,
+  Admin,
+} = require("../models/index");
 
 class Users_repository {
   // -----------------------------------
@@ -19,6 +26,20 @@ class Users_repository {
         updatedBy: data.updatedBy,
         uid: user.uid,
       });
+
+      await bank_details.create({
+        uid: user.uid,
+      });
+
+      await employment_details.create({
+        uid: user.uid,
+        employment_type: "Salaried",
+      });
+
+      // await loan_details.create({
+      //   uid: user.uid,
+      // });
+
       obj.signUp = user;
       obj.userName = userInfo;
       return obj;
@@ -56,7 +77,7 @@ class Users_repository {
   }
 
   // -----------------------------------
-  // get data from table
+  // get data from table (Login)
   // -----------------------------------
   async getUser(userLogin) {
     console.log(userLogin);
@@ -69,17 +90,29 @@ class Users_repository {
           isDeleted: false,
         },
       });
+      if (user) {
+        const userInfo = await user_info.findOne({
+          where: {
+            uid: user.uid,
+            isDeleted: false,
+          },
+        });
 
-      const userInfo = await user_info.findOne({
+        obj.signUp = user;
+        obj.userName = userInfo;
+        return obj;
+      }
+
+      const admin = await Admin.findOne({
         where: {
-          uid: user.uid,
+          email: userLogin.email,
+          password: userLogin.password,
           isDeleted: false,
         },
       });
 
-      obj.signUp = user;
-      obj.userName = userInfo;
-      return obj;
+      // console.log("admin found--", admin);
+      return admin;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };
@@ -121,7 +154,7 @@ class Users_repository {
   async getAllData(id) {
     try {
       const [data, metadata] = await sequelize.query(
-        `SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.email AS professional_email,employment_details.bussiness_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
+        `SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.email AS professional_email,employment_details.business_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
       );
       return data;
     } catch (error) {
