@@ -3,7 +3,7 @@ const path = require("path");
 // -------------------------------------------
 // 	upload image
 // -------------------------------------------
-var imageFiles = [];
+
 const upload = multer({
 	storage: multer.diskStorage({
 		destination: function (req, file, cb) {
@@ -15,11 +15,9 @@ const upload = multer({
 			let filename = file.fieldname + "-" + Date.now() + ".jpg";
 			const callback = cb(null, filename);
 
-			imageFiles = [...imageFiles, filename];
-			req.body.myfilename = imageFiles;
 			console.log("call back---", filename);
 		},
 	}),
-}).array("user_file", 3);
+}).array("aadharBiometric", 2);
 
 module.exports = { upload };

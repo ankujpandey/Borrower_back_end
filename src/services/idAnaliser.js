@@ -16,7 +16,7 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 		const response = await CoreAPI.scan({
 			document_primary: `./src/middleware/uploads/${primary_img}`,
 			document_secondary: `./src/middleware/uploads/${secondary_img}`,
-			biometric_photo: `./src/middleware/uploads/${biometric_img}`,
+			biometric_photo: `${biometric_img}`,
 		});
 		if (!response.error) {
 			console.log("this is response------------", response);

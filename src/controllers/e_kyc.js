@@ -1,19 +1,22 @@
 const uploadImage = require("../middleware/uploadImage");
-const coreAPI = require("../services/index");
+const { Id_analyzer } = require("../services/index");
 
 // ------------------------------------------------
 //	Save images and send Analysis of Aadhaar
 // ------------------------------------------------
 
 const checkData = async (req, res) => {
-	console.log("myfilename", req.body.myfilename);
-	imageFiles = [];
+	console.log("myfilename", req.files);
 	try {
-		console.log(req.params.id);
-		const analysis = await coreAPI.Id_analyzer.idScan(
-			req.body.myfilename[0],
-			req.body.myfilename[1],
-			req.body.myfilename[2],
+		// console.log(typeof req.body.biometric);
+		var profileImage = req.body.biometric[0].split("base64,");
+		profileImage = profileImage[1];
+		console.log(profileImage);
+
+		const analysis = await Id_analyzer.idScan(
+			req.files[0].filename,
+			req.files[1].filename,
+			profileImage,
 			req.params.id
 		);
 
