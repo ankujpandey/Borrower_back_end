@@ -14,6 +14,23 @@ class Bank_repository {
       throw { error };
     }
   }
-}
 
+  // -----------------------------------
+  // update into table using uid
+  // -----------------------------------
+  async updateBankRepo(data) {
+    console.log("Bank repository");
+    try {
+      const updatedBankData = await bank_details.update(data, {
+        where: {
+          uid: data.uid,
+        },
+      });
+      return updatedBankData;
+    } catch (error) {
+      console.log("Something went wrong in Bank repository layer".magenta);
+      throw { error };
+    }
+  }
+}
 module.exports = Bank_repository;

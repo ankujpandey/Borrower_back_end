@@ -1,5 +1,5 @@
 const { Users_repository } = require("../repository");
-const { createToken } = require("../middleware");
+const { createToken } = require("../middleware/token");
 // ----------------------------------------
 // jwt token
 // ----------------------------------------

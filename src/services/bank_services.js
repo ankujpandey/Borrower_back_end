@@ -1,4 +1,4 @@
-const { Bank_repository } = require("./src/repository");
+const { Bank_repository } = require("../repository");
 
 class Bank_service {
   constructor() {
@@ -15,6 +15,22 @@ class Bank_service {
       const createBankData = await this.Bank_repository.createBankRepo(data);
 
       return createBankData;
+    } catch (error) {
+      console.log("Something went wrong in Bank services layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // update table
+  // -----------------------------------
+  async updateBankService(data) {
+    console.log("service Bank");
+
+    try {
+      const updatedBankData = await this.Bank_repository.updateBankRepo(data);
+
+      return updatedBankData;
     } catch (error) {
       console.log("Something went wrong in Bank services layer".magenta);
       throw { error };

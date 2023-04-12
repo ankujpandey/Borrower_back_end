@@ -3,6 +3,7 @@
 // ----------------------------------------
 
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 
 const {
@@ -21,7 +22,7 @@ const {
 const Jwt = require("jsonwebtoken");
 const jwtKey = "anakaz";
 // const verifyToken = require("../../middleware/index").verifyToken;
-const { verifyToken } = require("../../middleware/index");
+const { verifyToken } = require("../../middleware/token");
 // ------------------------------------------
 // route for User_Info Table
 // ------------------------------------------
@@ -56,7 +57,7 @@ router.post("/createLoan", verifyToken, LoanController.createLoanController);
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
-router.post("/createBank", verifyToken, BankController.createBankController);
+router.post("/createBank", verifyToken, BankController.updateBankController);
 
 // ------------------------------------------
 // route for Employement Table
@@ -84,5 +85,24 @@ router.get("/admins", AdminController.getAllAdminController);
 // ------------------------------------------
 router.get("/getAllData/:id", UsersController.getAllData);
 router.get("/getUserData", UsersController.getUserData);
+
+// ------------------------------------------
+// Pancard
+// ------------------------------------------
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + "-" + Date.now() + ".jpg");
+    },
+  }),
+}).single("user_file");
+
+router.post("/uploadPancard", upload, (req, resp) => {
+  resp.send("file upload");
+});
 
 module.exports = router;
