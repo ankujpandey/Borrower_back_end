@@ -47,7 +47,7 @@ router.post("/signUp", UsersController.create);
 router.get("/logIn/", UsersController.get);
 router.delete("/user/:id", verifyToken, UsersController.destroy);
 router.patch("/user/:id", verifyToken, UsersController.update);
-router.get("/user", UsersController.getAll);
+router.get("/user", verifyToken, UsersController.getAll);
 router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
 
 // ------------------------------------------

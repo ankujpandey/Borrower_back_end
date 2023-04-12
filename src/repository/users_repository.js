@@ -18,7 +18,23 @@ class Users_repository {
     console.log("repo called", data.firstName);
     try {
       let obj = {};
-      const user = await users.create(data);
+      // const user = await users.create(data);
+      let user = await users.findOne({
+        where: {
+          email: data.email,
+          isDeleted: false,
+        },
+      });
+
+      if (user) {
+        obj.userDetails = user;
+        obj.message = "User already exists!";
+        obj.status = 203;
+        return obj;
+      }
+
+      user = await users.create(data);
+
       const userInfo = await user_info.create({
         firstName: data.firstName,
         lastName: data.lastName,

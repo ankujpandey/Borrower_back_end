@@ -1,10 +1,5 @@
 const { Users_repository } = require("../repository");
 const { createToken } = require("../middleware");
-// ----------------------------------------
-// jwt token
-// ----------------------------------------
-const Jwt = require("jsonwebtoken");
-const jwtKey = "anakaz";
 
 class Users_service {
   constructor() {
@@ -75,7 +70,7 @@ class Users_service {
   }
 
   // -----------------------------------
-  // get data from table
+  // Login
   // -----------------------------------
   async getUser(userLogin) {
     let userLogincheck = {};
