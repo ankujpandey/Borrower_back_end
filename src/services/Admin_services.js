@@ -24,7 +24,7 @@ class Admin_service {
   }
 
   // -----------------------------------
-  // insert into table
+  // get admin details
   // -----------------------------------
 
   async getAdminService(ID) {
