@@ -33,4 +33,5 @@ class Bank_repository {
     }
   }
 }
+
 module.exports = Bank_repository;

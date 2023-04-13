@@ -1,10 +1,11 @@
 const { Users_repository } = require("../repository");
-const { createToken } = require("../middleware/token");
+const { JWTToken } = require("../middleware/index");
+
 // ----------------------------------------
 // jwt token
 // ----------------------------------------
 const Jwt = require("jsonwebtoken");
-const jwtKey = "anakaz";
+const jwtKey = "aaa";
 
 class Users_service {
   constructor() {
@@ -19,7 +20,7 @@ class Users_service {
     let createUserData = {};
     try {
       const result = await this.usersRepository.createUser(data);
-      const token = createToken({
+      const token = await JWTToken.createToken({
         email: result.email,
         uid: result.uid,
       });
@@ -34,9 +35,9 @@ class Users_service {
     }
   }
 
-  // // -----------------------------------
-  // // create token
-  // // -----------------------------------
+  // -----------------------------------
+  // create token
+  // -----------------------------------
 
   // async createToken(result) {
   // 	try {
@@ -81,7 +82,7 @@ class Users_service {
     let userLogincheck = {};
     try {
       const result = await this.usersRepository.getUser(userLogin);
-      const token = createToken({
+      const token = await JWTToken.createToken({
         email: result.email,
         uid: result.uid,
       });
@@ -118,34 +119,6 @@ class Users_service {
       return result;
     } catch (error) {
       console.log("Something went wrong in userInfo services".magenta);
-      throw { error };
-    }
-  }
-
-  // -----------------------------------
-  // get all data
-  // -----------------------------------
-
-  async getAllData(id) {
-    try {
-      const data = await this.usersRepository.getAllData(id);
-      return data;
-    } catch (error) {
-      console.log("Something went wrong in repository layer".magenta);
-      throw { error };
-    }
-  }
-
-  // -----------------------------------
-  // get user data
-  // -----------------------------------
-
-  async getUserData() {
-    try {
-      const data = await this.usersRepository.getUserData();
-      return data;
-    } catch (error) {
-      console.log("Something went wrong in repository layer".magenta);
       throw { error };
     }
   }

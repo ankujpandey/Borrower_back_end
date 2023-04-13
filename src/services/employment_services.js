@@ -34,7 +34,7 @@ class Employment_service {
 
       return updatedEmploymentData;
     } catch (error) {
-      console.log("Something went wrong in Loan services layer".magenta);
+      console.log("Something went wrong in Employment services layer".magenta);
       throw { error };
     }
   }

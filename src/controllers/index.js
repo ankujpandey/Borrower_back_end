@@ -6,4 +6,6 @@ module.exports = {
   EmploymentController: require("./employment_controller"),
   CompanyController: require("./company_controller"),
   AdminController: require("./Admin_controller"),
+  E_kyc: require("./e_kyc"),
+  Pancard: require("./pancard_controllers"),
 };

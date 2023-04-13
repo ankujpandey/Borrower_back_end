@@ -3,7 +3,7 @@
 // ----------------------------------------
 
 const express = require("express");
-const multer = require("multer");
+
 const router = express.Router();
 
 const {
@@ -14,27 +14,35 @@ const {
   EmploymentController,
   CompanyController,
   AdminController,
+  E_kyc,
+  Pancard,
 } = require("../../controllers");
 
 // ----------------------------------------
 // jwt token
 // ----------------------------------------
+
 const Jwt = require("jsonwebtoken");
 const jwtKey = "anakaz";
 // const verifyToken = require("../../middleware/index").verifyToken;
-const { verifyToken } = require("../../middleware/token");
+const { JWTToken, UploadAadhaar } = require("../../middleware/index");
+
 // ------------------------------------------
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info/:id", verifyToken, UserInfoController.create);
-router.get("/user_info/:id", verifyToken, UserInfoController.get);
-router.delete("/user_info/:id", verifyToken, UserInfoController.destroy);
-router.patch("/user_info/:id", verifyToken, UserInfoController.update);
+router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
+router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
+router.delete(
+  "/user_info/:id",
+  JWTToken.verifyToken,
+  UserInfoController.destroy
+);
+router.patch("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
   "/user_info/admin/admin",
-  verifyToken,
+  JWTToken.verifyToken,
   UserInfoController.getAllByAdmin
 );
 
@@ -44,27 +52,39 @@ router.get(
 
 router.post("/signUp", UsersController.create);
 router.get("/logIn/", UsersController.get);
-router.delete("/user/:id", verifyToken, UsersController.destroy);
-router.patch("/user/:id", verifyToken, UsersController.update);
+router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
+router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", UsersController.getAll);
-router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
+router.get(
+  "/user/admin/admin",
+  JWTToken.verifyToken,
+  UsersController.getAllByAdmin
+);
 
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
-router.post("/createLoan", verifyToken, LoanController.createLoanController);
+router.post(
+  "/createLoan",
+  JWTToken.verifyToken,
+  LoanController.createLoanController
+);
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
-router.post("/createBank", verifyToken, BankController.updateBankController);
+router.post(
+  "/createBank",
+  JWTToken.verifyToken,
+  BankController.updateBankController
+);
 
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
 router.post(
   "/createEmployment",
-  verifyToken,
+  JWTToken.verifyToken,
   EmploymentController.updateEmploymentController
 );
 
@@ -86,23 +106,20 @@ router.get("/admins", AdminController.getAllAdminController);
 router.get("/getAllData/:id", UsersController.getAllData);
 router.get("/getUserData", UsersController.getUserData);
 
-// ------------------------------------------
-// Pancard
-// ------------------------------------------
+// -------------------------------------------
+//  E- KYC
+// -------------------------------------------
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "uploads");
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + "-" + Date.now() + ".jpg");
-    },
-  }),
-}).single("user_file");
+router.post("/uploadImage/:id", UploadAadhaar.upload, E_kyc.checkData);
 
-router.post("/uploadPancard", upload, (req, resp) => {
-  resp.send("file upload");
-});
+// -------------------------------------------
+//  Pan Card
+// -------------------------------------------
+
+router.post(
+  "/uploadPancard/:id",
+  UploadAadhaar.upload,
+  Pancard.checkDataController
+);
 
 module.exports = router;
