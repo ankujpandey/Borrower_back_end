@@ -30,18 +30,16 @@ module.exports = {
         allowNull: true,
         type: Sequelize.BIGINT,
       },
-      OfficeEmail: {
-        //we will make it uniqe once we completed.
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
+
       pan: {
         //we will make it uniqe once we completed.
+        unique: true,
         allowNull: true,
         type: Sequelize.STRING,
       },
       aadhaar: {
         //we will make it uniqe once we completed.
+        unique: true,
         allowNull: true,
         type: Sequelize.BIGINT,
       },

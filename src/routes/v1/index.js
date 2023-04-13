@@ -50,14 +50,10 @@ router.get(
 
 router.post("/signUp", UsersController.create);
 router.get("/logIn/", UsersController.get);
-router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
-router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
-router.get("/user", UsersController.getAll);
-router.get(
-	"/user/admin/admin",
-	JWTToken.verifyToken,
-	UsersController.getAllByAdmin
-);
+router.delete("/user/:id", verifyToken, UsersController.destroy);
+router.patch("/user/:id", verifyToken, UsersController.update);
+router.get("/user", verifyToken, UsersController.getAll);
+router.get("/user/admin/admin", verifyToken, UsersController.getAllByAdmin);
 
 // ------------------------------------------
 // route for Loan Table
