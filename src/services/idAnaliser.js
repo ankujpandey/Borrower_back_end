@@ -1,14 +1,20 @@
 const IDAnalyzer = require("idanalyzer");
-// const con = require("./dbConnect");
-// const storeImage = require("./mongoConnection");
-// const saveImage = require("./storeImage");
+const { UserInfo_repository } = require("../repository");
 const fs = require("fs");
 
-let CoreAPI = new IDAnalyzer.CoreAPI("INELU2ibe1HozTTaMBqWsVLHvTJYlsB3", "US");
+let CoreAPI = new IDAnalyzer.CoreAPI("9wlHRiB2YuS0kp5VbTXswwi8702geokP", "US");
+
+const userinfoRepository = new UserInfo_repository();
 
 async function idScan(primary_img, secondary_img, biometric_img, id) {
 	// Enable authentication module v2 to check if ID is authentic
 	CoreAPI.enableAuthentication(true, 2);
+
+	const userInfo = await userinfoRepository.getUserInfo(id);
+	console.log("users Info ---------->>>>>", userInfo.dataValues);
+	CoreAPI.verifyDocumentNumber(userInfo.dataValues.aadhaar);
+	// CoreAPI.verifyDOB("1990/01/01");
+	CoreAPI.verifyName(userInfo.dataValues.firstName);
 
 	// Analyze ID image by passing URL of the ID image (you may also use a local file)
 
@@ -32,9 +38,8 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 			) {
 				console.log("Wrong data");
 
-				fs.unlinkSync(`./uploads/${primary_img}`);
-				fs.unlinkSync(`./uploads/${secondary_img}`);
-				fs.unlinkSync(`./uploads/${biometric_img}`);
+				fs.unlinkSync(`./src/middleware/uploads/${primary_img}`);
+				fs.unlinkSync(`./src/middleware/uploads/${secondary_img}`);
 			} else {
 				console.log(`Hello your name is ${data_result["fullName"]}`);
 
