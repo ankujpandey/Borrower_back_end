@@ -69,7 +69,10 @@ class Users_repository {
   // -----------------------------------
   async deleteUser(userId) {
     try {
-      await users.update({ isDeleted: true }, { where: { uid: userId } });
+      await users.update(
+        { isDeleted: true, isActive: false },
+        { where: { uid: userId } }
+      );
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };
