@@ -7,15 +7,15 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  UsersController,
-  UserInfoController,
-  LoanController,
-  BankController,
-  EmploymentController,
-  CompanyController,
-  AdminController,
-  E_kyc,
-  Pancard,
+	UsersController,
+	UserInfoController,
+	LoanController,
+	BankController,
+	EmploymentController,
+	CompanyController,
+	AdminController,
+	E_kyc,
+	Pancard,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -34,16 +34,16 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
 router.delete(
-  "/user_info/:id",
-  JWTToken.verifyToken,
-  UserInfoController.destroy
+	"/user_info/:id",
+	JWTToken.verifyToken,
+	UserInfoController.destroy
 );
 router.patch("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
-  "/user_info/admin/admin",
-  JWTToken.verifyToken,
-  UserInfoController.getAllByAdmin
+	"/user_info/admin/admin",
+	JWTToken.verifyToken,
+	UserInfoController.getAllByAdmin
 );
 
 // ------------------------------------------
@@ -56,36 +56,36 @@ router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
 router.get(
-  "/user/admin/admin",
-  JWTToken.verifyToken,
-  UsersController.getAllByAdmin
+	"/user/admin/admin",
+	JWTToken.verifyToken,
+	UsersController.getAllByAdmin
 );
 
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
 router.post(
-  "/createLoan",
-  JWTToken.verifyToken,
-  LoanController.createLoanController
+	"/createLoan",
+	JWTToken.verifyToken,
+	LoanController.createLoanController
 );
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
 router.post(
-  "/createBank",
-  JWTToken.verifyToken,
-  BankController.updateBankController
+	"/createBank",
+	JWTToken.verifyToken,
+	BankController.updateBankController
 );
 
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
 router.post(
-  "/createEmployment",
-  JWTToken.verifyToken,
-  EmploymentController.updateEmploymentController
+	"/createEmployment",
+	JWTToken.verifyToken,
+	EmploymentController.updateEmploymentController
 );
 
 // ------------------------------------------
@@ -110,16 +110,20 @@ router.get("/getUserData", UsersController.getUserData);
 //  E- KYC
 // -------------------------------------------
 
-router.post("/uploadImage/:id", UploadAadhaar.upload, E_kyc.checkData);
+router.post(
+	"/uploadImage/:id",
+	UploadAadhaar.upload.array("aadharBiometric", 2),
+	E_kyc.checkData
+);
 
 // -------------------------------------------
 //  Pan Card
 // -------------------------------------------
 
 router.post(
-  "/uploadPancard/:id",
-  UploadAadhaar.upload,
-  Pancard.checkDataController
+	"/uploadPancard/:id",
+	UploadAadhaar.upload.array("PAN_Card", 1),
+	Pancard.checkDataController
 );
 
 module.exports = router;

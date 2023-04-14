@@ -70,22 +70,6 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 		console.log("something went wrong in the id analzer in services");
 		throw { error };
 	}
-	// .then(async function (response) {
-	// 	if (!response.error) {
-	//
-
-	// 			return response;
-	// 		}
-	// 	} else {
-	// 		// API returned an error
-	// 		console.log("response error -----", response.error);
-	// 	}
-	// })
-	// .catch(function (err) {
-	// 	console.log(err.message);
-	// });
-
-	console.log("this is get", get);
 }
 
 module.exports = { idScan };
