@@ -1,6 +1,7 @@
 const IDAnalyzer = require("idanalyzer");
 const { UserInfo_repository } = require("../repository");
 const fs = require("fs");
+const { saveDocument } = require("../mongodb/user_document");
 
 let CoreAPI = new IDAnalyzer.CoreAPI("ybpksMwVW03wE3Ved0YWHEeUEMxzqAsr", "US");
 
@@ -33,8 +34,16 @@ async function pancardScan(primary_img, id) {
 				verification_data.result.documentNumber === false
 			) {
 				console.log("Wrong data");
+				let data = {};
+				data.PAN_card = primary_img;
+				data.uid = id;
+				saveDocument(data);
 			} else {
 				console.log(`Hello your name is ${data_result["fullName"]}`);
+				let data = {};
+				data.PAN_card = primary_img;
+				data.uid = id;
+				saveDocument(data);
 			}
 
 			// Parse document authentication results

@@ -1,8 +1,9 @@
 const IDAnalyzer = require("idanalyzer");
 const { UserInfo_repository } = require("../repository");
 const fs = require("fs");
+const { saveDocument } = require("../mongodb/user_document");
 
-let CoreAPI = new IDAnalyzer.CoreAPI("9wlHRiB2YuS0kp5VbTXswwi8702geokP", "US");
+let CoreAPI = new IDAnalyzer.CoreAPI("8WO1sM9JbRIwAtTWvYGPX34GWR2QiKkx", "US");
 
 const userinfoRepository = new UserInfo_repository();
 
@@ -37,10 +38,23 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 				verification_data.result.documentNumber === false
 			) {
 				console.log("Wrong data");
+				let data = {};
+				data.aadhaar_front = primary_img;
+				data.aadhaar_back = secondary_img;
+				data.profile_image = biometric_img;
+				data.uid = id;
+				saveDocument(data);
 
-				fs.unlinkSync(`./src/middleware/uploads/${primary_img}`);
-				fs.unlinkSync(`./src/middleware/uploads/${secondary_img}`);
+				// fs.unlinkSync(`./src/middleware/uploads/${primary_img}`);
+				// fs.unlinkSync(`./src/middleware/uploads/${secondary_img}`);
 			} else {
+				let data = {};
+				data.aadhaar_front = primary_img;
+				data.aadhaar_back = secondary_img;
+				data.profile_image = biometric_img;
+				data.uid = id;
+				saveDocument(data);
+
 				console.log(`Hello your name is ${data_result["fullName"]}`);
 
 				// Parse document authentication results
