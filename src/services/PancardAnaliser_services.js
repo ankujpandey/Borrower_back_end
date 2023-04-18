@@ -54,7 +54,6 @@ async function pancardScan(primary_img, id) {
 					console.log("The document uploaded looks little bit suspicious");
 				} else {
 					console.log("The document uploaded is fake");
-					fs.unlinkSync(`./src/middleware/uploads/${primary_img}`);
 				}
 			}
 		}
