@@ -185,12 +185,23 @@ class Users_repository {
   // get user+user_info data
   // -----------------------------------
 
-  async getUserData() {
+  async getUserData(req) {
     try {
-      const [data, metadata] = await sequelize.query(
-        "SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid ;"
+      let [len, meta] = await sequelize.query(
+        "SELECT COUNT(*) as length From users"
       );
-      return data;
+
+      const page = parseInt(req.page) || 1;
+      const limit = parseInt(req.limit) || 2;
+      let reqObj = {};
+      const skip = (page - 1) * limit;
+
+      const [data, metadata] = await sequelize.query(
+        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid LIMIT ${limit} OFFSET ${skip}`
+      );
+      reqObj.data = data;
+      reqObj.length = len;
+      return reqObj;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };

@@ -1,14 +1,21 @@
 const IDAnalyzer = require("idanalyzer");
-// const con = require("./dbConnect");
-// const storeImage = require("./mongoConnection");
-// const saveImage = require("./storeImage");
+const { UserInfo_repository } = require("../repository");
 const fs = require("fs");
+const { saveDocument } = require("../mongodb/user_document");
 
-let CoreAPI = new IDAnalyzer.CoreAPI("INELU2ibe1HozTTaMBqWsVLHvTJYlsB3", "US");
+let CoreAPI = new IDAnalyzer.CoreAPI("8WO1sM9JbRIwAtTWvYGPX34GWR2QiKkx", "US");
+
+const userinfoRepository = new UserInfo_repository();
 
 async function idScan(primary_img, secondary_img, biometric_img, id) {
 	// Enable authentication module v2 to check if ID is authentic
 	CoreAPI.enableAuthentication(true, 2);
+
+	const userInfo = await userinfoRepository.getUserInfo(id);
+	console.log("users Info ---------->>>>>", userInfo.dataValues);
+	CoreAPI.verifyDocumentNumber(userInfo.dataValues.aadhaar);
+	// CoreAPI.verifyDOB("1990/01/01");
+	CoreAPI.verifyName(userInfo.dataValues.firstName);
 
 	// Analyze ID image by passing URL of the ID image (you may also use a local file)
 
@@ -31,11 +38,23 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 				verification_data.result.documentNumber === false
 			) {
 				console.log("Wrong data");
+				let data = {};
+				data.aadhaar_front = primary_img;
+				data.aadhaar_back = secondary_img;
+				data.profile_image = biometric_img;
+				data.uid = id;
+				saveDocument(data);
 
-				fs.unlinkSync(`./uploads/${primary_img}`);
-				fs.unlinkSync(`./uploads/${secondary_img}`);
-				fs.unlinkSync(`./uploads/${biometric_img}`);
+				// fs.unlinkSync(`./src/middleware/uploads/${primary_img}`);
+				// fs.unlinkSync(`./src/middleware/uploads/${secondary_img}`);
 			} else {
+				let data = {};
+				data.aadhaar_front = primary_img;
+				data.aadhaar_back = secondary_img;
+				data.profile_image = biometric_img;
+				data.uid = id;
+				saveDocument(data);
+
 				console.log(`Hello your name is ${data_result["fullName"]}`);
 
 				// Parse document authentication results
@@ -65,22 +84,6 @@ async function idScan(primary_img, secondary_img, biometric_img, id) {
 		console.log("something went wrong in the id analzer in services");
 		throw { error };
 	}
-	// .then(async function (response) {
-	// 	if (!response.error) {
-	//
-
-	// 			return response;
-	// 		}
-	// 	} else {
-	// 		// API returned an error
-	// 		console.log("response error -----", response.error);
-	// 	}
-	// })
-	// .catch(function (err) {
-	// 	console.log(err.message);
-	// });
-
-	console.log("this is get", get);
 }
 
 module.exports = { idScan };

@@ -8,10 +8,10 @@ const { Id_analyzer } = require("../services/index");
 const checkData = async (req, res) => {
 	console.log("myfilename", req.files);
 	try {
-		// console.log(typeof req.body.biometric);
-		var profileImage = req.body.biometric[0].split("base64,");
+		// console.log(req.body.userInfo.firstName);
+		var profileImage = req.body.biometric.split("base64,");
 		profileImage = profileImage[1];
-		console.log(profileImage);
+		// console.log(profileImage);
 
 		const analysis = await Id_analyzer.idScan(
 			req.files[0].filename,

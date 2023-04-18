@@ -118,7 +118,7 @@ class Users_service {
 	}
 
 	// -----------------------------------
-	// get all data
+	// get all data by admin
 	// -----------------------------------
 
 	async getAllData(id) {
@@ -132,12 +132,12 @@ class Users_service {
 	}
 
 	// -----------------------------------
-	// get user data
+	// get user data by admin
 	// -----------------------------------
 
-	async getUserData() {
+	async getUserData(req) {
 		try {
-			const data = await this.usersRepository.getUserData();
+			const data = await this.usersRepository.getUserData(req);
 			return data;
 		} catch (error) {
 			console.log("Something went wrong in repository layer".magenta);

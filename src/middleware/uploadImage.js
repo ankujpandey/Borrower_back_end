@@ -18,6 +18,7 @@ const upload = multer({
 			console.log("call back---", filename);
 		},
 	}),
-}).array("aadharBiometric", 2);
+});
+//.array("aadharBiometric", 2);
 
 module.exports = { upload };

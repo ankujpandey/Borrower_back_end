@@ -3,6 +3,7 @@
 // ----------------------------------------
 
 const express = require("express");
+
 const router = express.Router();
 
 const {
@@ -14,6 +15,7 @@ const {
 	CompanyController,
 	AdminController,
 	E_kyc,
+	Pancard,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -105,9 +107,25 @@ router.get("/getAllData/:id", UsersController.getAllData);
 router.get("/getUserData", UsersController.getUserData);
 
 // -------------------------------------------
-//  E- KYC
+//  Aadhaar Card Verification
 // -------------------------------------------
 
-router.post("/uploadImage/:id", UploadAadhaar.upload, E_kyc.checkData);
+router.post(
+	"/uploadImage/:id",
+	JWTToken.verifyToken,
+	UploadAadhaar.upload.array("aadharBiometric", 2),
+	E_kyc.checkData
+);
+
+// -------------------------------------------
+//  Pan Card Verification
+// -------------------------------------------
+
+router.post(
+	"/uploadPancard/:id",
+	JWTToken.verifyToken,
+	UploadAadhaar.upload.array("PAN_Card", 1),
+	Pancard.checkDataController
+);
 
 module.exports = router;
