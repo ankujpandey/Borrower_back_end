@@ -16,6 +16,7 @@ const {
 	AdminController,
 	E_kyc,
 	Pancard,
+	Kyc_ImageController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -126,6 +127,16 @@ router.post(
 	JWTToken.verifyToken,
 	UploadAadhaar.upload.array("PAN_Card", 1),
 	Pancard.checkDataController
+);
+
+// --------------------------------------
+// 	Get Images API
+// --------------------------------------
+
+router.get(
+	"/getImage/:id",
+	JWTToken.verifyToken,
+	Kyc_ImageController.getImagesController
 );
 
 module.exports = router;

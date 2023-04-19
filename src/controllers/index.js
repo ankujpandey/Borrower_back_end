@@ -8,4 +8,5 @@ module.exports = {
 	AdminController: require("./Admin_controller"),
 	E_kyc: require("./aadhaar_controller"),
 	Pancard: require("./pancard_controllers"),
+	Kyc_ImageController: require("./kyc_image_controller"),
 };

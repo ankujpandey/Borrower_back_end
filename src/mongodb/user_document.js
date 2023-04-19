@@ -1,13 +1,11 @@
-const express = require("express");
 const fs = require("fs");
 require("./config");
 
 const user_document = require("./user_document_schema");
-const { model } = require("mongoose");
 
-const app = express();
-app.use(express.json());
-
+// -----------------------------------------------------------
+// 	Saves Images in mongo- Aadhaar, pan and biometric images
+// -----------------------------------------------------------
 const saveDocument = async (data) => {
 	console.log("data---------->>>>>>>>", Object.keys(data));
 
