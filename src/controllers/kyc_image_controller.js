@@ -1,5 +1,9 @@
 const { getImages } = require("../mongodb/kyc_image");
 
+// ------------------------------------------------------
+// 	Get all KYC images
+// ------------------------------------------------------
+
 const getImagesController = async (req, res) => {
 	try {
 		const getImageControllerData = await getImages(req.params.id);
