@@ -9,7 +9,7 @@ const getEmiCalculations = async (req, res) => {
 		return res.status(201).json({
 			data: emi,
 			success: true,
-			message: "Successfully Inserted User Info",
+			message: "Successfully Got the data",
 			err: {},
 		});
 	} catch (error) {

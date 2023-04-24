@@ -144,6 +144,6 @@ router.get(
 // 	EMI Calculator API
 // --------------------------------------
 
-router.get("/calculateEMI", EMI_calculator.getEmiCalculations);
+router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 
 module.exports = router;
