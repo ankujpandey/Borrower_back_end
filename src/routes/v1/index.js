@@ -17,6 +17,7 @@ const {
 	E_kyc,
 	Pancard,
 	Kyc_ImageController,
+	EMI_calculator,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -138,5 +139,11 @@ router.get(
 	JWTToken.verifyToken,
 	Kyc_ImageController.getImagesController
 );
+
+// --------------------------------------
+// 	EMI Calculator API
+// --------------------------------------
+
+router.get("/calculateEMI", EMI_calculator.getEmiCalculations);
 
 module.exports = router;

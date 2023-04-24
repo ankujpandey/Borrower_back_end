@@ -1,8 +1,13 @@
+const { EMI_calculator_services } = require("../services");
+
+const EmiCalcService = new EMI_calculator_services();
+
 const getEmiCalculations = async (req, res) => {
 	try {
-		const user = await usersService.getEmiCalc(req.body);
+		const emi = await EmiCalcService.getCalculations(req.body);
+
 		return res.status(201).json({
-			data: user,
+			data: emi,
 			success: true,
 			message: "Successfully Inserted User Info",
 			err: {},
