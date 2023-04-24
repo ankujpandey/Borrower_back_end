@@ -8,4 +8,5 @@ module.exports = {
   Id_analyzer: require("./idAnaliser"),
   Bank_service: require("./bank_services"),
   PanCardAnalyzer: require("./PancardAnaliser_services"),
+  GeneratePdf_service: require("./generatePdf_services"),
 };
