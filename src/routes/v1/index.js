@@ -7,16 +7,16 @@ const express = require("express");
 const router = express.Router();
 
 const {
-	UsersController,
-	UserInfoController,
-	LoanController,
-	BankController,
-	EmploymentController,
-	CompanyController,
-	AdminController,
-	E_kyc,
-	Pancard,
-	Kyc_ImageController,
+  UsersController,
+  UserInfoController,
+  LoanController,
+  BankController,
+  EmploymentController,
+  CompanyController,
+  AdminController,
+  E_kyc,
+  Pancard,
+  Kyc_ImageController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -35,16 +35,16 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
 router.delete(
-	"/user_info/:id",
-	JWTToken.verifyToken,
-	UserInfoController.destroy
+  "/user_info/:id",
+  JWTToken.verifyToken,
+  UserInfoController.destroy
 );
 router.patch("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
-	"/user_info/admin/admin",
-	JWTToken.verifyToken,
-	UserInfoController.getAllByAdmin
+  "/user_info/admin/admin",
+  JWTToken.verifyToken,
+  UserInfoController.getAllByAdmin
 );
 
 // ------------------------------------------
@@ -57,36 +57,36 @@ router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
 router.get(
-	"/user/admin/admin",
-	JWTToken.verifyToken,
-	UsersController.getAllByAdmin
+  "/user/admin/admin",
+  JWTToken.verifyToken,
+  UsersController.getAllByAdmin
 );
 
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
 router.post(
-	"/createLoan",
-	JWTToken.verifyToken,
-	LoanController.createLoanController
+  "/createLoan",
+  JWTToken.verifyToken,
+  LoanController.createLoanController
 );
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
 router.post(
-	"/createBank",
-	JWTToken.verifyToken,
-	BankController.updateBankController
+  "/createBank",
+  JWTToken.verifyToken,
+  BankController.updateBankController
 );
 
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
 router.post(
-	"/createEmployment",
-	JWTToken.verifyToken,
-	EmploymentController.updateEmploymentController
+  "/createEmployment",
+  JWTToken.verifyToken,
+  EmploymentController.updateEmploymentController
 );
 
 // ------------------------------------------
@@ -112,10 +112,10 @@ router.get("/getUserData", UsersController.getUserData);
 // -------------------------------------------
 
 router.post(
-	"/uploadImage/:id",
-	JWTToken.verifyToken,
-	UploadAadhaar.upload.array("aadharBiometric", 2),
-	E_kyc.checkData
+  "/uploadImage/:id",
+  JWTToken.verifyToken,
+  UploadAadhaar.upload.array("aadharBiometric", 2),
+  E_kyc.checkData
 );
 
 // -------------------------------------------
@@ -123,10 +123,10 @@ router.post(
 // -------------------------------------------
 
 router.post(
-	"/uploadPancard/:id",
-	JWTToken.verifyToken,
-	UploadAadhaar.upload.array("PAN_Card", 1),
-	Pancard.checkDataController
+  "/uploadPancard/:id",
+  JWTToken.verifyToken,
+  UploadAadhaar.upload.array("PAN_Card", 1),
+  Pancard.checkDataController
 );
 
 // --------------------------------------
@@ -134,9 +134,19 @@ router.post(
 // --------------------------------------
 
 router.get(
-	"/getImage/:id",
-	JWTToken.verifyToken,
-	Kyc_ImageController.getImagesController
+  "/getImage/:id",
+  JWTToken.verifyToken,
+  Kyc_ImageController.getImagesController
+);
+
+// --------------------------------------
+// 	Get Images API
+// --------------------------------------
+
+router.post(
+  "/update/user/admin/:id",
+  JWTToken.verifyToken,
+  UsersController.updateUser
 );
 
 module.exports = router;
