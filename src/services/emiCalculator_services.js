@@ -9,17 +9,20 @@ class EMI_calculator_services {
 	async getCalculations(data) {
 		try {
 			let resultObj = {};
-			const emi = await Math.round(this.EMI_repository.calcEMI(data));
-			const totalAmount = await Math.round(
-				this.EMI_repository.calcTotalAmount(data)
-			);
-			const totalInterest = await Math.round(
-				this.EMI_repository.calcTotalInterest(data)
-			);
+			const emi =
+				(await Math.round(this.EMI_repository.calcEMI(data) * 100)) / 100;
+			const totalAmount =
+				(await Math.round(this.EMI_repository.calcTotalAmount(data) * 100)) /
+				100;
+			const totalInterest =
+				(await Math.round(this.EMI_repository.calcTotalInterest(data) * 100)) /
+				100;
+			const table = await this.EMI_repository.clacClosingBalence(data);
 
 			resultObj.EMI = emi;
 			resultObj.total_Amount = totalAmount;
 			resultObj.total_Interest = totalInterest;
+			resultObj.table = table;
 
 			return resultObj;
 		} catch (error) {
@@ -28,19 +31,10 @@ class EMI_calculator_services {
 		}
 	}
 
-	// async getTotalAmountCalc(data) {
+	// async getTable(data) {
 	// 	try {
-	// 		return result;
-	// 	} catch (error) {
-	// 		console.log("Something went wrong in EMI calculator services".magenta);
-	// 		throw { error };
-	// 	}
-	// }
-
-	// async getTotalInterestCalc(data) {
-	// 	try {
-	// 		const result = await this.EMI_repository.calcTotalInterest(data);
-	// 		return result;
+	// 		const table = await this.EMI_repository.clacClosingBalence(data);
+	// 		return table;
 	// 	} catch (error) {
 	// 		console.log("Something went wrong in EMI calculator services".magenta);
 	// 		throw { error };

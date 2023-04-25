@@ -4,8 +4,11 @@ const EmiCalcService = new EMI_calculator_services();
 
 const getEmiCalculations = async (req, res) => {
 	try {
+		// let obj = {};
 		const emi = await EmiCalcService.getCalculations(req.body);
-
+		// const table = await EmiCalcService.getTable(req.body);
+		// obj.EMI = emi;
+		// onj.Table = table;
 		return res.status(201).json({
 			data: emi,
 			success: true,
@@ -16,7 +19,7 @@ const getEmiCalculations = async (req, res) => {
 		return res.status(500).json({
 			data: {},
 			success: false,
-			message: "Not able to insert into User Info",
+			message: "Not able to get EMI data",
 			err: error,
 		});
 	}
