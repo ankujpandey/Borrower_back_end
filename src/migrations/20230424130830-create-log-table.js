@@ -27,7 +27,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      assign: {
+      assigned: {
         allowNull: true,
         type: Sequelize.STRING,
       },
