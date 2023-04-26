@@ -1,4 +1,9 @@
-const { Users_service } = require("../services");
+const {
+  Users_service,
+  UserInfo_service,
+  Employment_service,
+  Bank_service,
+} = require("../services");
 const { saveReqRes } = require("../mongodb/index");
 
 const usersService = new Users_service();
@@ -358,20 +363,28 @@ const updateUser = async (req, res) => {
   try {
     console.log("In controller id:- ", id);
     console.log("In controller data:-", data);
+    const userInfo_service = new UserInfo_service();
+    const employment_service = new Employment_service();
+    const bank_service = new Bank_service();
+    const userInfo = await userInfo_service.updateUserInfo(id, data);
+    const empInfo = await employment_service.updateEmploymentService(data);
+    const bankInfo = await bank_service.updateBankService(data);
+
+    const result = { userInfo, empInfo, bankInfo };
+
     return res.status(201).json({
-      data: {},
+      data: result,
       success: true,
       message: "Successfully updated User Info",
       err: {},
     });
   } catch (error) {
-    console.log(error);
-    storeRequestResponse.response = {
+    return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to update User Info",
+      message: "Not able fetch data from User Info",
       err: error,
-    };
+    });
   }
 };
 

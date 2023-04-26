@@ -39,6 +39,7 @@ class UserInfo_service {
   // -----------------------------------
   async updateUserInfo(userId, data) {
     try {
+      console.log("in userinfo services");
       const result = await this.userinfoRepository.updateUserInfo(userId, data);
       return result;
     } catch (error) {
