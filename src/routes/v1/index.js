@@ -141,6 +141,16 @@ router.get(
 );
 
 // --------------------------------------
+// 	Update User By Admin API
+// --------------------------------------
+
+router.post(
+	"/update/user/admin/:id",
+	JWTToken.verifyToken,
+	UsersController.updateUser
+);
+
+// --------------------------------------
 // 	EMI Calculator API
 // --------------------------------------
 
