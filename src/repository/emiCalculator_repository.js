@@ -1,4 +1,5 @@
 const colors = require("colors");
+const moment = require("moment");
 
 // --------------------------------------------
 //	EMI calculation repository
@@ -55,6 +56,9 @@ class EMI_calculator {
 		}
 	}
 
+	// --------------------------------------------
+	//	Calculate Interest per month in rupee
+	// --------------------------------------------
 	calcInterestPerMonth(principle, interest) {
 		try {
 			const interestPerMonth = principle * (interest / 1200);
@@ -68,6 +72,9 @@ class EMI_calculator {
 		}
 	}
 
+	// --------------------------------------------
+	//	Calculation table
+	// --------------------------------------------
 	clacClosingBalence(data) {
 		// try {
 		let table = [];
@@ -76,6 +83,7 @@ class EMI_calculator {
 		let i = 0;
 
 		const emi = this.calcEMI(data);
+		let date = data.date;
 		while (closingBalence > 0) {
 			let tableContent = {};
 			tableContent.installmentNo = i + 1;
@@ -83,15 +91,19 @@ class EMI_calculator {
 				break;
 			} else {
 				tableContent.openingBalence = Math.round(closingBalence * 100) / 100;
+
+				date = moment(date).add(1, "month").format("YYYY-MM-DD");
+				tableContent.installmentDate = moment(date).format("DD-MMM-YYYY");
+
 				let interest = this.calcInterestPerMonth(closingBalence, data.interest);
 				tableContent.interestPerMonth = Math.round(interest * 100) / 100;
 				let principle = emi - interest;
-				// console.log("EMI------------->>>>>>>", emi);
+
 				closingBalence = closingBalence - principle;
 
 				tableContent.closingBalence = Math.round(closingBalence * 100) / 100;
 				tableContent.principle = Math.round(principle * 100) / 100;
-				console.log("cloing Balence------------->>>>>>>", closingBalence);
+
 				table[i] = tableContent;
 			}
 

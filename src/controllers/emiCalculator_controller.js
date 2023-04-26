@@ -5,6 +5,7 @@ const EmiCalcService = new EMI_calculator_services();
 const getEmiCalculations = async (req, res) => {
 	try {
 		// let obj = {};
+		console.log(req.body);
 		const emi = await EmiCalcService.getCalculations(req.body);
 		// const table = await EmiCalcService.getTable(req.body);
 		// obj.EMI = emi;
