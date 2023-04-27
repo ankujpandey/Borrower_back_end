@@ -172,7 +172,7 @@ class Users_repository {
 	async getAllData(id) {
 		try {
 			const [data, metadata] = await sequelize.query(
-				`SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.email AS professional_email,employment_details.business_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
+				`SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.professional_email, employment_details.business_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
 			);
 			return data;
 		} catch (error) {

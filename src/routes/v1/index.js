@@ -19,6 +19,7 @@ const {
   Kyc_ImageController,
   EMI_calculator,
   JobAssigneeController,
+  Generate_PdfController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -142,10 +143,24 @@ router.get(
 );
 
 // --------------------------------------
+// 	Update User By Admin API
+// --------------------------------------
+
+router.post(
+  "/update/user/admin/:id",
+  JWTToken.verifyToken,
+  UsersController.updateUser
+);
+
+// --------------------------------------
 // 	EMI Calculator API
 // --------------------------------------
 
 router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
+// 	PDF downloaded API
+// --------------------------------------
+
+router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
 
 // --------------------------------------
 // 	API for Job Assignees
