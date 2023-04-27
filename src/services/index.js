@@ -10,4 +10,5 @@ module.exports = {
   PanCardAnalyzer: require("./PancardAnaliser_services"),
   EMI_calculator_services: require("./emiCalculator_services"),
   JobAssignees_service: require("./JobAssignees_services"),
+  GeneratePdf_service: require("./generatePdf_services"),
 };

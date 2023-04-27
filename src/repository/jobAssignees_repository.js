@@ -29,7 +29,7 @@ class JobAssignee_Repo {
           isDeleted: false,
         },
       });
-      console.log(JobAssigneeInfo.brightCyan);
+      console.log(JobAssigneeInfo);
       return JobAssigneeInfo;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
@@ -48,7 +48,7 @@ class JobAssignee_Repo {
           isDeleted: false,
         },
       });
-      console.log(jobAssignees.brightCyan);
+      console.log(jobAssignees);
       return jobAssignees;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);

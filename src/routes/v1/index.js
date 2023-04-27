@@ -35,14 +35,14 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
+// router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
 router.delete(
   "/user_info/:id",
   JWTToken.verifyToken,
   UserInfoController.destroy
 );
-router.patch("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
+router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
   "/user_info/admin/admin",
@@ -169,6 +169,14 @@ router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
 router.post(
   "/insert/JobAssignee",
   JobAssigneeController.createJobAssigneesController
+);
+router.get(
+  "/get/JobAssignee/:id",
+  JobAssigneeController.getJobAssigneeController
+);
+router.get(
+  "/getAll/JobAssignee",
+  JobAssigneeController.getAllJobAssigneeController
 );
 
 module.exports = router;

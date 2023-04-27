@@ -49,6 +49,98 @@ const createJobAssigneesController = async (req, res) => {
   }
 };
 
+// -----------------------------------
+// get particular data from table
+// -----------------------------------
+
+const getJobAssigneeController = async (req, res) => {
+  console.log("Job Assignee controller");
+  // const storeRequestResponse = {};
+  // const requestObj = {};
+  // requestObj.body = req.params.id;
+  // requestObj.headers = req.rawHeaders;
+  // storeRequestResponse.request = requestObj;
+  try {
+    const response = await JobAssigneeService.getJobAssigneesService(
+      req.params.id
+    );
+    // storeRequestResponse.response = {
+    // 	data: response,
+    // 	success: true,
+    // 	message: "Successfully fetched Assignee Info",
+    // 	err: {},
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully fetched Assignee Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    // storeRequestResponse.response = {
+    // 	data: {},
+    // 	success: false,
+    // 	message: "Unable fetch Assignee Info",
+    // 	err: error,
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable fetch Assignee Info",
+      err: error,
+    });
+  }
+};
+
+// -----------------------------------
+// get all data from table
+// -----------------------------------
+
+const getAllJobAssigneeController = async (req, res) => {
+  console.log("Job Assignee controller");
+  // const storeRequestResponse = {};
+  // const requestObj = {};
+  // requestObj.body = req.body || "";
+  // requestObj.headers = req.rawHeaders;
+  // storeRequestResponse.request = requestObj;
+  try {
+    const response = await JobAssigneeService.getAllJobAssigneesService();
+    // storeRequestResponse.response = {
+    //   data: response,
+    //   success: true,
+    //   message: "Successfully fetched JobAssignees Info",
+    //   err: {},
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully fetched Job Assignees Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    // storeRequestResponse.response = {
+    //   data: {},
+    //   success: false,
+    //   message: "Unable fetch Job Assignees Info",
+    //   err: error,
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable fetch Job Assignees Info",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createJobAssigneesController,
+  getAllJobAssigneeController,
+  getJobAssigneeController,
 };
