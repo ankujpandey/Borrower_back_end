@@ -10,4 +10,5 @@ module.exports = {
 	Pancard: require("./pancard_controllers"),
 	Kyc_ImageController: require("./kyc_image_controller"),
 	EMI_calculator: require("./emiCalculator_controller"),
+	Generate_PdfController: require("./generatePdf_controller"),
 };
