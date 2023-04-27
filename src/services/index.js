@@ -9,4 +9,5 @@ module.exports = {
 	Bank_service: require("./bank_services"),
 	PanCardAnalyzer: require("./PancardAnaliser_services"),
 	EMI_calculator_services: require("./emiCalculator_services"),
+	GeneratePdf_service: require("./generatePdf_services"),
 };
