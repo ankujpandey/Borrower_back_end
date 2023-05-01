@@ -1,6 +1,8 @@
 const colors = require("colors");
 const { UserInfo_service } = require("../services");
 const { saveReqRes } = require("../mongodb/index");
+const { createLogController } = require("./log_controller");
+const { LogCombineData } = require("./log_combine_data");
 
 const userInfoService = new UserInfo_service();
 
@@ -27,6 +29,16 @@ const create = async (req, res) => {
       err: {},
     };
     saveReqRes(storeRequestResponse);
+    // ------------------------------
+    // Creating log
+    // ------------------------------
+    const Data = {};
+    Data.currentStatus = "1000";
+    Data.req = req;
+    console.log("------------------1", Data);
+    const data = LogCombineData(Data);
+    createLogController(data);
+
     return res.status(201).json({
       data: userInfo,
       success: true,

@@ -24,6 +24,7 @@ const createEmploymentController = async (req, res) => {
       err: {},
     };
     saveReqRes(storeRequestResponse);
+
     return res.status(201).json({
       data: employmentData,
       success: true,
