@@ -8,4 +8,5 @@ module.exports = {
   Admin_repository: require("./admin_repository"),
   EMI_calculator: require("./emiCalculator_repository"),
   JobAssignee_Repo: require("./jobAssignees_repository"),
+  Log_repository: require("./log_repository"),
 };
