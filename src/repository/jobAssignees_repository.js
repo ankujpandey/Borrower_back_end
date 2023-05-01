@@ -1,4 +1,4 @@
-const { JobAssignees } = require("../models");
+const { JobAssignees, sequelize } = require("../models");
 
 class JobAssignee_Repo {
   // -----------------------------------
@@ -37,9 +37,9 @@ class JobAssignee_Repo {
     }
   }
 
-  // -----------------------------------
+  // ---------------------------------------
   // get all job assignees data from table
-  // -----------------------------------
+  // ---------------------------------------
 
   async getAllJobAssignees() {
     try {
@@ -50,6 +50,61 @@ class JobAssignee_Repo {
       });
       console.log(jobAssignees);
       return jobAssignees;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -------------------------------------------
+  // order agents by no. of jobs assigned
+  // -------------------------------------------
+
+  async AssignAgents() {
+    try {
+      const Agents = await JobAssignees.findAll({
+        where: {
+          isDeleted: false,
+        },
+        order: [["jobsAssigned", "ASC"]],
+      });
+      console.log(Agents);
+      return Agents;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -------------------------------------------
+  // find agent with min no. of jobs
+  // -------------------------------------------
+
+  async MinJobAgent() {
+    try {
+      const [Agent, metadata] = await sequelize.query(
+        `select * from JobAssignees where jobsAssigned=(select min(jobsAssigned) from JobAssignees) AND isDeleted = false;`
+      );
+
+      console.log(Agent);
+      return Agent;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -------------------------------------------
+  // increment no. of jobs
+  // -------------------------------------------
+
+  async UpdateJobsAssigned(id) {
+    try {
+      const response = JobAssignees.increment(
+        { jobsAssigned: 1 },
+        { where: { jobAssignees_id: id } }
+      );
+      return response;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };

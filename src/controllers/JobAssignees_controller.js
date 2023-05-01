@@ -7,7 +7,6 @@ const JobAssigneeService = new JobAssignees_service();
 // -----------------------------------
 
 const createJobAssigneesController = async (req, res) => {
-  console.log("Job Assignees controller");
   // const storeRequestResponse = {};
   // const requestObj = {};
   // requestObj.body = req.body;
@@ -54,7 +53,6 @@ const createJobAssigneesController = async (req, res) => {
 // -----------------------------------
 
 const getJobAssigneeController = async (req, res) => {
-  console.log("Job Assignee controller");
   // const storeRequestResponse = {};
   // const requestObj = {};
   // requestObj.body = req.params.id;
@@ -100,7 +98,6 @@ const getJobAssigneeController = async (req, res) => {
 // -----------------------------------
 
 const getAllJobAssigneeController = async (req, res) => {
-  console.log("Job Assignee controller");
   // const storeRequestResponse = {};
   // const requestObj = {};
   // requestObj.body = req.body || "";
@@ -139,8 +136,84 @@ const getAllJobAssigneeController = async (req, res) => {
   }
 };
 
+// -------------------------------------------
+// order agents by no. of jobs assigned
+// -------------------------------------------
+
+const assignAgentsController = async (req, res) => {
+  try {
+    const response = await JobAssigneeService.assignAgentsService();
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully sorted Job Assignees Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to sort Job Assignees Info",
+      err: error,
+    });
+  }
+};
+
+// -------------------------------------------
+// find agent with min no. of jobs
+// -------------------------------------------
+
+const MinJobAgentController = async (req, res) => {
+  try {
+    const response = await JobAssigneeService.minJobAgentService();
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully incremented no. of Jobs assigned",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to increment no. of Jobs assigned",
+      err: error,
+    });
+  }
+};
+
+// -------------------------------------------
+// increment no. of jobs
+// -------------------------------------------
+
+const UpdateJobsAssignedController = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const response = await JobAssigneeService.UpdateJobsAssignedService(id);
+    return res.status(201).json({
+      data: response,
+      success: true,
+      message: "Successfully found min Job Assignee Info",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to find min Job Assignee Info",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createJobAssigneesController,
   getAllJobAssigneeController,
   getJobAssigneeController,
+  assignAgentsController,
+  MinJobAgentController,
+  UpdateJobsAssignedController,
 };
