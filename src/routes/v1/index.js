@@ -110,6 +110,7 @@ router.get("/getAllCompany", CompanyController.getAllCompanyController);
 // ------------------------------------------
 // route for Admin Table
 // ------------------------------------------
+
 router.post("/admin", AdminController.createAdminController);
 router.get("/admin/:id", AdminController.getAdminController);
 router.get("/admins", AdminController.getAllAdminController);
