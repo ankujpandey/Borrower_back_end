@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class loan_details extends Model {
+  class JobAssignees extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,66 +9,57 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.users, {
-        foreignKey: "uid",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
-      });
     }
   }
-  loan_details.init(
+  JobAssignees.init(
     {
-      LoanId: {
+      jobAssignees_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      uid: {
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      jobsAssigned: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
-      Loan_state: {
+      status: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "1200",
       },
-      jobAssignees_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
-      amount: {
+      createdBy: {
         allowNull: true,
         type: DataTypes.STRING,
+        defaultValue: "agent",
       },
-      rate_of_interest: {
+      updatedBy: {
         allowNull: true,
         type: DataTypes.STRING,
-      },
-      tenure: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      createdby: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: "user",
-      },
-      updatedby: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: "user",
+        defaultValue: "agent",
       },
       isDeleted: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
     },
     {
       sequelize,
-      modelName: "loan_details",
+      modelName: "JobAssignees",
     }
   );
-  return loan_details;
+  return JobAssignees;
 };

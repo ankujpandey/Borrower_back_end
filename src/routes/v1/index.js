@@ -18,6 +18,7 @@ const {
 	Pancard,
 	Kyc_ImageController,
 	EMI_calculator,
+	JobAssigneeController,
 	Generate_PdfController,
 } = require("../../controllers");
 
@@ -34,14 +35,14 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 // route for User_Info Table
 // ------------------------------------------
 
-router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
+// router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
 router.delete(
 	"/user_info/:id",
 	JWTToken.verifyToken,
 	UserInfoController.destroy
 );
-router.patch("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
+router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
 	"/user_info/admin/admin",
@@ -162,5 +163,28 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 // --------------------------------------
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
+
+// --------------------------------------
+// 	API for Job Assignees
+// --------------------------------------
+
+router.post(
+	"/insert/JobAssignee",
+	JobAssigneeController.createJobAssigneesController
+);
+router.get(
+	"/get/JobAssignee/:id",
+	JobAssigneeController.getJobAssigneeController
+);
+router.get(
+	"/getAll/JobAssignee",
+	JobAssigneeController.getAllJobAssigneeController
+);
+router.get("/sort/JobAssignee", JobAssigneeController.assignAgentsController);
+router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
+router.post(
+	"/updateJobsAssigned/:id",
+	JobAssigneeController.UpdateJobsAssignedController
+);
 
 module.exports = router;

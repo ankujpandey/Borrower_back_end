@@ -25,19 +25,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       uid: {
-        unique: true,
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      task: {
+      LoanId: {
+        unique: true,
+        allowNull: true,
+        type: DataTypes.INTEGER,
+      },
+      old_state: {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      status: {
+      current_state: {
         allowNull: true,
         type: DataTypes.STRING,
       },
       assigned: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      user_ip: {
         allowNull: true,
         type: DataTypes.STRING,
       },
