@@ -1,4 +1,7 @@
 "use strict";
+
+const { DataTypes } = require("sequelize");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,7 +13,6 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       uid: {
-        unique: true,
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
@@ -19,11 +21,12 @@ module.exports = {
           key: "uid",
         },
       },
-      task: {
+      LoanId: {
+        unique: true,
         allowNull: true,
-        type: Sequelize.STRING,
+        type: DataTypes.INTEGER,
       },
-      status: {
+      current_status: {
         allowNull: true,
         type: Sequelize.STRING,
       },
@@ -31,12 +34,16 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      createdby: {
+      user_ip: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      createdBy: {
         allowNull: false,
         type: Sequelize.STRING,
         defaultValue: "user",
       },
-      updatedby: {
+      updatedBy: {
         allowNull: false,
         type: Sequelize.STRING,
         defaultValue: "user",
