@@ -26,9 +26,13 @@ module.exports = {
         allowNull: true,
         type: DataTypes.INTEGER,
       },
-      current_status: {
+      old_state: {
         allowNull: true,
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
+      },
+      current_state: {
+        allowNull: true,
+        type: DataTypes.STRING,
       },
       assigned: {
         allowNull: true,

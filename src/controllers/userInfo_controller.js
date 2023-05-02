@@ -29,15 +29,6 @@ const create = async (req, res) => {
       err: {},
     };
     saveReqRes(storeRequestResponse);
-    // ------------------------------
-    // Creating log
-    // ------------------------------
-    const Data = {};
-    Data.currentStatus = "1000";
-    Data.req = req;
-    console.log("------------------1", Data);
-    const data = LogCombineData(Data);
-    createLogController(data);
 
     return res.status(201).json({
       data: userInfo,
@@ -126,6 +117,17 @@ const update = async (req, res) => {
       err: {},
     };
     saveReqRes(storeRequestResponse);
+    // ------------------------------
+    // Creating log
+    // ------------------------------
+    const Data = {};
+    Data.oldState = "1000";
+    Data.currentState = "1000";
+    Data.req = req;
+    console.log("------------------1", Data);
+    const data = LogCombineData(Data);
+    console.log("-----------------", data);
+    createLogController(data);
     return res.status(201).json({
       data: response,
       success: true,

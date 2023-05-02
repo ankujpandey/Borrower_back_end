@@ -22,6 +22,18 @@ const createLoanController = async (req, res) => {
       err: {},
     };
     saveReqRes(storeRequestResponse);
+    // // ------------------------------
+    // // Creating log
+    // // ------------------------------
+    // const Data = {};
+    // Data.oldState = "1100";
+    // Data.currentState = "1200";
+    // Data.req = req;
+    // // console.log("------------------1", Data);
+    // const data = LogCombineData(Data);
+    // console.log("------------------1", data);
+
+    createLogController(data);
     return res.status(201).json({
       data: loanData,
       success: true,
