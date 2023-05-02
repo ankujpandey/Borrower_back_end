@@ -101,6 +101,10 @@ const getLoanDataController = async (req, res) => {
   }
 };
 
+// -----------------------------------------
+// update loan status in the table
+// -----------------------------------------
+
 const updateLoanStatusController = async (req, res) => {
   console.log("loan controller");
   // const storeRequestResponse = {};
@@ -143,8 +147,55 @@ const updateLoanStatusController = async (req, res) => {
   }
 };
 
+// -----------------------------------------
+// get loan status from the table
+// -----------------------------------------
+
+const getLoanStatusController = async (req, res) => {
+  console.log("loan controller");
+  // const storeRequestResponse = {};
+  // const requestObj = {};
+  // requestObj.body = req.body;
+  // requestObj.headers = req.rawHeaders;
+  // storeRequestResponse.request = requestObj;
+  try {
+    const updatedLoanStatus = await loanService.getLoanStatusService(
+      req.params.id
+    );
+    // storeRequestResponse.response = {
+    //   data: updatedLoanStatus,
+    //   success: true,
+    //   message: "Successfully updated Loan status",
+    //   err: {},
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(201).json({
+      data: updatedLoanStatus,
+      success: true,
+      message: "Successfully fetched loan status",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    // storeRequestResponse.response = {
+    //   data: {},
+    //   success: false,
+    //   message: "Unable to updated loan status",
+    //   err: error,
+    // };
+    // saveReqRes(storeRequestResponse);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to fetch loan status",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createLoanController,
   getLoanDataController,
   updateLoanStatusController,
+  getLoanStatusController,
 };

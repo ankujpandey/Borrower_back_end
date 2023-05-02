@@ -78,6 +78,13 @@ router.get(
   JWTToken.verifyToken,
   LoanController.getLoanDataController
 );
+
+router.get(
+  "/getLoanStatus/:id",
+  JWTToken.verifyToken,
+  LoanController.getLoanStatusController
+);
+
 router.post(
   "/updateLoanStatus",
   JWTToken.verifyToken,

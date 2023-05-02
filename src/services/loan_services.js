@@ -43,6 +43,22 @@ class Loan_service {
   }
 
   // -----------------------------------------
+  // get loan status
+  // -----------------------------------------
+
+  async getLoanStatusService(id) {
+    try {
+      let loanStatus = await this.Loan_repository.getLoanDataRepo(id);
+      console.log("loanStatus---", loanStatus.Loan_state);
+
+      // loanStatus = await this.
+    } catch (error) {
+      console.log("Something went wrong in Loan services layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -----------------------------------------
   // update loan status
   // -----------------------------------------
 
