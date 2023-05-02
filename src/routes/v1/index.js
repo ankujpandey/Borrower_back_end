@@ -20,6 +20,7 @@ const {
   EMI_calculator,
   JobAssigneeController,
   Generate_PdfController,
+  LogconditionController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -196,6 +197,14 @@ router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
 router.post(
   "/updateJobsAssigned/:id",
   JobAssigneeController.UpdateJobsAssignedController
+);
+
+// ------------------------------------------
+// route for log condition table
+// ------------------------------------------
+router.get(
+  "/getlogCondition",
+  LogconditionController.getLogConditionController
 );
 
 module.exports = router;
