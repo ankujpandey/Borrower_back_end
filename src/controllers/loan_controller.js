@@ -1,5 +1,7 @@
 const { Loan_service } = require("../services");
 const { saveReqRes } = require("../mongodb/index");
+const { createLogController } = require("./log_controller");
+const { LoanCombineData } = require("./log_combine_data");
 
 const loanService = new Loan_service();
 
@@ -23,6 +25,14 @@ const createLoanController = async (req, res) => {
     //   err: {},
     // };
     // saveReqRes(storeRequestResponse);
+    const Data = {};
+    Data.oldState = "1100";
+    Data.loanData = loanData;
+    Data.req = req;
+    console.log("------------------1", Data);
+    const data = LoanCombineData(Data);
+    // console.log("-----------------", data);
+    createLogController(data);
     return res.status(201).json({
       data: loanData,
       success: true,
