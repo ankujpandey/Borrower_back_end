@@ -1,9 +1,14 @@
-const { Loan_repository, JobAssignee_Repo } = require("../repository");
+const {
+  Loan_repository,
+  JobAssignee_Repo,
+  Logcondition_repository,
+} = require("../repository");
 
 class Loan_service {
   constructor() {
     this.Loan_repository = new Loan_repository();
     this.JobAssignee_repo = new JobAssignee_Repo();
+    this.Logcondition_repo = new Logcondition_repository();
   }
 
   // -----------------------------------
@@ -49,9 +54,13 @@ class Loan_service {
   async getLoanStatusService(id) {
     try {
       let loanStatus = await this.Loan_repository.getLoanDataRepo(id);
-      console.log("loanStatus---", loanStatus.Loan_state);
 
-      // loanStatus = await this.
+      const code = {
+        cndtn_code: loanStatus.Loan_state,
+      };
+
+      loanStatus = await this.Logcondition_repo.getLogconditionRepo(code);
+      return loanStatus;
     } catch (error) {
       console.log("Something went wrong in Loan services layer".magenta);
       throw { error };

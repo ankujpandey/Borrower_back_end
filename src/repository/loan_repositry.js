@@ -24,7 +24,7 @@ class Loan_repository {
     try {
       const LoanStatus = await loan_details.findOne({
         where: {
-          LoanId: ID,
+          uid: ID,
           isDeleted: false,
         },
       });
