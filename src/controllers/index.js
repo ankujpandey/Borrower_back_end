@@ -12,4 +12,5 @@ module.exports = {
   EMI_calculator: require("./emiCalculator_controller"),
   JobAssigneeController: require("./JobAssignees_controller"),
   Generate_PdfController: require("./generatePdf_controller"),
+  LogconditionController: require("./logCondition_controller"),
 };
