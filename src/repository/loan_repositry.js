@@ -8,6 +8,7 @@ class Loan_repository {
     console.log("Loan repository");
     try {
       const createLoanData = await loan_details.create(data);
+
       return createLoanData;
     } catch (error) {
       console.log("Something went wrong in loan repository layer".magenta);
