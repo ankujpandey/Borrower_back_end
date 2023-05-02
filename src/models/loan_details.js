@@ -28,14 +28,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+
+      jobAssignees_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       Loan_state: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "1200",
-      },
-      jobAssignees_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
       },
       amount: {
         allowNull: true,

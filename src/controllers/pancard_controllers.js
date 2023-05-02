@@ -22,7 +22,8 @@ const checkDataController = async (req, res) => {
     // Creating log
     // ------------------------------
     const Data = {};
-    Data.currentStatus = "1100";
+    Data.oldState = "1000";
+    Data.currentState = "1100";
     Data.req = req;
     // console.log("------------------1", Data);
     const data = LogCombineData(Data);
