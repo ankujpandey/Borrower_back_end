@@ -9,15 +9,17 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			firstName: {
-				allowNull: false,
-				type: Sequelize.STRING,
-			},
-			lastName: {
-				allowNull: true,
-				type: Sequelize.STRING,
-			},
+			// firstName: {
+			// 	allowNull: false,
+			// 	type: Sequelize.STRING,
+			// },
+			// lastName: {
+			// 	allowNull: true,
+			// 	type: Sequelize.STRING,
+			// },
 			email: {
+				//we will make it uniqe once we completed.
+				unique: true,
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
