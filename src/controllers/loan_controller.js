@@ -159,18 +159,16 @@ const getLoanStatusController = async (req, res) => {
   // requestObj.headers = req.rawHeaders;
   // storeRequestResponse.request = requestObj;
   try {
-    const updatedLoanStatus = await loanService.getLoanStatusService(
-      req.params.id
-    );
+    const loanStatus = await loanService.getLoanStatusService(req.params.id);
     // storeRequestResponse.response = {
-    //   data: updatedLoanStatus,
+    //   data: loanStatus,
     //   success: true,
     //   message: "Successfully updated Loan status",
     //   err: {},
     // };
     // saveReqRes(storeRequestResponse);
     return res.status(201).json({
-      data: updatedLoanStatus,
+      data: loanStatus,
       success: true,
       message: "Successfully fetched loan status",
       err: {},
