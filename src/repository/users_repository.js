@@ -52,9 +52,11 @@ class Users_repository {
         uid: user.uid,
       });
 
-      // await loan_details.create({
-      //   uid: user.uid,
-      // });
+      await loan_details.create({
+        uid: user.uid,
+        Loan_state: 1000,
+        jobAssignees_id: null,
+      });
 
       obj.signUp = user;
       obj.userName = userInfo;
@@ -170,17 +172,17 @@ class Users_repository {
   // get all data
   // -----------------------------------
 
-	async getAllData(id) {
-		try {
-			const [data, metadata] = await sequelize.query(
-				`SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.professional_email, employment_details.business_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
-			);
-			return data;
-		} catch (error) {
-			console.log("Something went wrong in repository layer".magenta);
-			throw { error };
-		}
-	}
+  async getAllData(id) {
+    try {
+      const [data, metadata] = await sequelize.query(
+        `SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.professional_email, employment_details.business_nature,employment_details.monthly_income, loan_details.Loan_state, JobAssignees.name AS AgentName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid INNER JOIN loan_details ON users.uid = loan_details.uid INNER JOIN JobAssignees ON JobAssignees.jobAssignees_id = loan_details.jobAssignees_id WHERE users.uid = ${id} ;`
+      );
+      return data;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
 
   // -----------------------------------
   // get user+user_info data
@@ -198,7 +200,7 @@ class Users_repository {
       const skip = (page - 1) * limit;
 
       const [data, metadata] = await sequelize.query(
-        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid LIMIT ${limit} OFFSET ${skip}`
+        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName, loan_details.Loan_state, JobAssignees.name AS AgentName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN loan_details ON users.uid = loan_details.uid INNER JOIN JobAssignees ON JobAssignees.jobAssignees_id = loan_details.jobAssignees_id LIMIT ${limit} OFFSET ${skip}`
       );
       reqObj.data = data;
       reqObj.length = len;

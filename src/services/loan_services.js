@@ -55,14 +55,14 @@ class Loan_service {
     try {
       let loanStatus = await this.Loan_repository.getLoanDataRepo(id);
 
-      if (loanStatus) {
-        const code = {
-          cndtn_code: loanStatus.Loan_state,
-        };
+      // if (loanStatus) {
+      //   const code = {
+      //     cndtn_code: loanStatus.Loan_state,
+      //   };
 
-        loanStatus = await this.Logcondition_repo.getLogconditionRepo(code);
-        return loanStatus;
-      }
+      //   loanStatus = await this.Logcondition_repo.getLogconditionRepo(code);
+      return loanStatus;
+      // }
     } catch (error) {
       console.log("Something went wrong in Loan services layer".magenta);
       throw { error };
