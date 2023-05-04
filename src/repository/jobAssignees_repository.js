@@ -1,4 +1,4 @@
-const { JobAssignees, sequelize } = require("../models");
+const { JobAssignees, sequelize, loan_details } = require("../models");
 
 class JobAssignee_Repo {
   // -----------------------------------

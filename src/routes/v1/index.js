@@ -200,7 +200,9 @@ router.get(
   JobAssigneeController.getAllJobAssigneeController
 );
 router.get("/sort/JobAssignee", JobAssigneeController.assignAgentsController);
+
 router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
+
 router.post(
   "/updateJobsAssigned/:id",
   JobAssigneeController.UpdateJobsAssignedController

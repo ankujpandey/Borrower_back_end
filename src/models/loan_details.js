@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       jobAssignees_id: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       Loan_state: {
