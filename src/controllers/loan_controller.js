@@ -31,7 +31,7 @@ const createLoanController = async (req, res) => {
     Data.req = req;
     console.log("------------------1", Data);
     const data = LoanCombineData(Data);
-    // console.log("-----------------", data);
+    console.log("-----------------", data);
     createLogController(data);
     return res.status(201).json({
       data: loanData,

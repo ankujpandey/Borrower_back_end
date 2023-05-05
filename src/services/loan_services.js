@@ -15,10 +15,10 @@ class Loan_service {
   // insert into table
   // -----------------------------------
   async createLoanService(data) {
-    console.log("service loan");
+    // console.log("in create loan service ");
     const assignedAgent = await this.JobAssignee_repo.MinJobAgent();
     data.jobAssignees_id = assignedAgent[0].jobAssignees_id;
-    console.log("data in service", data);
+
     this.JobAssignee_repo.UpdateJobsAssigned(data.jobAssignees_id);
 
     try {

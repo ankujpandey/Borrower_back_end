@@ -1,5 +1,7 @@
 const { JobAssignees, sequelize, loan_details } = require("../models");
 
+const { Op } = require("sequelize");
+
 class JobAssignee_Repo {
   // -----------------------------------
   // inserting in table
@@ -46,6 +48,11 @@ class JobAssignee_Repo {
       const jobAssignees = await JobAssignees.findAll({
         where: {
           isDeleted: false,
+          [Op.ne]: [
+            {
+              jobAssignees_id: 1,
+            },
+          ],
         },
       });
       console.log(jobAssignees);
@@ -65,6 +72,11 @@ class JobAssignee_Repo {
       const Agents = await JobAssignees.findAll({
         where: {
           isDeleted: false,
+          [Op.ne]: [
+            {
+              jobAssignees_id: 1,
+            },
+          ],
         },
         order: [["jobsAssigned", "ASC"]],
       });
@@ -83,10 +95,10 @@ class JobAssignee_Repo {
   async MinJobAgent() {
     try {
       const [Agent, metadata] = await sequelize.query(
-        `select * from JobAssignees where jobsAssigned=(select min(jobsAssigned) from JobAssignees) AND isDeleted = false;`
+        `SELECT * from JobAssignees where jobsAssigned=(SELECT min(jobsAssigned) FROM JobAssignees WHERE jobAssignees_id <> 1) AND isDeleted = false`
       );
 
-      console.log(Agent);
+      console.log("Agent available", Agent);
       return Agent;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);

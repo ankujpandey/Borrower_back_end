@@ -30,8 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       jobAssignees_id: {
-        allowNull: true,
+        allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: "1",
       },
       Loan_state: {
         allowNull: false,

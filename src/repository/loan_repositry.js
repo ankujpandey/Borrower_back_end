@@ -6,10 +6,22 @@ class Loan_repository {
   // -----------------------------------
   async createLoanRepo(data) {
     console.log("Loan repository");
-    try {
-      const createLoanData = await loan_details.create(data);
 
-      return createLoanData;
+    try {
+      const loanUpdated = await loan_details.update(data, {
+        where: {
+          uid: data.uid,
+        },
+      });
+      if (loanUpdated) {
+        const loanDataInserted = await loan_details.findOne({
+          where: {
+            uid: data.uid,
+          },
+        });
+
+        return loanDataInserted;
+      } else return error;
     } catch (error) {
       console.log("Something went wrong in loan repository layer".magenta);
       throw { error };
@@ -43,7 +55,7 @@ class Loan_repository {
     try {
       const updatedLoanStatus = await loan_details.update(data, {
         where: {
-          LoanId: data.LoanId,
+          uid: data.uid,
           isDeleted: false,
         },
       });
