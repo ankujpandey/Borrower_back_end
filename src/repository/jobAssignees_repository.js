@@ -48,11 +48,9 @@ class JobAssignee_Repo {
       const jobAssignees = await JobAssignees.findAll({
         where: {
           isDeleted: false,
-          [Op.ne]: [
-            {
-              jobAssignees_id: 1,
-            },
-          ],
+          jobAssignees_id: {
+            [Op.ne]: 1,
+          },
         },
       });
       console.log(jobAssignees);
@@ -72,11 +70,9 @@ class JobAssignee_Repo {
       const Agents = await JobAssignees.findAll({
         where: {
           isDeleted: false,
-          [Op.ne]: [
-            {
-              jobAssignees_id: 1,
-            },
-          ],
+          jobAssignees_id: {
+            [Op.ne]: 1,
+          },
         },
         order: [["jobsAssigned", "ASC"]],
       });

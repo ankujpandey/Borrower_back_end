@@ -8,6 +8,7 @@ class Loan_repository {
     console.log("Loan repository");
 
     try {
+      data.Loan_state = "1200";
       const loanUpdated = await loan_details.update(data, {
         where: {
           uid: data.uid,
@@ -52,6 +53,8 @@ class Loan_repository {
   // -----------------------------------------
   async updateLoanStatusRepo(data) {
     console.log("Loan repository");
+
+    console.log(data);
     try {
       const updatedLoanStatus = await loan_details.update(data, {
         where: {
@@ -59,6 +62,7 @@ class Loan_repository {
           isDeleted: false,
         },
       });
+      console.log(updatedLoanStatus);
       return updatedLoanStatus;
     } catch (error) {
       console.log("Something went wrong in loan repository layer".magenta);

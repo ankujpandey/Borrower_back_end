@@ -106,7 +106,9 @@ const getLoanDataController = async (req, res) => {
 // -----------------------------------------
 
 const updateLoanStatusController = async (req, res) => {
-  console.log("loan controller");
+  // console.log("loan controller");
+
+  console.log("this is body----->>>>>>>>>>>>>>>>>", req.body);
   // const storeRequestResponse = {};
   // const requestObj = {};
   // requestObj.body = req.body;
