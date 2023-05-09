@@ -56,7 +56,7 @@ class Users_repository {
       await loan_details.create({
         uid: user.uid,
         Loan_state: 1000,
-        jobAssignees_id: null,
+        jobAssignees_id: 1,
       });
 
       obj.signUp = user;
