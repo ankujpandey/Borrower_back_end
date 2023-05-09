@@ -26,7 +26,7 @@ module.exports = {
       Loan_state: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "1200",
+        defaultValue: "1000",
       },
       amountAsked: {
         allowNull: true,
