@@ -19,8 +19,9 @@ module.exports = {
         },
       },
       jobAssignees_id: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
+        defaultValue: "1",
       },
       Loan_state: {
         allowNull: false,

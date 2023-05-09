@@ -22,7 +22,6 @@ module.exports = {
         },
       },
       LoanId: {
-        unique: true,
         allowNull: true,
         type: DataTypes.INTEGER,
       },
