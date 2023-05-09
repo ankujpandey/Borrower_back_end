@@ -1,13 +1,22 @@
 const { SendAgreement_service } = require("../services");
+const SendAgreementService = new SendAgreement_service();
 
 // -----------------------------------
 // send Agreement Pdf
 // -----------------------------------
 
 const sendArgeementController = async (req, res) => {
+  console.log("----------controller----------", req.body);
   try {
     const sendAgreementControllerData =
-      await SendAgreement_service.sendAgreementService(req.body);
+      await SendAgreementService.sendAgreementService(req.body);
+    // Console.log("data-------", sendAgreementControllerData);
+    return res.status(201).json({
+      data: sendAgreementControllerData,
+      success: true,
+      message: "Successful sent agreement",
+      err: {},
+    });
 
     // res.sendFile(`${__dirname}/result.pdf`);
   } catch (error) {
@@ -15,7 +24,7 @@ const sendArgeementController = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to Generated Pdf Data",
+      message: "Not able to sent agreement",
       err: error,
     });
   }
