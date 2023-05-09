@@ -91,10 +91,10 @@ class JobAssignee_Repo {
   async MinJobAgent() {
     try {
       const [Agent, metadata] = await sequelize.query(
-        `SELECT * from JobAssignees where jobsAssigned=(SELECT min(jobsAssigned) FROM JobAssignees WHERE jobAssignees_id <> 1) AND isDeleted = false`
+        `SELECT * from JobAssignees where jobsAssigned=(SELECT min(jobsAssigned) FROM JobAssignees) AND isDeleted = false`
       );
 
-      console.log("Agent available", Agent);
+      // console.log("Agent available", Agent);
       return Agent;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);

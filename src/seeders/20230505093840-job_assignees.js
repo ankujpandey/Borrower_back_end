@@ -10,6 +10,7 @@ module.exports = {
         password: "Default@123",
         jobsAssigned: 0,
         status: "Will never be assigned",
+        isDeleted: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

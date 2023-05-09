@@ -1,92 +1,92 @@
 const {
-	Loan_repository,
-	JobAssignee_Repo,
-	Logcondition_repository,
+  Loan_repository,
+  JobAssignee_Repo,
+  Logcondition_repository,
 } = require("../repository");
 
 class Loan_service {
-	constructor() {
-		this.Loan_repository = new Loan_repository();
-		this.JobAssignee_repo = new JobAssignee_Repo();
-		this.Logcondition_repo = new Logcondition_repository();
-	}
+  constructor() {
+    this.Loan_repository = new Loan_repository();
+    this.JobAssignee_repo = new JobAssignee_Repo();
+    this.Logcondition_repo = new Logcondition_repository();
+  }
 
-	// -----------------------------------
-	// insert into table
-	// -----------------------------------
-	async createLoanService(data) {
-		// console.log("in create loan service ");
-		const assignedAgent = await this.JobAssignee_repo.MinJobAgent();
-		data.jobAssignees_id = assignedAgent[0].jobAssignees_id;
+  // -----------------------------------
+  // insert into table
+  // -----------------------------------
+  async createLoanService(data) {
+    const assignedAgent = await this.JobAssignee_repo.MinJobAgent();
+    data.jobAssignees_id = assignedAgent[0].jobAssignees_id;
 
-		this.JobAssignee_repo.UpdateJobsAssigned(data.jobAssignees_id);
+    const updateAgent = await this.JobAssignee_repo.UpdateJobsAssigned(
+      data.jobAssignees_id
+    );
+    try {
+      const createLoanData = await this.Loan_repository.createLoanRepo(data);
+      return createLoanData;
+    } catch (error) {
+      console.log("Something went wrong in Loan services layer".magenta);
+      throw { error };
+    }
+  }
 
-		try {
-			const createLoanData = await this.Loan_repository.createLoanRepo(data);
-			return createLoanData;
-		} catch (error) {
-			console.log("Something went wrong in Loan services layer".magenta);
-			throw { error };
-		}
-	}
+  // -----------------------------------------
+  // get particular loan data from the table
+  // -----------------------------------------
 
-	// -----------------------------------------
-	// get particular loan data from the table
-	// -----------------------------------------
+  async getLoanDataService(ID) {
+    console.log("service loan");
 
-	async getLoanDataService(ID) {
-		console.log("service loan");
+    try {
+      const LoanStatus = await this.Loan_repository.getLoanDataRepo(ID);
 
-		try {
-			const LoanStatus = await this.Loan_repository.getLoanDataRepo(ID);
+      return LoanStatus;
+    } catch (error) {
+      console.log("Something went wrong in Loan services layer".magenta);
+      throw { error };
+    }
+  }
 
-			return LoanStatus;
-		} catch (error) {
-			console.log("Something went wrong in Loan services layer".magenta);
-			throw { error };
-		}
-	}
+  // -----------------------------------------
+  // get loan status
+  // -----------------------------------------
 
-	// -----------------------------------------
-	// get loan status
-	// -----------------------------------------
+  async getLoanStatusService(id) {
+    try {
+      let loanStatus = await this.Loan_repository.getLoanDataRepo(id);
 
-	async getLoanStatusService(id) {
-		try {
-			let loanStatus = await this.Loan_repository.getLoanDataRepo(id);
+      // if (loanStatus) {
+      //   const code = {
+      //     cndtn_code: loanStatus.Loan_state,
+      //   };
 
-			// if (loanStatus) {
-			//   const code = {
-			//     cndtn_code: loanStatus.Loan_state,
-			//   };
+      //   loanStatus = await this.Logcondition_repo.getLogconditionRepo(code);
+      return loanStatus;
+      // }
+    } catch (error) {
+      console.log("Something went wrong in Loan services layer".magenta);
+      throw { error };
+    }
+  }
 
-			//   loanStatus = await this.Logcondition_repo.getLogconditionRepo(code);
-			return loanStatus;
-			// }
-		} catch (error) {
-			console.log("Something went wrong in Loan services layer".magenta);
-			throw { error };
-		}
-	}
+  // -----------------------------------------
+  // update loan status
+  // -----------------------------------------
 
-	// -----------------------------------------
-	// update loan status
-	// -----------------------------------------
+  async updateLoanStatusService(data) {
+    console.log("service loan");
 
-	async updateLoanStatusService(data) {
-		console.log("service loan");
+    try {
+      const updatedLoanStatus = await this.Loan_repository.updateLoanStatusRepo(
+        data
+      );
 
-		try {
-			const updatedLoanStatus = await this.Loan_repository.updateLoanStatusRepo(
-				data
-			);
-
-			return updatedLoanStatus;
-		} catch (error) {
-			console.log("Something went wrong in Loan services layer".magenta);
-			throw { error };
-		}
-	}
+      return updatedLoanStatus;
+    } catch (error) {
+      console.log("Something went wrong in Loan services layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Loan_service;
