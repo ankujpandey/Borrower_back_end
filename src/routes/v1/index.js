@@ -56,7 +56,7 @@ router.get(
 // ------------------------------------------
 
 router.post("/signUp", UsersController.create);
-router.get("/logIn/", UsersController.get);
+router.get("/logIn/", UsersController.get); //Login API
 router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
@@ -123,11 +123,20 @@ router.post("/admin", AdminController.createAdminController);
 router.get("/admin/:id", AdminController.getAdminController);
 router.get("/admins", AdminController.getAllAdminController);
 
-// ------------------------------------------
-// route to fetch all data
-// ------------------------------------------
+// -------------------------------------
+// get all data for user details page
+// -------------------------------------
 router.get("/getAllData/:id", UsersController.getAllData);
+
+// --------------------------------------------------
+// get user+user_info data for admin dashboard table
+// --------------------------------------------------
 router.get("/getUserData", UsersController.getUserData);
+
+// --------------------------------------------------
+// get user+user_info data for agent dashboard table
+// --------------------------------------------------
+router.get("/getUserDataAgent", UsersController.getUserDataAgent);
 
 // -------------------------------------------
 //  Aadhaar Card Verification
