@@ -10,7 +10,7 @@ const sendArgeementController = async (req, res) => {
   try {
     const sendAgreementControllerData =
       await SendAgreementService.sendAgreementService(req.body);
-    // Console.log("data-------", sendAgreementControllerData);
+
     return res.status(201).json({
       data: sendAgreementControllerData,
       success: true,

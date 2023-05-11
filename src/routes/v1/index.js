@@ -216,7 +216,7 @@ router.get(
 );
 
 // ------------------------------------------
-// route for Agreementd
+// route for send Agreement
 // ------------------------------------------
 router.post("/sendAgreement", AgreementController.sendArgeementController);
 
