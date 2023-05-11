@@ -21,6 +21,7 @@ const {
   JobAssigneeController,
   Generate_PdfController,
   LogconditionController,
+  AgreementController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -224,5 +225,10 @@ router.get(
   "/getlogCondition",
   LogconditionController.getLogConditionController
 );
+
+// ------------------------------------------
+// route for send Agreement
+// ------------------------------------------
+router.post("/sendAgreement", AgreementController.sendArgeementController);
 
 module.exports = router;
