@@ -63,12 +63,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      createdby: {
+      createdBy: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "user",
       },
-      updatedby: {
+      updatedBy: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "user",
