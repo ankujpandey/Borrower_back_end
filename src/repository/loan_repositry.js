@@ -55,7 +55,6 @@ class Loan_repository {
 		console.log("Loan repository");
 
 		console.log(data);
-		data.Loan_state = "1300";
 		try {
 			const updatedLoanStatus = await loan_details.update(data, {
 				where: {
