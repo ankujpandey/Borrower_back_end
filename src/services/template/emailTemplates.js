@@ -4,7 +4,7 @@
 // a confirmation mail for him/her.
 // ---------------------------------------------
 
-export const appliedUser = (userData, agentData) => {
+const appliedUser = (userData, agentData) => {
   return `<!DOCTYPE html>
 	<html>
 		<head>
@@ -19,13 +19,11 @@ export const appliedUser = (userData, agentData) => {
 
     <br/>
     <div class="fw-bold">
-	    Hello ${userData.firstName + userData.lastName} !
+	    Hello ${userData.name} !
 	  </div>
 	  
 	  <br/>
-	 <div> You have successfully applied for loan. ${
-     agentData.name
-   } has been assigned to you as your agent.
+	 <div> You have successfully applied for loan. ${agentData.name} has been assigned to you as your agent.
 	  </div>
 	  <br/>
 	  <br/>
@@ -50,7 +48,7 @@ export const appliedUser = (userData, agentData) => {
 // confirmation mail for the agent about application.
 // -------------------------------------------------------
 
-export const appliedAgent = (userData, agentData) => {
+const appliedAgent = (userData, agentData) => {
   return `<!DOCTYPE html>
 	<html>
 		<head>
@@ -73,7 +71,7 @@ export const appliedAgent = (userData, agentData) => {
 	 
 	 <br/>
 	 
-	 User name: ${userData.firstName + userData.lastName}
+	 User name: ${userData.name}
 	 <br/>
 	 User email: ${userData.email}
 	 <br/>
@@ -103,7 +101,7 @@ export const appliedAgent = (userData, agentData) => {
 // the agreement.
 // ------------------------------------------------------------------------
 
-export const agreementInitiated = (userData) => {
+const agreementInitiated = (userData) => {
   return `<!DOCTYPE html>
 	  <html>
 		  <head>
@@ -118,7 +116,7 @@ export const agreementInitiated = (userData) => {
   
 	  <br/>
 	  <div class="fw-bold">
-		  Hello ${userData.firstName + userData.lastName} !
+		  Hello ${userData.name} !
 		</div>
 		
 		<br/>
@@ -150,7 +148,7 @@ export const agreementInitiated = (userData) => {
 // notification mail to the agent regarding the acceptance/rejection.
 // ------------------------------------------------------------------------
 
-export const acceptReject = (agentData, loanState) => {
+const acceptReject = (agentData, loanState) => {
   return `<!DOCTYPE html>
 		<html>
 			<head>
@@ -191,4 +189,32 @@ export const acceptReject = (agentData, loanState) => {
 	
 			</body>
 		</html>`;
+};
+
+const subjectDecide = (loanState) => {
+  if (loanState == 1200) {
+    return "Loan application submitted.";
+  } else if (loanState == 1400) {
+    return "Agreement initiated";
+  } else if (loanState == 1500) {
+    return "Loan agreement accepted";
+  } else return "Loan agreement rejected";
+};
+
+const emailTemplateDecide = (userData, agentData, loanState) => {
+  if (loanState == 1200) {
+    const userTemplate = appliedUser(userData, agentData);
+    const agentTemplate = appliedAgent(userData, agentData);
+
+    return { userTemplate, agentTemplate };
+  } else if (loanState == 1400) {
+    return agreementInitiated(userData);
+  } else if (loanState == 1500) {
+    return acceptReject(agentData, true);
+  } else return acceptReject(agentData, false);
+};
+
+module.exports = {
+  emailTemplateDecide,
+  subjectDecide,
 };

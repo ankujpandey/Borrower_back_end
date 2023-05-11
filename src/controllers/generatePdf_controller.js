@@ -11,7 +11,7 @@ const generatepdfController = async (req, res) => {
     const generatepdfControllerData =
       await GeneratePdfService.generatedpdfService(req.params.id);
     // res.sendFile(
-    //   `/home/mohdazharuddin/Desktop/projectborrower/Borrower_back_end/Borrower_back_end/src/esult.pdf`
+    //   `/home/mohdazharuddin/Desktop/projectborrower/Borrower_back_end/Borrower_back_end/src/result.pdf`
     // );
     res.sendFile(`${__dirname}/result.pdf`);
 
