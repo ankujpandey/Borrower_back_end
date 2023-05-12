@@ -4,11 +4,14 @@ const {
 	Logcondition_repository,
 } = require("../repository");
 
+const EMICalculator = require("./emiCalculator_services");
+
 class Loan_service {
 	constructor() {
 		this.Loan_repository = new Loan_repository();
 		this.JobAssignee_repo = new JobAssignee_Repo();
 		this.Logcondition_repo = new Logcondition_repository();
+		this.calculateEMI = new EMICalculator();
 	}
 
 	// -----------------------------------
@@ -82,6 +85,32 @@ class Loan_service {
 			);
 
 			return updatedLoanStatus;
+		} catch (error) {
+			console.log("Something went wrong in Loan services layer".magenta);
+			throw { error };
+		}
+	}
+
+	// -----------------------------------------
+	// Get loan Details with EMI calculations
+	// -----------------------------------------
+
+	async getLoanWithEMIService(ID) {
+		const loanData = await this.getLoanDataService(ID);
+
+		const loan = {};
+		loan.date = loanData.dataValues.updatedAt;
+		loan.principle = loanData.dataValues.amountApproved;
+		loan.interest = loanData.dataValues.minRoiApproved;
+		loan.time = loanData.dataValues.tenureApproved;
+
+		console.log("service loan with EMI------->>>>", loan);
+		try {
+			const output = {};
+			const EMI = await this.calculateEMI.getCalculations(loan);
+			output.loanData = loanData;
+			output.EMI = EMI;
+			return output;
 		} catch (error) {
 			console.log("Something went wrong in Loan services layer".magenta);
 			throw { error };

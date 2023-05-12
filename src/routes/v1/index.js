@@ -92,6 +92,12 @@ router.post(
 	LoanController.updateLoanStatusController
 );
 
+router.get(
+	"/getLoanWithEMI/:id",
+	JWTToken.verifyToken,
+	LoanController.getLoanWithEMIController
+);
+
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
