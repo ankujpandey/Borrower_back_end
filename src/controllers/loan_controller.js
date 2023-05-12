@@ -1,9 +1,10 @@
-const { Loan_service } = require("../services");
+const { Loan_service, SendAgreement_service } = require("../services");
 const { saveReqRes } = require("../mongodb/index");
 const { createLogController } = require("./log_controller");
 const { LoanCombineData } = require("./log_combine_data");
 
 const loanService = new Loan_service();
+const SendAgreementService = new SendAgreement_service();
 
 // -----------------------------------
 // insert into table
@@ -25,6 +26,21 @@ const createLoanController = async (req, res) => {
 		//   err: {},
 		// };
 		// saveReqRes(storeRequestResponse);
+		if (req.body.emailUser) {
+			const emailReq = await SendAgreementService.sendAgreementUserService(
+				loanData.dataValues.uid,
+				loanData.dataValues.jobAssignees_id,
+				loanData.dataValues.Loan_state
+			);
+		}
+		if (req.body.emailAgent) {
+			const emailReq = await SendAgreementService.sendAgreementAgentService(
+				loanData.dataValues.uid,
+				loanData.dataValues.jobAssignees_id,
+				loanData.dataValues.Loan_state
+			);
+		}
+
 		const Data = {};
 		Data.oldState = "1100";
 		Data.loanData = loanData;
@@ -118,6 +134,21 @@ const updateLoanStatusController = async (req, res) => {
 		const updatedLoanStatus = await loanService.updateLoanStatusService(
 			req.body
 		);
+
+		if (req.body.emailUser) {
+			const emailReq = await SendAgreementService.sendAgreementUserService(
+				updatedLoanStatus.dataValues.uid,
+				updatedLoanStatus.dataValues.jobAssignees_id,
+				updatedLoanStatus.dataValues.Loan_state
+			);
+		}
+		if (req.body.emailAgent) {
+			const emailReq = await SendAgreementService.sendAgreementAgentService(
+				loanData.dataValues.uid,
+				loanData.dataValues.jobAssignees_id,
+				loanData.dataValues.Loan_state
+			);
+		}
 		// storeRequestResponse.response = {
 		//   data: updatedLoanStatus,
 		//   success: true,
@@ -193,6 +224,9 @@ const getLoanStatusController = async (req, res) => {
 	}
 };
 
+// -----------------------------------------
+// get particular loan data with EMI calculations
+// -----------------------------------------
 const getLoanWithEMIController = async (req, res) => {
 	console.log("loan controller");
 	// const storeRequestResponse = {};

@@ -1,9 +1,10 @@
-const { Users_repository } = require("../repository");
+const { Users_repository, UserInfo_repository } = require("../repository");
 const { JWTToken } = require("../middleware");
 
 class Users_service {
   constructor() {
     this.usersRepository = new Users_repository();
+    this.userInfoRepository = new UserInfo_repository();
   }
 
   // -----------------------------------
@@ -126,7 +127,7 @@ class Users_service {
       const data = await this.usersRepository.getAllData(id);
       return data;
     } catch (error) {
-      console.log("Something went wrong in repository layer".magenta);
+      console.log("Something went wrong in services layer".magenta);
       throw { error };
     }
   }
@@ -140,7 +141,7 @@ class Users_service {
       const data = await this.usersRepository.getUserData(req);
       return data;
     } catch (error) {
-      console.log("Something went wrong in repository layer".magenta);
+      console.log("Something went wrong in services layer".magenta);
       throw { error };
     }
   }
@@ -154,7 +155,7 @@ class Users_service {
       const data = await this.usersRepository.getUserDataAgent(req);
       return data;
     } catch (error) {
-      console.log("Something went wrong in repository layer".magenta);
+      console.log("Something went wrong in services layer".magenta);
       throw { error };
     }
   }

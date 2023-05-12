@@ -49,7 +49,7 @@ class Loan_repository {
 	}
 
 	// -----------------------------------------
-	// update loan status By ID
+	// update loan status
 	// -----------------------------------------
 	async updateLoanStatusRepo(data) {
 		console.log("Loan repository");
@@ -62,8 +62,15 @@ class Loan_repository {
 					isDeleted: false,
 				},
 			});
-			console.log(updatedLoanStatus);
-			return updatedLoanStatus;
+			if (updatedLoanStatus) {
+				const loanDataUpdated = await loan_details.findOne({
+					where: {
+						uid: data.uid,
+					},
+				});
+
+				return loanDataUpdated;
+			} else return error;
 		} catch (error) {
 			console.log("Something went wrong in loan repository layer".magenta);
 			throw { error };

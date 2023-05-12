@@ -13,4 +13,5 @@ module.exports = {
   GeneratePdf_service: require("./generatePdf_services"),
   Log_service: require("./Log_services"),
   Logcondition_service: require("./logCondition_services"),
+  SendAgreement_service: require("./sendAgreement_services"),
 };

@@ -247,6 +247,22 @@ class Users_repository {
       throw { error };
     }
   }
+
+  // -----------------------------------
+  // get user from table for email
+  // -----------------------------------
+  async getUserDataEmail(id) {
+    try {
+      const user = await users.findOne({
+        where: { uid: id, isDeleted: false },
+      });
+      console.log(user.brightCyan);
+      return user;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Users_repository;
