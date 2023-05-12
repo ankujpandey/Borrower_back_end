@@ -95,8 +95,24 @@ class UserInfo_repository {
   async getAllUserInfoByAdmin() {
     try {
       const userInfo = await user_info.findAll();
-      console.log(userInfo.brightCyan);
+      // console.log(userInfo.brightCyan);
       return userInfo;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // get userinfo from table for email
+  // -----------------------------------
+  async getUserInfoDataEmail(id) {
+    try {
+      const user = await user_info.findOne({
+        where: { uid: id, isDeleted: false },
+      });
+      // console.log(user.brightCyan);
+      return user;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };

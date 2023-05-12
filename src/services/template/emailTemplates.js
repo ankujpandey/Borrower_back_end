@@ -24,6 +24,8 @@ const appliedUser = (userData, agentData) => {
 	  
 	  <br/>
 	 <div> You have successfully applied for loan. ${agentData.name} has been assigned to you as your agent.
+	 <br/>
+	 Your application is under process now.
 	  </div>
 	  <br/>
 	  <br/>
@@ -74,6 +76,8 @@ const appliedAgent = (userData, agentData) => {
 	 User name: ${userData.name}
 	 <br/>
 	 User email: ${userData.email}
+	 <br/>
+	 User contact: ${userData.contact}
 	 <br/>
 	 Kindly check your dashboard for more details.
 	  </div>
