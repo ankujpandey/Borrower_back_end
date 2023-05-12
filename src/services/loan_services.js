@@ -79,6 +79,8 @@ class Loan_service {
 	async updateLoanStatusService(data) {
 		console.log("service loan");
 
+		console.log(data);
+
 		try {
 			const updatedLoanStatus = await this.Loan_repository.updateLoanStatusRepo(
 				data

@@ -144,9 +144,9 @@ const updateLoanStatusController = async (req, res) => {
 		}
 		if (req.body.emailAgent) {
 			const emailReq = await SendAgreementService.sendAgreementAgentService(
-				loanData.dataValues.uid,
-				loanData.dataValues.jobAssignees_id,
-				loanData.dataValues.Loan_state
+				updatedLoanStatus.dataValues.uid,
+				updatedLoanStatus.dataValues.jobAssignees_id,
+				updatedLoanStatus.dataValues.Loan_state
 			);
 		}
 		// storeRequestResponse.response = {
