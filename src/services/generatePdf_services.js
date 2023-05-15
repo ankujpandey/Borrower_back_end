@@ -1,7 +1,9 @@
 const { Users_repository, Generate_Pdf } = require("../repository");
 const { getImages } = require("../mongodb/kyc_image");
-const pdfTemplate = require("./template/pdfTemplate");
-const puppeteer = require("puppeteer");
+const userDetailsPdf = require("./template/pdfTemplate");
+const agreementTemplate = require("./template/agreementTemplate");
+const { Loan_service } = require("./loan_services");
+// const puppeteer = require("puppeteer");
 
 class GeneratePdf_service {
 	constructor() {
@@ -9,9 +11,9 @@ class GeneratePdf_service {
 		this.generetePDF = new Generate_Pdf();
 	}
 	// -----------------------------------
-	// pdf download by admin
+	// user details pdf download by admin
 	// -----------------------------------
-	async generatedpdfService(id) {
+	async generateUserPdfServices(id) {
 		let object = {};
 		object.id = id;
 
@@ -20,9 +22,26 @@ class GeneratePdf_service {
 		const imageData = await getImages(id);
 
 		object.UserData = UserData;
-		object.imageData = imageData;
-		object.path = "./src/controllers/result.pdf";
-		object.pdfTemplate = pdfTemplate;
+		object.SecondryData = imageData;
+		object.path = "./src/controllers/userData.pdf";
+		object.pdfTemplate = userDetailsPdf;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
+
+	// -----------------------------------
+	// user agreement download
+	// -----------------------------------
+	async generateAgreementPdfServices(id, loanData) {
+		let object = {};
+		object.id = id;
+
+		console.log("service==============", loanData);
+		const UserData = await this.usersRepository.getAllData(id);
+
+		object.UserData = UserData;
+		object.SecondryData = loanData;
+		object.path = "./src/controllers/agreement.pdf";
+		object.pdfTemplate = agreementTemplate;
 		await this.generetePDF.generatedpdfRepo(object);
 	}
 }

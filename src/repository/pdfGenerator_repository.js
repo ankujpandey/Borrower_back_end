@@ -12,10 +12,7 @@ class Generate_Pdf {
 		//Create a new page
 		const page = await browser.newPage();
 
-		const html = data.pdfTemplate(
-			data.UserData,
-			data.imageData[0].profile_photo
-		);
+		const html = data.pdfTemplate(data.UserData, data.SecondryData);
 		await page.setContent(html, { waitUntil: "domcontentloaded" });
 
 		// To reflect CSS used for screens instead of print
@@ -23,7 +20,7 @@ class Generate_Pdf {
 
 		// Downlaod the PDF
 		const pdf = await page.pdf({
-			path: "./src/controllers/result.pdf",
+			path: data.path,
 			margin: { top: "100px", right: "50px", bottom: "100px", left: "50px" },
 			printBackground: true,
 			format: "A4",

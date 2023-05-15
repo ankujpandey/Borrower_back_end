@@ -198,6 +198,10 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 // --------------------------------------
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
+router.get(
+	"/createAgreementPdf/:id",
+	Generate_PdfController.generateAgreementPdfController
+);
 
 // --------------------------------------
 // 	API for Job Assignees
