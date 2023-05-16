@@ -14,4 +14,6 @@ module.exports = {
   Generate_PdfController: require("./generatePdf_controller"),
   LogconditionController: require("./logCondition_controller"),
   AgreementController: require("./sendAgreement_controller"),
+  BorrowerTransactionController: require("./borrower_txn_controller"),
+  PoolTransactionController: require("./pool_txn_controller"),
 };
