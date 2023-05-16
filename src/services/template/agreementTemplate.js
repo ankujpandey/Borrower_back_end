@@ -1,9 +1,36 @@
 const agreementTemplate = (UserData, loanData) => {
 	const today = new Date();
 
-	console.log("data in pdf agreement----->>>>", UserData);
+	console.log("data in pdf agreement----->>>>", loanData);
 
-	return `<!DOCTYPE html>
+	let tableData = "";
+	loanData.EMI.table.forEach((row) => {
+		tableData += `
+		<tr key=${row.installmentNo}>
+			<th scope="row">${row.installmentNo}</th>
+				<td>
+					&#8377;
+					${row.openingBalence}
+				</td>
+				<td>
+					&#8377;
+					${loanData?.EMI?.EMI}
+				</td>
+				<td>
+					&#8377;
+					${row.closingBalence}
+				</td>
+				<td>
+					&#8377;
+					${row.interestPerMonth}
+				</td>
+				<td>
+					&#8377;
+					${row.principle}
+				</td>
+			</tr>`;
+	});
+	let templateString = `<!DOCTYPE html>
 	<html>
 		<head>
 			<title>HTML content</title>
@@ -12,10 +39,12 @@ const agreementTemplate = (UserData, loanData) => {
         rel="stylesheet"
       />
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	 
+
 		</head>
 		<body>
 
-        <div class="modal-content">
+        <div class="modal-content" style="font-size: 10px;">
 					<div >
 						<h5 class="modal-title" id="exampleModalLabel">
 							Terms and Conditions & Loan Agreement
@@ -242,6 +271,10 @@ const agreementTemplate = (UserData, loanData) => {
 								
 							</table>
 						</div>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
 						<div>
 							<p>CALCULATION OF DETAILS OF EMI</p>
 							<table class="table table-bordered">
@@ -256,22 +289,13 @@ const agreementTemplate = (UserData, loanData) => {
 									</tr>
 								</thead>
 								
-								<tbody>
-								
-									{loanData.EMI.table.map((row) => (
-										<tr key={row.installmentNo}>
-											<th scope="row">{row.installmentNo}</th>
+								<tbody id="tableData">`;
+	templateString += tableData;
 
-											<td>{row.openingBalence}</td>
-											<td>{loanData.EMI.EMI}</td>
-											<td>{row.closingBalence}</td>
-											<td>{row.interestPerMonth}</td>
-											<td>{row.principle}</td>
-										</tr>
-									))}
-								</tbody>
+	templateString += `			</tbody>
 							</table>
 						</div>
+						
 
 						<div>
 							<p>
@@ -302,5 +326,7 @@ const agreementTemplate = (UserData, loanData) => {
 				</div>
 		</body>
 	</html>`;
+
+	return templateString;
 };
 module.exports = agreementTemplate;
