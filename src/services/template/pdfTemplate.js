@@ -17,7 +17,7 @@ const createTemplate = (UserData, imgRes) => {
     <div class="d-flex justify-content-start align-items-center mt-5">
       <div class="d-flex justify-content-center">
         <img
-          src="data:image/jpg;base64,${imgRes}"
+          src="data:image/jpg;base64,${imgRes[0].profile_photo}"
           className="img-thumbnail m-3"
           alt=""
           height="100"

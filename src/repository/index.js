@@ -10,6 +10,7 @@ module.exports = {
   JobAssignee_Repo: require("./jobAssignees_repository"),
   Log_repository: require("./log_repository"),
   Logcondition_repository: require("./logCondition_repository"),
+  Generate_Pdf: require("./pdfGenerator_repository"),
   borrowerTxn_Repo: require("./borrower_txn_repository"),
   poolTxn_Repo: require("./pool_txn_repository"),
 };
