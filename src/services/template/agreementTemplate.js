@@ -1,7 +1,36 @@
-const agreementTemplate = (UserData, imgRes) => {
+const agreementTemplate = (UserData, loanData) => {
   const today = new Date();
 
-  return `<!DOCTYPE html>
+  console.log("data in pdf agreement----->>>>", loanData);
+
+  let tableData = "";
+  loanData.EMI.table.forEach((row) => {
+    tableData += `
+		<tr key=${row.installmentNo}>
+			<th scope="row">${row.installmentNo}</th>
+				<td>
+					&#8377;
+					${row.openingBalence}
+				</td>
+				<td>
+					&#8377;
+					${loanData?.EMI?.EMI}
+				</td>
+				<td>
+					&#8377;
+					${row.closingBalence}
+				</td>
+				<td>
+					&#8377;
+					${row.interestPerMonth}
+				</td>
+				<td>
+					&#8377;
+					${row.principle}
+				</td>
+			</tr>`;
+  });
+  let templateString = `<!DOCTYPE html>
 	<html>
 		<head>
 			<title>HTML content</title>
@@ -10,10 +39,12 @@ const agreementTemplate = (UserData, imgRes) => {
         rel="stylesheet"
       />
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	 
+
 		</head>
 		<body>
 
-        <div class="modal-content">
+        <div class="modal-content" style="font-size: 10px;">
 					<div >
 						<h5 class="modal-title" id="exampleModalLabel">
 							Terms and Conditions & Loan Agreement
@@ -207,14 +238,14 @@ const agreementTemplate = (UserData, imgRes) => {
 						</div>
 						<div>
 							<table class="table table-bordered">
-								<tbody>
+								
 									<tr>
 										<td>Loan Amount</td>
-										<td>{loanData?.loanData?.amountApproved}</td>
+										<td>${loanData.loanData.amountApproved}</td>
 									</tr>
 									<tr>
 										<td>Loan Term (Months)</td>
-										<td>{loanData?.loanData?.tenureApproved}</td>
+										<td>${loanData.loanData.tenureApproved}</td>
 									</tr>
 									<tr>
 										<td>Payments Per Month</td>
@@ -222,27 +253,28 @@ const agreementTemplate = (UserData, imgRes) => {
 									</tr>
 									<tr>
 										<td>Rate of Interest</td>
-										<td>{loanData?.loanData?.minRoiApproved} %</td>
+										<td>${loanData.loanData.minRoiApproved} %</td>
 									</tr>
 									<tr>
 										<td>Collection Fee (On Outstanding Principal)</td>
-										<td>12.00 %</td>
+										<td>5.00 %</td>
 									</tr>
 									<tr>
 										<td>Regular EMI</td>
-										<td>{loanData?.EMI?.EMI}</td>
+										<td>${loanData.EMI.EMI}</td>
 									</tr>
-									{/* <tr>
-										<td>EMI due date</td>
-										<td></td>
-									</tr> */}
+									
 									<tr>
 										<td>Additional Charges</td>
 										<td>18% pa</td>
 									</tr>
-								</tbody>
+								
 							</table>
 						</div>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
 						<div>
 							<p>CALCULATION OF DETAILS OF EMI</p>
 							<table class="table table-bordered">
@@ -256,44 +288,22 @@ const agreementTemplate = (UserData, imgRes) => {
 										<th scope="col">Principal</th>
 									</tr>
 								</thead>
-								<tbody>
-									{loanData?.EMI?.table?.map((row) => (
-										<tr key={row.installmentNo}>
-											<th scope="row">{row.installmentNo}</th>
-											{/* <td>{row.installmentDate}</td> */}
-											<td>
-												{Icons.smallRupee}
-												{row.openingBalence}
-											</td>
-											<td>
-												{Icons.smallRupee}
-												{loanData?.EMI?.EMI}
-											</td>
-											<td>
-												{Icons.smallRupee}
-												{row.closingBalence}
-											</td>
-											<td>
-												{Icons.smallRupee}
-												{row.interestPerMonth}
-											</td>
-											<td>
-												{Icons.smallRupee}
-												{row.principle}
-											</td>
-										</tr>
-									))}
-								</tbody>
+								
+								<tbody id="tableData">`;
+  templateString += tableData;
+
+  templateString += `			</tbody>
 							</table>
 						</div>
+						
 
 						<div>
 							<p>
 								<b>Schedule II:</b>
 							</p>
 							<p>
-								This schedule is governed by the terms of the MTCLA executed on{" "}
-								<b>{date}</b> at Gurgaon, Haryana
+								This schedule is governed by the terms of the MTCLA executed on
+								<b>${today}</b> at Gurgaon, Haryana
 							</p>
 							<p>
 								<u>
@@ -301,19 +311,22 @@ const agreementTemplate = (UserData, imgRes) => {
 								</u>
 							</p>
 							<p>
-								Name : {user?.userName?.firstName} {user?.userName?.lastName}{" "}
+								Name : ${UserData[0].firstName} ${UserData[0].lastName}
 							</p>
 							<p>
-								Address: {user?.userName?.postOffice}, {user?.userName?.city},{" "}
-								{user?.userName?.state}, {user?.userName?.pinCode}
+								Address: ${UserData[0].postOffice}, ${UserData[0].city},
+								${UserData[0].state}, ${UserData[0].pinCode}
 							</p>
-							<p>Purpose of Loan availed by the borrower: Business Funding</p>
+							
 							<p>
-								PAN:<b> {user?.userName?.pan}</b>
+								PAN:<b> ${UserData[0].pan}</b>
 							</p>
-							<p>Contact no.: {user?.userName?.contact}</p>
+							<p>Contact no.: ${UserData[0].contact}</p>
 						</div>
 				</div>
 		</body>
 	</html>`;
+
+  return templateString;
 };
+module.exports = agreementTemplate;

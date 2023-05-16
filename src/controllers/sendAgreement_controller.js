@@ -1,11 +1,5 @@
-const {
-  SendAgreement_service,
-  Loan_service,
-  JobAssignees_service,
-} = require("../services");
+const { SendAgreement_service } = require("../services");
 const SendAgreementService = new SendAgreement_service();
-const LoanService = new Loan_service();
-const JobAssigneesService = new JobAssignees_service();
 
 // -----------------------------------
 // send Agreement Pdf
@@ -14,17 +8,8 @@ const JobAssigneesService = new JobAssignees_service();
 const sendArgeementController = async (req, res) => {
   console.log("----------controller----------", req.body);
   try {
-    const loanData = await LoanService.getLoanDataService(req.body.uid);
-
-    const agent = await JobAssigneesService.getJobAssigneesService(
-      loanData.jobAssignees_id
-    );
     const sendAgreementControllerData =
-      await SendAgreementService.sendAgreementService(
-        req.body,
-        agent.dataValues,
-        loanData.dataValues.Loan_state
-      );
+      await SendAgreementService.sendAgreementUserService(req.body);
 
     return res.status(201).json({
       data: sendAgreementControllerData,
