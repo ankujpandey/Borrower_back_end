@@ -152,7 +152,7 @@ const agreementInitiated = (userData) => {
 // notification mail to the agent regarding the acceptance/rejection.
 // ------------------------------------------------------------------------
 
-const acceptReject = (agentData, loanState) => {
+const acceptRejectAgent = (agentData, loanState) => {
   return `<!DOCTYPE html>
 		<html>
 			<head>
@@ -195,6 +195,54 @@ const acceptReject = (agentData, loanState) => {
 		</html>`;
 };
 
+const acceptRejectUser = (userData, loanState) => {
+  return `<!DOCTYPE html>
+		  <html>
+			  <head>
+				  <title>Email Template</title>
+				  <link
+			  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+			  rel="stylesheet"
+			/>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+			  </head>
+			  <body>
+	  
+		  <br/>
+		  <div class="fw-bold">
+			  Hello ${userData.name} !
+			</div>
+			
+			<br/>
+		   <div>
+	
+		   The loan agreement provided to you has been ${
+         loanState ? "accepted" : "rejected"
+       } by you. Kindly visit your dashboard for more details.
+
+	   <br/>
+	   You can find the attachment of the agreement with this email.
+
+	   <br/>
+		   
+			</div>
+			<br/>
+			<br/>
+			
+			<div>Regards,
+			<br/>
+			Team Borrower
+			<br/>
+			Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
+			<br/>
+			+0120 465 9902
+			<br/>
+			faircentmrborrower@gmail.com</div>
+	  
+			  </body>
+		  </html>`;
+};
+
 const subjectDecide = (loanState) => {
   if (loanState == 1200) {
     return "Loan application submitted.";
@@ -214,8 +262,10 @@ const emailTemplateDecide = (userData, agentData, loanState) => {
   } else if (loanState == 1400) {
     return agreementInitiated(userData);
   } else if (loanState == 1500) {
-    return acceptReject(agentData, true);
-  } else return acceptReject(agentData, false);
+    const userTemplate = acceptRejectUser(userData, true);
+    const agentTemplate = acceptRejectAgent(agentData, true);
+    return { userTemplate, agentTemplate };
+  } else return acceptRejectAgent(agentData, false);
 };
 
 module.exports = {
