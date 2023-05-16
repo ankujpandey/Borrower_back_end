@@ -22,6 +22,9 @@ const {
   Generate_PdfController,
   LogconditionController,
   AgreementController,
+  BorrowerTransactionController,
+  PoolTransactionController,
+  PoolController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -237,8 +240,33 @@ router.get(
 );
 
 // ------------------------------------------
-// route for send Agreement
+// route to send Agreement
 // ------------------------------------------
 router.post("/sendAgreement", AgreementController.sendArgeementController);
 
+// ------------------------------------------
+// routes for Borrower Transactions
+// ------------------------------------------
+router.post(
+  "/createBorrowerTransaction",
+  BorrowerTransactionController.createTransactionController
+);
+
+router.get(
+  "/getUserTransaction/:id",
+  BorrowerTransactionController.findUserTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Transactions
+// ------------------------------------------
+router.post(
+  "/createPoolTransaction",
+  PoolTransactionController.createTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Transactions
+// ------------------------------------------
+router.post("/createPool", PoolController.createPoolController);
 module.exports = router;

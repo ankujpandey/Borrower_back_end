@@ -14,4 +14,7 @@ module.exports = {
   Log_service: require("./Log_services"),
   Logcondition_service: require("./logCondition_services"),
   SendAgreement_service: require("./sendAgreement_services"),
+  borrowerTxn_Service: require("./borrower_txn_services"),
+  poolTxn_Service: require("./pool_txn_services"),
+  Pool_Service: require("./pool_services"),
 };
