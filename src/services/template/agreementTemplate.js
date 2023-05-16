@@ -44,20 +44,20 @@ const agreementTemplate = (UserData, loanData) => {
 		</head>
 		<body>
 
-        <div class="modal-content" style="font-size: 10px;">
+        <div class="modal-content" style="font-size: 12px;text-align: justify;">
 					<div >
-						<h5 class="modal-title" id="exampleModalLabel">
+						<h5 class="modal-title mb-1" id="exampleModalLabel" style="text-align: center; font-weight: bold;">
 							Terms and Conditions & Loan Agreement
 						</h5>
 						
 					</div>
-					<div class="modal-body modals-card-border calculator-msg px-5 pb-3 pt-5 d-flex flex-column justify-content-around">
+					<div class="modal-body modals-card-border calculator-msg px-5 pb-3 d-flex flex-column justify-content-around">
 						<div class="col-12 mt-3">
 							<p>
 								These Master Terms and Conditions of the Loan Agreement ("
 								<b>MTCLA</b>") shall govern the general terms and conditions
 								applicable to the Loan (defined below) to be provided to
-								<b>Borrower(s)</b> by the <b>Lender(s)</b> through{" "}
+								<b>Borrower(s)</b> by the <b>Lender(s)</b> through 
 								<b>MrBorrower.com</b>
 							</p>
 							<p>
@@ -108,7 +108,6 @@ const agreementTemplate = (UserData, loanData) => {
 							</p>
 							<b>1. Definitions</b>
 							<br />
-							<br />
 							<p>
 								a. "<b>Borrower’s Dues</b>" means the outstanding principal
 								amount of the Loan and other amounts payable by the Borrower(s)
@@ -158,7 +157,7 @@ const agreementTemplate = (UserData, loanData) => {
 							<p>
 								g. "<b>MrBorrower Platform(s)</b>" shall mean and include all
 								digital footprint, mobile application(s) and website(s) of
-								MrBorrower.com and/or Confirming Party including{" "}
+								MrBorrower.com and/or Confirming Party including 
 								<a href="#">www.MrBorrower.com</a> operated under the brand
 								MrBorrower.
 							</p>
@@ -226,7 +225,7 @@ const agreementTemplate = (UserData, loanData) => {
 							<p>
 								<b>
 									This schedule is governed by the terms of the MTCLA executed
-									on at {date} Gurugram, Haryana.
+									on at ${today} Gurugram, Haryana.
 								</b>
 							</p>
 							<p>
@@ -271,8 +270,6 @@ const agreementTemplate = (UserData, loanData) => {
 								
 							</table>
 						</div>
-						<br/>
-						<br/>
 						<br/>
 						<br/>
 						<div>
