@@ -16,7 +16,7 @@ const createPoolController = async (req, res) => {
     return res.status(201).json({
       data: createPoolControllerData,
       success: true,
-      message: "Successfully created a transaction",
+      message: "Successfully created a pool table data",
       err: {},
     });
   } catch (error) {
@@ -24,7 +24,34 @@ const createPoolController = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Unable to create transaction",
+      message: "Unable to create pool table data",
+      err: error,
+    });
+  }
+};
+
+// -----------------------------------
+// get Particular Pool Id data
+// -----------------------------------
+
+const getParticularPoolController = async (req, res) => {
+  console.log("Pool get Particular Controller");
+  try {
+    const getParticularPoolControllerData =
+      await PoolService.getParticularPoolService(req.params.id);
+
+    return res.status(201).json({
+      data: getParticularPoolControllerData,
+      success: true,
+      message: "Successfully fetch particular pool table",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to fetch particular pool table",
       err: error,
     });
   }
@@ -57,4 +84,5 @@ const getPoolController = async (req, res) => {
 module.exports = {
   createPoolController,
   getPoolController,
+  getParticularPoolController,
 };

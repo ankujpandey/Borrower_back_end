@@ -41,6 +41,31 @@ class borrowerTxn_Repo {
       throw { error };
     }
   }
+
+  // ---------------------------------------------------------------
+  // finding transactions of a particular user of particular loan
+  // ---------------------------------------------------------------
+
+  async findUserLoanTransaction(uid, loanId) {
+    console.log("Borrower Transaction Repository");
+
+    try {
+      const transactions = await borrower_transaction.findAll({
+        where: {
+          uid: uid,
+          LoanID: loanId,
+          isDeleted: false,
+        },
+      });
+      return transactions;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Borrower Transaction Repository layer".magenta
+      );
+
+      throw { error };
+    }
+  }
 }
 
 module.exports = borrowerTxn_Repo;

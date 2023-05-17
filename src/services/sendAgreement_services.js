@@ -29,18 +29,21 @@ class SendAgreement_service {
       name:
         userInfoRepoResult.dataValues.firstName +
         " " +
-        userInfoRepoResult.dataValues.lastName,
+        userInfoRepoResult.lastName,
       email: usersRepoResult.email,
-      contact: userInfoRepoResult.dataValues.contact,
+      contact: userInfoRepoResult.contact,
     };
+    // console.log("usersRepoResult", usersRepoResult.email);
+    // console.log("userInfoRepoResult", userInfoRepoResult.lastName);
 
     const jobAssigneeRepoData = await this.jobAssigneeRepo.getJobAssigneeInfo(
       jobAssignees_id
     );
+    // console.log("jobAssigneeRepoData", jobAssigneeRepoData.name);
 
     const agentData = {
-      name: jobAssigneeRepoData.dataValues.name,
-      email: jobAssigneeRepoData.dataValues.email,
+      name: jobAssigneeRepoData.name,
+      email: jobAssigneeRepoData.email,
     };
 
     const html = emailTemplateDecide(userData, agentData, loanStatus);
@@ -100,12 +103,9 @@ class SendAgreement_service {
     const userInfoRepoResult =
       await this.userinfoRepository.getUserInfoDataEmail(uid);
     const userData = {
-      name:
-        userInfoRepoResult.dataValues.firstName +
-        " " +
-        userInfoRepoResult.dataValues.lastName,
+      name: userInfoRepoResult.firstName + " " + userInfoRepoResult.lastName,
       email: usersRepoResult.email,
-      contact: userInfoRepoResult.dataValues.contact,
+      contact: userInfoRepoResult.contact,
     };
 
     const jobAssigneeRepoData = await this.jobAssigneeRepo.getJobAssigneeInfo(
@@ -113,8 +113,8 @@ class SendAgreement_service {
     );
 
     const agentData = {
-      name: jobAssigneeRepoData.dataValues.name,
-      email: jobAssigneeRepoData.dataValues.email,
+      name: jobAssigneeRepoData.name,
+      email: jobAssigneeRepoData.email,
     };
 
     const html = emailTemplateDecide(userData, agentData, loanStatus);
@@ -138,7 +138,19 @@ class SendAgreement_service {
           subject: subjectDecide(loanStatus),
           html: html.agentTemplate,
         };
-      } else if (loanStatus == 1500 || loanStatus == -1000) {
+      } else if (loanStatus == 1500) {
+        message = {
+          to: `${agentData.email}`,
+          subject: subjectDecide(loanStatus),
+          html: html.agentTemplate,
+          attachments: [
+            {
+              filename: "agreement.pdf",
+              path: "src/controllers/agreement.pdf",
+            },
+          ],
+        };
+      } else if (loanStatus == -1000) {
         message = {
           to: `${agentData.email}`,
           subject: subjectDecide(loanStatus),

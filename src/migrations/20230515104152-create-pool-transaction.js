@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      PoolId: {
+      poolId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         // onDelete: "CASCADE",

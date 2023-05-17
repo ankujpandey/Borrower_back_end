@@ -257,6 +257,11 @@ router.get(
   BorrowerTransactionController.findUserTransactionController
 );
 
+router.get(
+  "/getUserLoanTransaction/:id",
+  BorrowerTransactionController.findUserLoanTransactionController
+);
+
 // ------------------------------------------
 // routes for Pool Transactions
 // ------------------------------------------
@@ -265,14 +270,27 @@ router.post(
   PoolTransactionController.createTransactionController
 );
 
+router.get(
+  "/getPoolTransaction/:id",
+  PoolTransactionController.getParticularTransactionController
+);
+
 // ------------------------------------------
 // routes for Pool Table
 // ------------------------------------------
 router.post("/addPoolBalance", PoolController.createPoolController);
-
+router.get(
+  "/getParticularPoolData/:id",
+  PoolController.getParticularPoolController
+);
 // -----------------------------------------------------------
 // get pool transcations + pool table data for pool dashboard
 // ------------------------------------------------------------
 router.get("/getPoolData", PoolController.getPoolController);
+
+router.get(
+  "/findAllPoolTransactions",
+  PoolTransactionController.findAllTransactionsController
+);
 
 module.exports = router;

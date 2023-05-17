@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      PoolId: {
+      poolId: {
         allowNull: true,
         type: DataTypes.INTEGER,
       },
