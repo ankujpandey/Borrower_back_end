@@ -201,8 +201,8 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
 router.get(
-	"/createAgreementPdf/:id",
-	Generate_PdfController.generateAgreementPdfController
+  "/createAgreementPdf/:id",
+  Generate_PdfController.generateAgreementPdfController
 );
 
 // --------------------------------------
@@ -256,12 +256,22 @@ router.get(
   BorrowerTransactionController.findUserTransactionController
 );
 
+router.get(
+  "/getUserLoanTransaction/:id",
+  BorrowerTransactionController.findUserLoanTransactionController
+);
+
 // ------------------------------------------
 // routes for Pool Transactions
 // ------------------------------------------
 router.post(
   "/createPoolTransaction",
   PoolTransactionController.createTransactionController
+);
+
+router.get(
+  "/findAllPoolTransactions",
+  PoolTransactionController.findAllTransactionsController
 );
 
 module.exports = router;

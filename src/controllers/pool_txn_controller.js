@@ -29,6 +29,34 @@ const createTransactionController = async (req, res) => {
   }
 };
 
+// -----------------------------------
+// find all transactions
+// -----------------------------------
+
+const findAllTransactionsController = async (req, res) => {
+  console.log("In Pool Transaction Controller");
+
+  try {
+    const transactions = await PoolTxnService.findAllTransactions();
+
+    return res.status(201).json({
+      data: transactions,
+      success: true,
+      message: "Successfully fetched all transactions",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to fetch transactions",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createTransactionController,
+  findAllTransactionsController,
 };

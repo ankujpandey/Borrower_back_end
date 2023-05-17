@@ -195,6 +195,12 @@ const acceptRejectAgent = (agentData, loanState) => {
 		</html>`;
 };
 
+// ------------------------------------------------------------------------
+// Email template for Loan_state = 1200
+// The user has read and accepted/rejected the loan agreement. This is a
+// notification mail to the user regarding the acceptance/rejection.
+// ------------------------------------------------------------------------
+
 const acceptRejectUser = (userData, loanState) => {
   return `<!DOCTYPE html>
 		  <html>

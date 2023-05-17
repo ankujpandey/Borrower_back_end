@@ -17,6 +17,27 @@ class poolTxn_Repo {
       throw { error };
     }
   }
+
+  // ---------------------------------------------
+  // get all transactions of pool table
+  // ---------------------------------------------
+
+  async findAllTransactions() {
+    console.log("Pool Transaction Repository");
+
+    try {
+      const transactions = await pool_transaction.findAll({
+        where: { isDeleted: false },
+      });
+      return transactions;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Pool Transaction Repository layer".magenta
+      );
+
+      throw { error };
+    }
+  }
 }
 
 module.exports = poolTxn_Repo;

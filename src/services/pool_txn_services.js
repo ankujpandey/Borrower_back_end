@@ -23,6 +23,25 @@ class poolTxn_Service {
       throw { error };
     }
   }
+
+  // ---------------------------------------------
+  // get all transactions of pool table
+  // ---------------------------------------------
+
+  async findAllTransactions() {
+    console.log("Pool Transaction Service");
+
+    try {
+      const transactions = await this.poolTxnRepo.findAllTransactions();
+      return transactions;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Pool Transaction Repository layer".magenta
+      );
+
+      throw { error };
+    }
+  }
 }
 
 module.exports = poolTxn_Service;
