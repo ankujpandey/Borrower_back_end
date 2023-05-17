@@ -11,6 +11,7 @@ module.exports = {
 			},
 			uid: {
 				type: Sequelize.INTEGER,
+				unique: true,
 				onDelete: "CASCADE",
 				references: {
 					model: "users",
@@ -19,6 +20,7 @@ module.exports = {
 			},
 			LoanId: {
 				allowNull: true,
+				unique: true,
 				type: Sequelize.INTEGER,
 				references: {
 					model: "loan_details",
@@ -36,6 +38,7 @@ module.exports = {
 			wallet_balance: {
 				allowNull: true,
 				type: Sequelize.STRING,
+				defaultValue: 0,
 			},
 			createdBy: {
 				allowNull: false,
