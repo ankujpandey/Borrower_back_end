@@ -9,6 +9,7 @@ const {
   user_info,
   Admin,
   Log_table,
+  JobAssignees,
 } = require("../models/index");
 
 class Users_repository {
@@ -52,9 +53,11 @@ class Users_repository {
         uid: user.uid,
       });
 
-      // await loan_details.create({
-      //   uid: user.uid,
-      // });
+      await loan_details.create({
+        uid: user.uid,
+        Loan_state: 1000,
+        jobAssignees_id: 1,
+      });
 
       obj.signUp = user;
       obj.userName = userInfo;
@@ -130,8 +133,17 @@ class Users_repository {
         },
       });
 
-      // console.log("admin found--", admin);
-      return admin;
+      if (admin) return admin;
+
+      const agent = await JobAssignees.findOne({
+        where: {
+          email: userLogin.email,
+          password: userLogin.password,
+          isDeleted: false,
+        },
+      });
+
+      return agent;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };
@@ -166,25 +178,25 @@ class Users_repository {
     }
   }
 
-  // -----------------------------------
-  // get all data
-  // -----------------------------------
+  // -------------------------------------
+  // get all data for user details page
+  // -------------------------------------
 
-	async getAllData(id) {
-		try {
-			const [data, metadata] = await sequelize.query(
-				`SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.professional_email, employment_details.business_nature,employment_details.monthly_income FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid WHERE users.uid = ${id} ;`
-			);
-			return data;
-		} catch (error) {
-			console.log("Something went wrong in repository layer".magenta);
-			throw { error };
-		}
-	}
+  async getAllData(id) {
+    try {
+      const [data, metadata] = await sequelize.query(
+        `SELECT users.uid, users.email,users.isActive, user_infos.firstName,user_infos.lastName,user_infos.contact,user_infos.pan,user_infos.aadhaar, user_infos.pinCode,user_infos.state,user_infos.city,user_infos.postOffice, bank_details.account_number,bank_details.ifsc_code,bank_details.bank_name,bank_details.branch_name, employment_details.employment_type,employment_details.company_name,employment_details.professional_email, employment_details.business_nature,employment_details.monthly_income, loan_details.Loan_state, loan_details.amountAsked, loan_details.roiAsked, loan_details.tenureAsked, loan_details.amountApproved, loan_details.minRoiApproved, loan_details.tenureApproved, JobAssignees.name AS AgentName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN bank_details ON users.uid = bank_details.uid INNER JOIN employment_details ON users.uid = employment_details.uid INNER JOIN loan_details ON users.uid = loan_details.uid INNER JOIN JobAssignees ON JobAssignees.jobAssignees_id = loan_details.jobAssignees_id WHERE users.uid = ${id} ;`
+      );
+      return data;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
 
-  // -----------------------------------
-  // get user+user_info data
-  // -----------------------------------
+  // --------------------------------------------------
+  // get user+user_info data for admin dashboard table
+  // --------------------------------------------------
 
   async getUserData(req) {
     try {
@@ -198,11 +210,54 @@ class Users_repository {
       const skip = (page - 1) * limit;
 
       const [data, metadata] = await sequelize.query(
-        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid LIMIT ${limit} OFFSET ${skip}`
+        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName, loan_details.Loan_state, JobAssignees.name AS AgentName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN loan_details ON users.uid = loan_details.uid INNER JOIN JobAssignees ON JobAssignees.jobAssignees_id = loan_details.jobAssignees_id LIMIT ${limit} OFFSET ${skip}`
       );
       reqObj.data = data;
       reqObj.length = len;
       return reqObj;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // --------------------------------------------------
+  // get user+user_info data for agent dashboard table
+  // --------------------------------------------------
+
+  async getUserDataAgent(req) {
+    try {
+      let [len, meta] = await sequelize.query(
+        "SELECT COUNT(*) as length From users"
+      );
+      const agentId = parseInt(req.agentId);
+      const page = parseInt(req.page) || 1;
+      const limit = parseInt(req.limit) || 2;
+      let reqObj = {};
+      const skip = (page - 1) * limit;
+
+      const [data, metadata] = await sequelize.query(
+        `SELECT users.uid, users.isDeleted, users.email,users.isActive,user_infos.contact, user_infos.pan, user_infos.aadhaar, user_infos.firstName,user_infos.lastName, loan_details.Loan_state, JobAssignees.name AS AgentName FROM users INNER JOIN user_infos ON users.uid = user_infos.uid INNER JOIN loan_details ON users.uid = loan_details.uid INNER JOIN JobAssignees ON JobAssignees.jobAssignees_id = loan_details.jobAssignees_id WHERE JobAssignees.jobAssignees_id = ${agentId} LIMIT ${limit} OFFSET ${skip}`
+      );
+      reqObj.data = data;
+      reqObj.length = len;
+      return reqObj;
+    } catch (error) {
+      console.log("Something went wrong in repository layer".magenta);
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // get user from table for email
+  // -----------------------------------
+  async getUserDataEmail(id) {
+    try {
+      const user = await users.findOne({
+        where: { uid: id, isDeleted: false },
+      });
+      console.log(user.brightCyan);
+      return user;
     } catch (error) {
       console.log("Something went wrong in repository layer".magenta);
       throw { error };

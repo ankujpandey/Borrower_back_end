@@ -1,44 +1,48 @@
-const { Users_repository } = require("../repository");
+const { Users_repository, Generate_Pdf } = require("../repository");
 const { getImages } = require("../mongodb/kyc_image");
-const pdfTemplate = require("./template/pdfTemplate");
-const puppeteer = require("puppeteer");
+const userDetailsPdf = require("./template/pdfTemplate");
+const agreementTemplate = require("./template/agreementTemplate");
+const { Loan_service } = require("./loan_services");
+// const puppeteer = require("puppeteer");
 
 class GeneratePdf_service {
-  constructor() {
-    this.usersRepository = new Users_repository();
-  }
-  // -----------------------------------
-  // insert into table
-  // -----------------------------------
-  async generatedpdfService(id) {
-    console.log("service==============", id);
-    const UserData = await this.usersRepository.getAllData(id);
-    const imageData = await getImages(id);
-    console.log("user============", UserData);
-    console.log("image==============", imageData[0].profile_photo);
+	constructor() {
+		this.usersRepository = new Users_repository();
+		this.generetePDF = new Generate_Pdf();
+	}
+	// -----------------------------------
+	// user details pdf download by admin
+	// -----------------------------------
+	async generateUserPdfServices(id) {
+		let object = {};
+		object.id = id;
 
-    // Create a browser instance
-    const browser = await puppeteer.launch();
+		console.log("service==============", id);
+		const UserData = await this.usersRepository.getAllData(id);
+		const imageData = await getImages(id);
 
-    // Create a new page
-    const page = await browser.newPage();
+		object.UserData = UserData;
+		object.SecondryData = imageData;
+		object.path = "./src/controllers/userData.pdf";
+		object.pdfTemplate = userDetailsPdf;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
 
-    const html = pdfTemplate(UserData, imageData[0].profile_photo);
-    await page.setContent(html, { waitUntil: "domcontentloaded" });
+	// -----------------------------------
+	// user agreement download
+	// -----------------------------------
+	async generateAgreementPdfServices(id, loanData) {
+		let object = {};
+		object.id = id;
 
-    // To reflect CSS used for screens instead of print
-    await page.emulateMediaType("screen");
+		console.log("service==============", loanData);
+		const UserData = await this.usersRepository.getAllData(id);
 
-    // Downlaod the PDF
-    const pdf = await page.pdf({
-      path: "./src/controllers/result.pdf",
-      margin: { top: "100px", right: "50px", bottom: "100px", left: "50px" },
-      printBackground: true,
-      format: "A4",
-    });
-
-    // Close the browser instance
-    await browser.close();
-  }
+		object.UserData = UserData;
+		object.SecondryData = loanData;
+		object.path = "./src/controllers/agreement.pdf";
+		object.pdfTemplate = agreementTemplate;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
 }
 module.exports = GeneratePdf_service;

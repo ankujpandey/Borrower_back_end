@@ -28,33 +28,47 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      Loan_state: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: "1200",
-      },
+
       jobAssignees_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: "1",
       },
-      amount: {
+      Loan_state: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "1000",
+      },
+      amountAsked: {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      rate_of_interest: {
+      roiAsked: {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      tenure: {
+      tenureAsked: {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      createdby: {
+      amountApproved: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      minRoiApproved: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      tenureApproved: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      createdBy: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "user",
       },
-      updatedby: {
+      updatedBy: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "user",

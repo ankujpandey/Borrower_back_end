@@ -12,4 +12,9 @@ module.exports = {
 	JobAssignees_service: require("./JobAssignees_services"),
 	GeneratePdf_service: require("./generatePdf_services"),
 	Log_service: require("./Log_services"),
+	Logcondition_service: require("./logCondition_services"),
+	SendAgreement_service: require("./sendAgreement_services"),
+	borrowerTxn_Service: require("./borrower_txn_services"),
+	poolTxn_Service: require("./pool_txn_services"),
+	BorrowerWallet_service: require("./borrower_wallet_services"),
 };

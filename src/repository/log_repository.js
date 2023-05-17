@@ -7,7 +7,9 @@ class Log_repository {
   async createLogRepo(data) {
     console.log("Log repositry");
     try {
+      console.log(data);
       const createLogData = await Log_table.create(data);
+      console.log("create log data", createLogData);
       return createLogData;
     } catch (error) {
       console.log("Something went wrong Log repository layer".magenta);
