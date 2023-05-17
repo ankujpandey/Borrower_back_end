@@ -23,10 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      running_balance: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
+
       available_balance: {
         allowNull: false,
         type: DataTypes.STRING,

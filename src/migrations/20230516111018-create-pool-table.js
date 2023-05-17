@@ -13,10 +13,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      running_balance: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+
       available_balance: {
         allowNull: false,
         type: Sequelize.STRING,

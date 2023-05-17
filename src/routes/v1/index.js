@@ -266,7 +266,13 @@ router.post(
 );
 
 // ------------------------------------------
-// routes for Pool Transactions
+// routes for Pool Table
 // ------------------------------------------
-router.post("/createPool", PoolController.createPoolController);
+router.post("/addPoolBalance", PoolController.createPoolController);
+
+// -----------------------------------------------------------
+// get pool transcations + pool table data for pool dashboard
+// ------------------------------------------------------------
+router.get("/getPoolData", PoolController.getPoolController);
+
 module.exports = router;
