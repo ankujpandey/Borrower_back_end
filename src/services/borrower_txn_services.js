@@ -7,9 +7,9 @@ class borrowerTxn_Service {
 		this.borrowerwalletRepo = new BorrowerWallet();
 	}
 
-	// -----------------------------------
-	// insert into table
-	// -----------------------------------
+	// -------------------------------------------
+	//  debit and credit + insert data into table
+	// -------------------------------------------
 
 	async createTransaction(data) {
 		console.log("Borrower Transaction Service");
@@ -20,6 +20,7 @@ class borrowerTxn_Service {
 			// console.log("wallet balance", wallet?.dataValues, data);
 
 			if (data?.credit_Amount) {
+				data.txn_flow = "credit";
 				var walletBalance =
 					parseFloat(wallet?.dataValues?.wallet_balance) +
 					parseFloat(data?.credit_Amount);
@@ -30,6 +31,7 @@ class borrowerTxn_Service {
 				console.log("less money detected.");
 				throw new Error("Please Add Money!");
 			} else {
+				data.txn_flow = "debit";
 				var walletBalance =
 					parseFloat(wallet?.dataValues?.wallet_balance) -
 					parseFloat(data?.debit_Amount);
