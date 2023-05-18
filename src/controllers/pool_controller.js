@@ -82,8 +82,36 @@ const getPoolController = async (req, res) => {
     });
   }
 };
+
+// -----------------------------------------
+// find pool Balance
+// -----------------------------------------
+const getPoolBalanceController = async (req, res) => {
+  console.log("Pool get Pool balance Controller");
+  try {
+    const getPoolBalanceControllerData =
+      await PoolService.getPoolBalanceService();
+
+    return res.status(201).json({
+      data: getPoolBalanceControllerData,
+      success: true,
+      message: "Successfully fetch balance pool table",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to fetch balance pool table",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createPoolController,
   getPoolController,
   getParticularPoolController,
+  getPoolBalanceController,
 };
