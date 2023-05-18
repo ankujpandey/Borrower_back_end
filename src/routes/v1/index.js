@@ -24,6 +24,7 @@ const {
   AgreementController,
   BorrowerTransactionController,
   PoolTransactionController,
+  BorrowerWalletController,
   PoolController,
 } = require("../../controllers");
 
@@ -255,6 +256,19 @@ router.post(
 router.get(
   "/getUserTransaction/:id",
   BorrowerTransactionController.findUserTransactionController
+);
+
+// ------------------------------------------
+// routes for Borrower Wallet
+// ------------------------------------------
+router.post(
+  "/createBorrowerWallet",
+  BorrowerWalletController.createWalletController
+);
+
+router.get(
+  "/getBorrowerWallet/:id",
+  BorrowerWalletController.getWalletController
 );
 
 router.get(

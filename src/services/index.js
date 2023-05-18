@@ -16,5 +16,6 @@ module.exports = {
   SendAgreement_service: require("./sendAgreement_services"),
   borrowerTxn_Service: require("./borrower_txn_services"),
   poolTxn_Service: require("./pool_txn_services"),
+  BorrowerWallet_service: require("./borrower_wallet_services"),
   Pool_Service: require("./pool_services"),
 };

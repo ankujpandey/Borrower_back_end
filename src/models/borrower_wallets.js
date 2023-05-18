@@ -29,10 +29,12 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			uid: {
 				allowNull: true,
+				unique: true,
 				type: DataTypes.INTEGER,
 			},
 			LoanId: {
 				allowNull: true,
+				unique: true,
 				type: DataTypes.INTEGER,
 			},
 			txn_type: {
@@ -46,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 			wallet_balance: {
 				allowNull: true,
 				type: DataTypes.STRING,
+				defaultValue: 0,
 			},
 			createdBy: {
 				allowNull: false,
