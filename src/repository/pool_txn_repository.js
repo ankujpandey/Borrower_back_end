@@ -39,6 +39,25 @@ class poolTxn_Repo {
       throw { error };
     }
   }
+
+  // ---------------------------------------------------
+  // find Particular transactions using pool Id
+  // ---------------------------------------------------
+  async getParticularTranscationRepo(id) {
+    console.log("Pool get Particular repositroy");
+    try {
+      const getParticularTranscationRepoData = await pool_transaction.findOne({
+        where: { poolId: id },
+      });
+      // console.log(user.brightCyan);
+      return getParticularTranscationRepoData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in get Particular repository layer".magenta
+      );
+      throw { error };
+    }
+  }
 }
 
 module.exports = poolTxn_Repo;

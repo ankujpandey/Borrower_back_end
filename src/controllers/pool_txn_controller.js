@@ -56,7 +56,34 @@ const findAllTransactionsController = async (req, res) => {
   }
 };
 
+// ---------------------------------------------------
+// find Particular transactions using pool Id
+// ---------------------------------------------------
+const getParticularTransactionController = async (req, res) => {
+  console.log(" find Particular transactions using pool Id Controller");
+  try {
+    const getParticularTransactionControllerData =
+      await PoolTxnService.getParticularTransacationService(req.params.id);
+
+    return res.status(201).json({
+      data: getParticularTransactionControllerData,
+      success: true,
+      message: "Successfully fetch particular transactions table",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to fetch particular transactions table",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createTransactionController,
   findAllTransactionsController,
+  getParticularTransactionController,
 };

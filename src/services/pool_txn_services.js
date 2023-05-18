@@ -42,6 +42,25 @@ class poolTxn_Service {
       throw { error };
     }
   }
+  // ---------------------------------------------------
+  // find Particular transactions using pool Id
+  // ---------------------------------------------------
+
+  async getParticularTransacationService(id) {
+    console.log("Transcations get particular Service");
+    try {
+      const getParticularTransacationServiceData =
+        await this.poolTxnRepo.getParticularTranscationRepo(id);
+      return getParticularTransacationServiceData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in  get particluar transcations services layer"
+          .magenta
+      );
+
+      throw { error };
+    }
+  }
 }
 
 module.exports = poolTxn_Service;

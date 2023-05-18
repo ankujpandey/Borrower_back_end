@@ -13,4 +13,5 @@ module.exports = {
   Generate_Pdf: require("./pdfGenerator_repository"),
   borrowerTxn_Repo: require("./borrower_txn_repository"),
   poolTxn_Repo: require("./pool_txn_repository"),
+  Pool_repository: require("./pool_repository"),
 };

@@ -24,6 +24,7 @@ const {
   AgreementController,
   BorrowerTransactionController,
   PoolTransactionController,
+  PoolController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -268,6 +269,24 @@ router.post(
   "/createPoolTransaction",
   PoolTransactionController.createTransactionController
 );
+
+router.get(
+  "/getPoolTransaction/:id",
+  PoolTransactionController.getParticularTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Table
+// ------------------------------------------
+router.post("/addPoolBalance", PoolController.createPoolController);
+router.get(
+  "/getParticularPoolData/:id",
+  PoolController.getParticularPoolController
+);
+// -----------------------------------------------------------
+// get pool transcations + pool table data for pool dashboard
+// ------------------------------------------------------------
+router.get("/getPoolData", PoolController.getPoolController);
 
 router.get(
   "/findAllPoolTransactions",

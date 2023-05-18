@@ -16,4 +16,5 @@ module.exports = {
   AgreementController: require("./sendAgreement_controller"),
   BorrowerTransactionController: require("./borrower_txn_controller"),
   PoolTransactionController: require("./pool_txn_controller"),
+  PoolController: require("./pool_controller"),
 };
