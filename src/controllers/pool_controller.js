@@ -61,7 +61,8 @@ const getParticularPoolController = async (req, res) => {
 // get pool+pool_transcation  data for pool table
 // --------------------------------------------------
 const getPoolController = async (req, res) => {
-  console.log("Pool get Controller");
+  console.log("Pool get Controller", req.query);
+
   try {
     const getPoolControllerData = await PoolService.getPoolService(req.query);
 

@@ -45,14 +45,14 @@ class Pool_Service {
   // --------------------------------------------------
   // get pool+pool_transcation  data for pool table
   // --------------------------------------------------
-  async getPoolService(data) {
+  async getPoolService(id) {
     console.log("Pool get  Service");
     const getPoolServiceData = {};
     try {
       getPoolServiceData.pool_table =
-        await this.PoolRepository.getParticularPoolRepo(id);
+        await this.PoolRepository.getParticularPoolRepo(id.PoolId);
       getPoolServiceData.poolTxn_table =
-        await this.poolTxnRepo.getParticularTranscationRepo(id);
+        await this.poolTxnRepo.getParticularTranscationRepo(id.PoolId);
       return getPoolServiceData;
     } catch (error) {
       console.log(
