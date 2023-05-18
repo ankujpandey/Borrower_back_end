@@ -26,10 +26,7 @@ class SendAgreement_service {
     const userInfoRepoResult =
       await this.userinfoRepository.getUserInfoDataEmail(uid);
     const userData = {
-      name:
-        userInfoRepoResult.dataValues.firstName +
-        " " +
-        userInfoRepoResult.lastName,
+      name: userInfoRepoResult.firstName + " " + userInfoRepoResult.lastName,
       email: usersRepoResult.email,
       contact: userInfoRepoResult.contact,
     };
@@ -81,6 +78,12 @@ class SendAgreement_service {
               path: "src/controllers/agreement.pdf",
             },
           ],
+        };
+      } else if (loanStatus == 1600) {
+        message = {
+          to: `${userData.email}`,
+          subject: subjectDecide(loanStatus),
+          html: html.userTemplate,
         };
       }
 

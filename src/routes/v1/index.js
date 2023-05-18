@@ -103,6 +103,12 @@ router.get(
   LoanController.getLoanWithEMIController
 );
 
+router.post(
+  "/disburseLoan",
+  JWTToken.verifyToken,
+  LoanController.loanDisbursementController
+);
+
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
