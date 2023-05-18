@@ -13,6 +13,7 @@ class poolTxn_Repo {
       return transaction;
     } catch (error) {
       console.log("Something went wrong in Pool Transaction Repo".magenta);
+      console.log(error);
 
       throw { error };
     }
