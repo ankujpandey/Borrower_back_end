@@ -1,5 +1,4 @@
 module.exports = {
-<<<<<<< HEAD
   UserInfo_repository: require("./userInfo_repository"),
   Users_repository: require("./users_repository"),
   Loan_repository: require("./loan_repositry"),
@@ -14,24 +13,6 @@ module.exports = {
   Generate_Pdf: require("./pdfGenerator_repository"),
   borrowerTxn_Repo: require("./borrower_txn_repository"),
   poolTxn_Repo: require("./pool_txn_repository"),
+  BorrowerWallet: require("./borrower_wallet_repository"),
   Pool_repository: require("./pool_repository"),
-=======
-	UserInfo_repository: require("./userInfo_repository"),
-	Users_repository: require("./users_repository"),
-	Loan_repository: require("./loan_repositry"),
-	Bank_repository: require("./bank_repository"),
-	Employment_repository: require("./employment_repository"),
-	Company_repository: require("./company_repositry"),
-	Admin_repository: require("./admin_repository"),
-	EMI_calculator: require("./emiCalculator_repository"),
-	JobAssignee_Repo: require("./jobAssignees_repository"),
-	Log_repository: require("./log_repository"),
-	Logcondition_repository: require("./logCondition_repository"),
-	Generate_Pdf: require("./pdfGenerator_repository"),
-	borrowerTxn_Repo: require("./borrower_txn_repository"),
-	poolTxn_Repo: require("./pool_txn_repository"),
-	BorrowerWallet: require("./borrower_wallet_repository"),
-  Pool_repository: require("./pool_repository"),
-
->>>>>>> 3706dcc4df88e495c74e10fbcb9eacbd121d298e
 };
