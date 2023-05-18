@@ -49,7 +49,6 @@ class poolTxn_Repo {
       const getParticularTranscationRepoData = await pool_transaction.findOne({
         where: { poolId: id },
       });
-      // console.log(user.brightCyan);
       return getParticularTranscationRepoData;
     } catch (error) {
       console.log(

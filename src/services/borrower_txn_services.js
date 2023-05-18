@@ -1,6 +1,4 @@
-const { borrowerTxn_Repo } = require("../repository");
-const { BorrowerWallet } = require("../repository");
-
+const { borrowerTxn_Repo, BorrowerWallet } = require("../repository");
 class borrowerTxn_Service {
   constructor() {
     this.borrowerTxnRepo = new borrowerTxn_Repo();

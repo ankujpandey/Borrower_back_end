@@ -1,8 +1,9 @@
-const { poolTxn_Repo } = require("../repository");
+const { poolTxn_Repo, Pool_repository } = require("../repository");
 
 class poolTxn_Service {
   constructor() {
     this.poolTxnRepo = new poolTxn_Repo();
+    this.poolRepo = new Pool_repository();
   }
 
   // -----------------------------------
@@ -13,7 +14,29 @@ class poolTxn_Service {
     console.log("Pool Transaction Service");
 
     try {
+      const poolData = await this.poolRepo.getPoolBalance();
+      var poolBalance = poolData[0].balance;
+
+      if (data?.credit_Amount) {
+        data.txn_flow = "credit";
+        poolBalance = parseFloat(poolBalance) + parseFloat(data?.credit_Amount);
+      } else if (poolBalance < data?.debit_Amount) {
+        console.log("pool balance low!!");
+        throw new Error("Please Add Money!");
+      } else {
+        data.txn_flow = "debit";
+        poolBalance = parseFloat(poolBalance) - parseFloat(data?.debit_Amount);
+      }
+
+      data.running_Amount = poolBalance;
+
       const transaction = await this.poolTxnRepo.createTransaction(data);
+
+      const updatePoolBalance = await this.poolRepo.updatePoolBalance({
+        available_balance: poolBalance,
+      });
+
+      console.log(updatePoolBalance);
       return transaction;
     } catch (error) {
       console.log(

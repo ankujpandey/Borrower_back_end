@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       cndtn_code: {
-        type: DataTypes.STRING,
+        allowNull: false,
         type: DataTypes.STRING,
         unique: true,
       },

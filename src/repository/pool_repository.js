@@ -1,4 +1,4 @@
-const { pool_table } = require("../models");
+const { pool_table, sequelize } = require("../models");
 
 class Pool_repository {
   // -----------------------------------
@@ -18,18 +18,58 @@ class Pool_repository {
     }
   }
 
-  // -----------------------------------
-  // get particular pool ID table data
-  // -----------------------------------
+  // -----------------------------------------
+  // get particular pool data using poolId
+  // -----------------------------------------
 
   async getParticularPoolRepo(id) {
-    console.log("Pool get Particular repositroy");
+    console.log("Pool get Particular repository");
     try {
       const getParticularPoolRepoData = await pool_table.findOne({
         where: { poolId: id },
       });
-      // console.log(user.brightCyan);
       return getParticularPoolRepoData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in get Particular repository layer".magenta
+      );
+      throw { error };
+    }
+  }
+
+  // -----------------------------------------
+  // find pool Balance
+  // -----------------------------------------
+  async getPoolBalance() {
+    try {
+      const balance = await pool_table.findAll({
+        attributes: [
+          [sequelize.fn("sum", sequelize.col("available_balance")), "balance"],
+        ],
+        raw: true,
+      });
+
+      return balance;
+    } catch (error) {
+      console.log(
+        "Something went wrong in get Particular repository layer".magenta
+      );
+      throw { error };
+    }
+  }
+
+  // -----------------------------------------
+  // update pool Balance
+  // -----------------------------------------
+  async updatePoolBalance(data) {
+    try {
+      const balance = await pool_table.update(data, {
+        where: {
+          poolId: 1,
+          isDeleted: false,
+        },
+      });
+      return balance;
     } catch (error) {
       console.log(
         "Something went wrong in get Particular repository layer".magenta

@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("pool_transactions", {
-      PoolTxn_id: {
+      pool_txn_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -12,13 +12,12 @@ module.exports = {
       poolId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // onDelete: "CASCADE",
-        // references: {
-        //   model: "users",
-        //   key: "uid",
-        // },
+        onDelete: "CASCADE",
+        references: {
+          model: "pool_tables",
+          key: "poolId",
+        },
       },
-
       txn_type: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -27,12 +26,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      CreditAmount: {
+      credit_Amount: {
         allowNull: false,
         type: Sequelize.STRING,
         defaultValue: 0,
       },
-      DebitAmount: {
+      debit_Amount: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 0,
+      },
+      running_Amount: {
         allowNull: false,
         type: Sequelize.STRING,
         defaultValue: 0,

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   pool_transaction.init(
     {
-      PoolTxn_id: {
+      pool_txn_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -31,15 +31,35 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      CreditAmount: {
+      credit_Amount: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: 0,
       },
-      DebitAmount: {
+      debit_Amount: {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: 0,
+      },
+      running_Amount: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 0,
+      },
+      createdBy: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "admin",
+      },
+      updatedBy: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "admin",
+      },
+      isDeleted: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
