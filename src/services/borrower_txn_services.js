@@ -5,9 +5,9 @@ class borrowerTxn_Service {
 		this.borrowerwalletRepo = new BorrowerWallet();
 	}
 
-	// -----------------------------------
-	// insert into table
-	// -----------------------------------
+	// -------------------------------------------
+	//  debit and credit + insert data into table
+	// -------------------------------------------
 
 	async createTransaction(data) {
 		console.log("Borrower Transaction Service");

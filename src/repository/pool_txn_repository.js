@@ -1,4 +1,4 @@
-const { pool_transaction } = require("../models");
+const { pool_transaction, sequelize } = require("../models");
 
 class poolTxn_Repo {
   // -----------------------------------
@@ -23,20 +23,27 @@ class poolTxn_Repo {
   // get all transactions of pool table
   // ---------------------------------------------
 
-  async findAllTransactions() {
-    console.log("Pool Transaction Repository");
-
+  async findAllTransactions(req) {
     try {
-      const transactions = await pool_transaction.findAll({
-        where: { isDeleted: false },
-      });
-      return transactions;
+      let [len, meta] = await sequelize.query(
+        `SELECT COUNT(*) as length FROM pool_transactions`
+      );
+      console.log("len-----------", len);
+      const page = parseInt(req.page) || 1;
+      const limit = parseInt(req.limit) || 2;
+      let reqObj = {};
+      const skip = (page - 1) * limit;
+      const [data, metadata] = await sequelize.query(
+        `SELECT * FROM pool_transactions LIMIT ${limit} OFFSET ${skip} `
+      );
+      console.log("daATA-----------", data);
+      reqObj.data = data;
+      reqObj.length = len;
+      return reqObj;
     } catch (error) {
       console.log(
-        "Something went wrong in Pool Transaction Repository layer".magenta
+        "Something went wrong in pool transcation repository layer".magenta.bold
       );
-
-      throw { error };
     }
   }
 

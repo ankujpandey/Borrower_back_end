@@ -173,7 +173,6 @@ const findUserLoanTransactionController = async (req, res) => {
 module.exports = {
 	createTransactionController,
 	findUserTransactionController,
-	selfDeductTransactionController,
-
 	findUserLoanTransactionController,
+	selfDeductTransactionController,
 };

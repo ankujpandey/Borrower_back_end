@@ -62,6 +62,24 @@ class Pool_Service {
       throw { error };
     }
   }
+
+  // -----------------------------------------
+  // find pool Balance
+  // -----------------------------------------
+  async getPoolBalanceService() {
+    console.log("Pool get balance  Service");
+    try {
+      const getPoolBalanceServiceData =
+        await this.PoolRepository.getPoolBalance();
+      return getPoolBalanceServiceData;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Pool get balance services layer".magenta
+      );
+
+      throw { error };
+    }
+  }
 }
 
 module.exports = Pool_Service;

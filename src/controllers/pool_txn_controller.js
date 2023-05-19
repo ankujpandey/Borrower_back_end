@@ -19,7 +19,6 @@ const createTransactionController = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       data: {},
       success: false,
@@ -37,7 +36,7 @@ const findAllTransactionsController = async (req, res) => {
   console.log("In Pool Transaction Controller");
 
   try {
-    const transactions = await PoolTxnService.findAllTransactions();
+    const transactions = await PoolTxnService.findAllTransactions(req.query);
 
     return res.status(201).json({
       data: transactions,

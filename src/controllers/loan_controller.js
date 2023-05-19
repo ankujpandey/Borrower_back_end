@@ -133,17 +133,13 @@ const getLoanDataController = async (req, res) => {
 const updateLoanStatusController = async (req, res) => {
 	// console.log("loan controller");
 
-	console.log("this is body----->>>>>>>>>>>>>>>>>", req.body.Loan_state);
+	console.log("this is body----->>>>>>>>>>>>>>>>>", req.body);
 	// const storeRequestResponse = {};
 	// const requestObj = {};
 	// requestObj.body = req.body;
 	// requestObj.headers = req.rawHeaders;
 	// storeRequestResponse.request = requestObj;
 	try {
-		if (req.body.Loan_state === 1500) {
-			const wallet = await walletServices.createWalletServices(req.body);
-		}
-
 		const updatedLoanStatus = await loanService.updateLoanStatusService(
 			req.body
 		);
@@ -241,7 +237,7 @@ const getLoanStatusController = async (req, res) => {
 // get particular loan data with EMI calculations
 // ------------------------------------------------
 const getLoanWithEMIController = async (req, res) => {
-	console.log("loan csontroller");
+	console.log("loan controller");
 	// const storeRequestResponse = {};
 	// const requestObj = {};
 	// requestObj.body = req.body;
@@ -280,6 +276,52 @@ const getLoanWithEMIController = async (req, res) => {
 	}
 };
 
+// -----------------------------------
+// self deduct Seduled EMI
+// -----------------------------------
+
+const selfDeductTransactionController = async (req, res) => {
+	console.log("In Borrower self deduct transaction Controller");
+
+	try {
+		const startTime = new Date(Date.now() + 5000);
+		const endTime = new Date(startTime.getTime() + 5000);
+		const job = schedule.scheduleJob(
+			{ start: startTime, end: endTime, rule: "*/1 * * * * *" },
+			function () {
+				console.log("Time for tea!");
+			}
+		);
+		try {
+			const transaction = await BorrowerTxnService.createTransaction(req.body);
+
+			return res.status(201).json({
+				data: transaction,
+				success: true,
+				message: "Successfully created a transaction",
+				err: {},
+			});
+		} catch (error) {
+			console.log("error detected in wallet transaction", typeof error);
+			if (error.error.message === "Please Add Money!") {
+				return res.status(503).json({
+					data: {},
+					success: false,
+					message: "Unable to create transaction",
+					err: error.error.message,
+				});
+			}
+		}
+	} catch (error) {
+		return res.status(500).json({
+			data: {},
+			success: false,
+			message: "Unable to create transaction",
+			err: error.error.message,
+		});
+	}
+};
+
 // -----------------------------------------
 // loan Disbursement
 // -----------------------------------------
@@ -309,13 +351,13 @@ const loanDisbursementController = async (req, res) => {
 		};
 
 		if (updateLoanState) {
-			// await poolTxnService.createTransaction(poolData);
+			await poolTxnService.createTransaction(poolData);
 			await borrowerTxnService.createTransaction(walletData);
-			// await SendAgreementService.sendAgreementUserService(
-			// 	req.body.uid,
-			// 	req.body.jobAssignees_id,
-			// 	req.body.Loan_state
-			// );
+			await SendAgreementService.sendAgreementUserService(
+				req.body.uid,
+				req.body.jobAssignees_id,
+				req.body.Loan_state
+			);
 		}
 		return res.status(201).json({
 			data: updateLoanState,
@@ -332,6 +374,16 @@ const loanDisbursementController = async (req, res) => {
 		//   err: error,
 		// };
 		// saveReqRes(storeRequestResponse);
+
+		if (error.error.message === "Please Add Money!") {
+			await SendAgreementService.sendAgreementAdminService();
+			return res.status(503).json({
+				data: {},
+				success: false,
+				message: "Unable to create transaction",
+				err: error.error.message,
+			});
+		}
 		return res.status(500).json({
 			data: {},
 			success: false,
