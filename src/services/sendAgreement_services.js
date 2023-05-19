@@ -88,6 +88,12 @@ class SendAgreement_service {
           subject: subjectDecide(loanStatus),
           html: html,
         };
+      } else if (loanStatus == 1700) {
+        message = {
+          to: `${userData.email}`,
+          subject: subjectDecide(loanStatus),
+          html: html,
+        };
       }
 
       const info = await transporter.sendMail(message);

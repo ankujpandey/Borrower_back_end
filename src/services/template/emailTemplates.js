@@ -306,6 +306,100 @@ const loanDisburse = (userData) => {
 			</html>`;
 };
 
+// ---------------------------------------
+// To tell admin about low pool balance
+// ---------------------------------------
+
+const sendEmailtoAdmin = () => {
+  return `<!DOCTYPE html>
+	  <html>
+		  <head>
+			  <title>Email Template</title>
+			  <link
+		  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+		  rel="stylesheet"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		  </head>
+		  <body>
+  
+	  <br/>
+	  <div class="fw-bold">
+		  Hello Admin !!
+		</div>
+		
+		<br/>
+	  <div>
+  
+	  <div>
+	  The pool balance is low!! Kindly add money to the pool balance so that the pending loans can be disbursed.
+  
+	  </div>
+  
+	  
+		</div>
+		<br/>
+		<br/>
+		
+		<div>Regards,
+		<br/>
+		Team Borrower
+		<br/>
+		Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
+		<br/>
+		+0120 465 9902
+		<br/>
+		faircentmrborrower@gmail.com</div>
+  
+		  </body>
+	  </html>`;
+};
+
+const loanRepaidUser = (userData) => {
+  return `<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Email Template</title>
+				<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		  />
+		  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+			</head>
+			<body>
+	
+		<br/>
+		<div class="fw-bold">
+			Hello ${userData.name} !
+		  </div>
+		  
+		  <br/>
+		<div>
+	
+		<div>
+		The loan provided by you has been repaid successfully. The NOC certificate has been attached to the mail. Kindly refer to it for more details.
+	
+		</div>
+	
+		
+		  </div>
+		  <br/>
+		  <br/>
+		  
+		  <div>Regards,
+		  <br/>
+		  Team Borrower
+		  <br/>
+		  Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
+		  <br/>
+		  +0120 465 9902
+		  <br/>
+		  faircentmrborrower@gmail.com</div>
+	
+			</body>
+		</html>`;
+};
+
 const subjectDecide = (loanState) => {
   if (loanState == 1200) {
     return "Loan application submitted.";
@@ -315,6 +409,8 @@ const subjectDecide = (loanState) => {
     return "Loan agreement accepted.";
   } else if (loanState == 1600) {
     return "Loan disbursed.";
+  } else if (loanState == 1700) {
+    return "Loan repaid.";
   } else return "Loan agreement rejected.";
 };
 
@@ -333,52 +429,9 @@ const emailTemplateDecide = (userData, agentData, loanState, agent) => {
     return { userTemplate, agentTemplate };
   } else if (loanState == 1600) {
     return loanDisburse(userData);
+  } else if (loanState == 1700) {
+    return loanRepaidUser(userData);
   } else return acceptRejectAgent(agentData, false);
-};
-
-const sendEmailtoAdmin = () => {
-  return `<!DOCTYPE html>
-	<html>
-		<head>
-			<title>Email Template</title>
-			<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-		rel="stylesheet"
-	  />
-	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-		</head>
-		<body>
-
-	<br/>
-	<div class="fw-bold">
-		Hello Admin !!
-	  </div>
-	  
-	  <br/>
-	<div>
-
-	<div>
-	The pool balance is low!! Kindly add money to the pool balance so that the pending loans can be disbursed.
-
-	</div>
-
-	
-	  </div>
-	  <br/>
-	  <br/>
-	  
-	  <div>Regards,
-	  <br/>
-	  Team Borrower
-	  <br/>
-	  Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
-	  <br/>
-	  +0120 465 9902
-	  <br/>
-	  faircentmrborrower@gmail.com</div>
-
-		</body>
-	</html>`;
 };
 
 module.exports = {
