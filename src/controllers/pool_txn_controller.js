@@ -19,15 +19,6 @@ const createTransactionController = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
-    if (error.error.message === "Please Add Money!") {
-      return res.status(503).json({
-        data: {},
-        success: false,
-        message: "Unable to create transaction",
-        err: error.error.message,
-      });
-    }
     return res.status(500).json({
       data: {},
       success: false,

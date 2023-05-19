@@ -3,12 +3,14 @@ const {
   appliedUser,
   subjectDecide,
   emailTemplateDecide,
+  sendEmailtoAdmin,
 } = require("./template/emailTemplates");
 
 const {
   UserInfo_repository,
   Users_repository,
   JobAssignee_Repo,
+  Admin_repository,
 } = require("../repository");
 
 class SendAgreement_service {
@@ -16,6 +18,7 @@ class SendAgreement_service {
     this.userinfoRepository = new UserInfo_repository();
     this.usersRepository = new Users_repository();
     this.jobAssigneeRepo = new JobAssignee_Repo();
+    this.AdminRepository = new Admin_repository();
   }
 
   // -----------------------------------
@@ -167,6 +170,46 @@ class SendAgreement_service {
         };
       }
 
+      const info = await transporter.sendMail(message);
+      console.log(info);
+      return info;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Send Agreement services layer".magenta
+      );
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // send email to admin
+  // -----------------------------------
+
+  async sendAgreementAdminService() {
+    const admin = await this.AdminRepository.getAllAdmins();
+
+    let mailList = [];
+    admin.forEach((element) => {
+      mailList.push(element.email);
+    });
+    console.log("mailList", mailList);
+    const html = sendEmailtoAdmin();
+    console.log("html-----", html);
+    try {
+      var transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: "faircentmrborrower@gmail.com",
+          pass: "amdozngheogafooc",
+        },
+      });
+
+      const message = {
+        to: mailList,
+        subject: "Pool balance low!! Please add money.",
+        html: html,
+      };
       const info = await transporter.sendMail(message);
       console.log(info);
       return info;
