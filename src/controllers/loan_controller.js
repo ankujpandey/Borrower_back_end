@@ -3,6 +3,7 @@ const {
 	SendAgreement_service,
 	poolTxn_Service,
 	borrowerTxn_Service,
+	BorrowerWallet_service,
 } = require("../services");
 const { saveReqRes } = require("../mongodb/index");
 const { createLogController } = require("./log_controller");
@@ -12,6 +13,7 @@ const loanService = new Loan_service();
 const SendAgreementService = new SendAgreement_service();
 const poolTxnService = new poolTxn_Service();
 const borrowerTxnService = new borrowerTxn_Service();
+const walletServices = new BorrowerWallet_service();
 
 // -----------------------------------
 // insert into table
@@ -131,13 +133,17 @@ const getLoanDataController = async (req, res) => {
 const updateLoanStatusController = async (req, res) => {
 	// console.log("loan controller");
 
-	console.log("this is body----->>>>>>>>>>>>>>>>>", req.body);
+	console.log("this is body----->>>>>>>>>>>>>>>>>", req.body.Loan_state);
 	// const storeRequestResponse = {};
 	// const requestObj = {};
 	// requestObj.body = req.body;
 	// requestObj.headers = req.rawHeaders;
 	// storeRequestResponse.request = requestObj;
 	try {
+		if (req.body.Loan_state === 1500) {
+			const wallet = await walletServices.createWalletServices(req.body);
+		}
+
 		const updatedLoanStatus = await loanService.updateLoanStatusService(
 			req.body
 		);
@@ -303,13 +309,13 @@ const loanDisbursementController = async (req, res) => {
 		};
 
 		if (updateLoanState) {
-			await poolTxnService.createTransaction(poolData);
+			// await poolTxnService.createTransaction(poolData);
 			await borrowerTxnService.createTransaction(walletData);
-			await SendAgreementService.sendAgreementUserService(
-				req.body.uid,
-				req.body.jobAssignees_id,
-				req.body.Loan_state
-			);
+			// await SendAgreementService.sendAgreementUserService(
+			// 	req.body.uid,
+			// 	req.body.jobAssignees_id,
+			// 	req.body.Loan_state
+			// );
 		}
 		return res.status(201).json({
 			data: updateLoanState,
