@@ -264,6 +264,11 @@ router.get(
   BorrowerTransactionController.findUserTransactionController
 );
 
+router.post(
+	"/selfDeductTransaction/:id",
+	BorrowerTransactionController.selfDeductTransactionController
+);
+
 // ------------------------------------------
 // routes for Borrower Wallet
 // ------------------------------------------

@@ -235,7 +235,7 @@ const getLoanStatusController = async (req, res) => {
 // get particular loan data with EMI calculations
 // ------------------------------------------------
 const getLoanWithEMIController = async (req, res) => {
-  console.log("loan csontroller");
+  console.log("loan controller");
   // const storeRequestResponse = {};
   // const requestObj = {};
   // requestObj.body = req.body;
@@ -270,6 +270,52 @@ const getLoanWithEMIController = async (req, res) => {
       success: false,
       message: "Unable to fetch loan status",
       err: error,
+    });
+  }
+};
+
+// -----------------------------------
+// self deduct Seduled EMI
+// -----------------------------------
+
+const selfDeductTransactionController = async (req, res) => {
+  console.log("In Borrower self deduct transaction Controller");
+
+  try {
+    const startTime = new Date(Date.now() + 5000);
+    const endTime = new Date(startTime.getTime() + 5000);
+    const job = schedule.scheduleJob(
+      { start: startTime, end: endTime, rule: "*/1 * * * * *" },
+      function () {
+        console.log("Time for tea!");
+      }
+    );
+    try {
+      const transaction = await BorrowerTxnService.createTransaction(req.body);
+
+      return res.status(201).json({
+        data: transaction,
+        success: true,
+        message: "Successfully created a transaction",
+        err: {},
+      });
+    } catch (error) {
+      console.log("error detected in wallet transaction", typeof error);
+      if (error.error.message === "Please Add Money!") {
+        return res.status(503).json({
+          data: {},
+          success: false,
+          message: "Unable to create transaction",
+          err: error.error.message,
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to create transaction",
+      err: error.error.message,
     });
   }
 };
