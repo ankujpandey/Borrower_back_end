@@ -10,7 +10,7 @@ class borrowerTxn_Service {
 	// -------------------------------------------
 
 	async createTransaction(data) {
-		console.log("Borrower Transaction Service");
+		console.log("Borrower Transaction Service", data);
 
 		try {
 			const wallet = await this.borrowerwalletRepo.getWallet(data.uid);
