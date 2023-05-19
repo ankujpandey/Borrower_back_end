@@ -11,7 +11,6 @@ const createTransactionController = async (req, res) => {
 
   try {
     const transaction = await BorrowerTxnService.createTransaction(req.body);
-
     return res.status(201).json({
       data: transaction,
       success: true,

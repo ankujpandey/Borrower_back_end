@@ -311,13 +311,12 @@ const loanDisbursementController = async (req, res) => {
         req.body.Loan_state
       );
     }
-
-    // return res.status(201).json({
-    //   data: loanStatus,
-    //   success: true,
-    //   message: "Successfully fetched loan status",
-    //   err: {},
-    // });
+    return res.status(201).json({
+      data: updateLoanState,
+      success: true,
+      message: "Successfully fetched loan status",
+      err: {},
+    });
   } catch (error) {
     console.log(error);
     // storeRequestResponse.response = {

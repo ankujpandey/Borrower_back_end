@@ -83,7 +83,7 @@ class SendAgreement_service {
         message = {
           to: `${userData.email}`,
           subject: subjectDecide(loanStatus),
-          html: html.userTemplate,
+          html: html,
         };
       }
 
