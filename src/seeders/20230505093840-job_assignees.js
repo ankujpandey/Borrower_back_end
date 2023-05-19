@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("log_conditions", [
+    return queryInterface.bulkInsert("JobAssignees", [
       {
         name: "No Agent",
         email: "default@gmail.com",

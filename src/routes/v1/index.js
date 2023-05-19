@@ -7,24 +7,25 @@ const express = require("express");
 const router = express.Router();
 
 const {
-	UsersController,
-	UserInfoController,
-	LoanController,
-	BankController,
-	EmploymentController,
-	CompanyController,
-	AdminController,
-	E_kyc,
-	Pancard,
-	Kyc_ImageController,
-	EMI_calculator,
-	JobAssigneeController,
-	Generate_PdfController,
-	LogconditionController,
-	AgreementController,
-	BorrowerTransactionController,
-	PoolTransactionController,
-	BorrowerWalletController,
+  UsersController,
+  UserInfoController,
+  LoanController,
+  BankController,
+  EmploymentController,
+  CompanyController,
+  AdminController,
+  E_kyc,
+  Pancard,
+  Kyc_ImageController,
+  EMI_calculator,
+  JobAssigneeController,
+  Generate_PdfController,
+  LogconditionController,
+  AgreementController,
+  BorrowerTransactionController,
+  PoolTransactionController,
+  BorrowerWalletController,
+  PoolController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -43,16 +44,16 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 // router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
 router.delete(
-	"/user_info/:id",
-	JWTToken.verifyToken,
-	UserInfoController.destroy
+  "/user_info/:id",
+  JWTToken.verifyToken,
+  UserInfoController.destroy
 );
 router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
 router.get("/user_info", UserInfoController.getAll);
 router.get(
-	"/user_info/admin/admin",
-	JWTToken.verifyToken,
-	UserInfoController.getAllByAdmin
+  "/user_info/admin/admin",
+  JWTToken.verifyToken,
+  UserInfoController.getAllByAdmin
 );
 
 // ------------------------------------------
@@ -65,59 +66,65 @@ router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
 router.get(
-	"/user/admin/admin",
-	JWTToken.verifyToken,
-	UsersController.getAllByAdmin
+  "/user/admin/admin",
+  JWTToken.verifyToken,
+  UsersController.getAllByAdmin
 );
 
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
 router.post(
-	"/createLoan",
-	JWTToken.verifyToken,
-	LoanController.createLoanController
+  "/createLoan",
+  JWTToken.verifyToken,
+  LoanController.createLoanController
 );
 router.get(
-	"/getLoan/:id",
-	JWTToken.verifyToken,
-	LoanController.getLoanDataController
+  "/getLoan/:id",
+  JWTToken.verifyToken,
+  LoanController.getLoanDataController
 );
 
 router.get(
-	"/getLoanStatus/:id",
-	JWTToken.verifyToken,
-	LoanController.getLoanStatusController
+  "/getLoanStatus/:id",
+  JWTToken.verifyToken,
+  LoanController.getLoanStatusController
 );
 
 router.post(
-	"/updateLoanStatus",
-	JWTToken.verifyToken,
-	LoanController.updateLoanStatusController
+  "/updateLoanStatus",
+  JWTToken.verifyToken,
+  LoanController.updateLoanStatusController
 );
 
 router.get(
-	"/getLoanWithEMI/:id",
-	JWTToken.verifyToken,
-	LoanController.getLoanWithEMIController
+  "/getLoanWithEMI/:id",
+  JWTToken.verifyToken,
+  LoanController.getLoanWithEMIController
+);
+
+router.post(
+  "/disburseLoan",
+  JWTToken.verifyToken,
+  LoanController.loanDisbursementController
 );
 
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
 router.post(
-	"/createBank",
-	JWTToken.verifyToken,
-	BankController.updateBankController
+  "/createBank",
+  JWTToken.verifyToken,
+  BankController.updateBankController
 );
 
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
 router.post(
-	"/createEmployment",
-	JWTToken.verifyToken,
-	EmploymentController.updateEmploymentController
+  "/createEmployment",
+  JWTToken.verifyToken,
+  EmploymentController.updateEmploymentController
 );
 
 // ------------------------------------------
@@ -153,10 +160,10 @@ router.get("/getUserDataAgent", UsersController.getUserDataAgent);
 // -------------------------------------------
 
 router.post(
-	"/uploadImage/:id",
-	JWTToken.verifyToken,
-	UploadAadhaar.upload.array("aadharBiometric", 2),
-	E_kyc.checkData
+  "/uploadImage/:id",
+  JWTToken.verifyToken,
+  UploadAadhaar.upload.array("aadharBiometric", 2),
+  E_kyc.checkData
 );
 
 // -------------------------------------------
@@ -164,10 +171,10 @@ router.post(
 // -------------------------------------------
 
 router.post(
-	"/uploadPancard/:id",
-	JWTToken.verifyToken,
-	UploadAadhaar.upload.array("PAN_Card", 1),
-	Pancard.checkDataController
+  "/uploadPancard/:id",
+  JWTToken.verifyToken,
+  UploadAadhaar.upload.array("PAN_Card", 1),
+  Pancard.checkDataController
 );
 
 // --------------------------------------
@@ -175,9 +182,9 @@ router.post(
 // --------------------------------------
 
 router.get(
-	"/getImage/:id",
-	JWTToken.verifyToken,
-	Kyc_ImageController.getImagesController
+  "/getImage/:id",
+  JWTToken.verifyToken,
+  Kyc_ImageController.getImagesController
 );
 
 // --------------------------------------
@@ -185,9 +192,9 @@ router.get(
 // --------------------------------------
 
 router.post(
-	"/update/user/admin/:id",
-	JWTToken.verifyToken,
-	UsersController.updateUser
+  "/update/user/admin/:id",
+  JWTToken.verifyToken,
+  UsersController.updateUser
 );
 
 // --------------------------------------
@@ -202,8 +209,8 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
 router.get(
-	"/createAgreementPdf/:id",
-	Generate_PdfController.generateAgreementPdfController
+  "/createAgreementPdf/:id",
+  Generate_PdfController.generateAgreementPdfController
 );
 
 // --------------------------------------
@@ -211,32 +218,32 @@ router.get(
 // --------------------------------------
 
 router.post(
-	"/insert/JobAssignee",
-	JobAssigneeController.createJobAssigneesController
+  "/insert/JobAssignee",
+  JobAssigneeController.createJobAssigneesController
 );
 router.get(
-	"/get/JobAssignee/:id",
-	JobAssigneeController.getJobAssigneeController
+  "/get/JobAssignee/:id",
+  JobAssigneeController.getJobAssigneeController
 );
 router.get(
-	"/getAll/JobAssignee",
-	JobAssigneeController.getAllJobAssigneeController
+  "/getAll/JobAssignee",
+  JobAssigneeController.getAllJobAssigneeController
 );
 router.get("/sort/JobAssignee", JobAssigneeController.assignAgentsController);
 
 router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
 
 router.post(
-	"/updateJobsAssigned/:id",
-	JobAssigneeController.UpdateJobsAssignedController
+  "/updateJobsAssigned/:id",
+  JobAssigneeController.UpdateJobsAssignedController
 );
 
 // ------------------------------------------
 // route for log condition table
 // ------------------------------------------
 router.get(
-	"/getlogCondition",
-	LogconditionController.getLogConditionController
+  "/getlogCondition",
+  LogconditionController.getLogConditionController
 );
 
 // ------------------------------------------
@@ -248,13 +255,13 @@ router.post("/sendAgreement", AgreementController.sendArgeementController);
 // routes for Borrower Transactions
 // ------------------------------------------
 router.post(
-	"/createBorrowerTransaction",
-	BorrowerTransactionController.createTransactionController
+  "/createBorrowerTransaction",
+  BorrowerTransactionController.createTransactionController
 );
 
 router.get(
-	"/getUserTransaction/:id",
-	BorrowerTransactionController.findUserTransactionController
+  "/getUserTransaction/:id",
+  BorrowerTransactionController.findUserTransactionController
 );
 
 router.post(
@@ -266,21 +273,49 @@ router.post(
 // routes for Borrower Wallet
 // ------------------------------------------
 router.post(
-	"/createBorrowerWallet",
-	BorrowerWalletController.createWalletController
+  "/createBorrowerWallet",
+  BorrowerWalletController.createWalletController
 );
 
 router.get(
-	"/getBorrowerWallet/:id",
-	BorrowerWalletController.getWalletController
+  "/getBorrowerWallet/:id",
+  BorrowerWalletController.getWalletController
+);
+
+router.get(
+  "/getUserLoanTransaction/:id",
+  BorrowerTransactionController.findUserLoanTransactionController
 );
 
 // ------------------------------------------
 // routes for Pool Transactions
 // ------------------------------------------
 router.post(
-	"/createPoolTransaction",
-	PoolTransactionController.createTransactionController
+  "/createPoolTransaction",
+  PoolTransactionController.createTransactionController
+);
+
+router.get(
+  "/getPoolTransaction/:id",
+  PoolTransactionController.getParticularTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Table
+// ------------------------------------------
+router.post("/addPoolBalance", PoolController.createPoolController);
+router.get(
+  "/getParticularPoolData/:id",
+  PoolController.getParticularPoolController
+);
+// -----------------------------------------------------------
+// get pool transcations + pool table data for pool dashboard
+// ------------------------------------------------------------
+router.get("/getPoolData", PoolController.getPoolController);
+
+router.get(
+  "/findAllPoolTransactions",
+  PoolTransactionController.findAllTransactionsController
 );
 
 module.exports = router;

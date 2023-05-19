@@ -1,15 +1,13 @@
-const { borrowerTxn_Repo } = require("../repository");
-const { BorrowerWallet } = require("../repository");
-
+const { borrowerTxn_Repo, BorrowerWallet } = require("../repository");
 class borrowerTxn_Service {
 	constructor() {
 		this.borrowerTxnRepo = new borrowerTxn_Repo();
 		this.borrowerwalletRepo = new BorrowerWallet();
 	}
 
-	// -------------------------------------------
-	//  debit and credit + insert data into table
-	// -------------------------------------------
+	// -----------------------------------
+	// insert into table
+	// -----------------------------------
 
 	async createTransaction(data) {
 		console.log("Borrower Transaction Service");
@@ -67,6 +65,28 @@ class borrowerTxn_Service {
 
 		try {
 			const transactions = await this.borrowerTxnRepo.findUserTransaction(uid);
+			return transactions;
+		} catch (error) {
+			console.log(
+				"Something went wrong in Borrower Transaction services layer".magenta
+			);
+
+			throw { error };
+		}
+	}
+
+	// ---------------------------------------------------------------
+	// finding transactions of a particular user of particular loan
+	// ---------------------------------------------------------------
+
+	async findUserLoanTransaction(uid, loanId) {
+		console.log("Borrower Transaction Service");
+
+		try {
+			const transactions = await this.borrowerTxnRepo.findUserLoanTransaction(
+				uid,
+				loanId
+			);
 			return transactions;
 		} catch (error) {
 			console.log(

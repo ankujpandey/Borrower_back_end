@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class pool_transaction extends Model {
+  class pool_table extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,50 +11,32 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  pool_transaction.init(
+  pool_table.init(
     {
-      pool_txn_id: {
+      poolId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      poolId: {
-        allowNull: true,
-        type: DataTypes.INTEGER,
-      },
-      txn_type: {
+      pool_type: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      txn_flow: {
+
+      available_balance: {
         allowNull: false,
         type: DataTypes.STRING,
-      },
-      credit_Amount: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: 0,
-      },
-      debit_Amount: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: 0,
-      },
-      running_Amount: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        defaultValue: 0,
       },
       createdBy: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "admin",
+        defaultValue: "user",
       },
       updatedBy: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "admin",
+        defaultValue: "user",
       },
       isDeleted: {
         allowNull: false,
@@ -64,8 +46,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "pool_transaction",
+      modelName: "pool_table",
     }
   );
-  return pool_transaction;
+  return pool_table;
 };

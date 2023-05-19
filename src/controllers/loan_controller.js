@@ -1,14 +1,17 @@
-const { Loan_service, SendAgreement_service } = require("../services");
-const { borrowerTxn_Service } = require("../services");
-const schedule = require("node-schedule");
-
+const {
+	Loan_service,
+	SendAgreement_service,
+	poolTxn_Service,
+	borrowerTxn_Service,
+} = require("../services");
 const { saveReqRes } = require("../mongodb/index");
 const { createLogController } = require("./log_controller");
 const { LoanCombineData } = require("./log_combine_data");
 
 const loanService = new Loan_service();
 const SendAgreementService = new SendAgreement_service();
-const BorrowerTxnService = new borrowerTxn_Service();
+const poolTxnService = new poolTxn_Service();
+const borrowerTxnService = new borrowerTxn_Service();
 
 // -----------------------------------
 // insert into table
@@ -32,16 +35,16 @@ const createLoanController = async (req, res) => {
 		// saveReqRes(storeRequestResponse);
 		if (req.body.emailUser) {
 			const emailReq = await SendAgreementService.sendAgreementUserService(
-				loanData.dataValues.uid,
-				loanData.dataValues.jobAssignees_id,
-				loanData.dataValues.Loan_state
+				loanData.uid,
+				loanData.jobAssignees_id,
+				loanData.Loan_state
 			);
 		}
 		if (req.body.emailAgent) {
 			const emailReq = await SendAgreementService.sendAgreementAgentService(
-				loanData.dataValues.uid,
-				loanData.dataValues.jobAssignees_id,
-				loanData.dataValues.Loan_state
+				loanData.uid,
+				loanData.jobAssignees_id,
+				loanData.Loan_state
 			);
 		}
 
@@ -141,16 +144,16 @@ const updateLoanStatusController = async (req, res) => {
 
 		if (req.body.emailUser) {
 			const emailReq = await SendAgreementService.sendAgreementUserService(
-				updatedLoanStatus.dataValues.uid,
-				updatedLoanStatus.dataValues.jobAssignees_id,
-				updatedLoanStatus.dataValues.Loan_state
+				updatedLoanStatus.uid,
+				updatedLoanStatus.jobAssignees_id,
+				updatedLoanStatus.Loan_state
 			);
 		}
 		if (req.body.emailAgent) {
 			const emailReq = await SendAgreementService.sendAgreementAgentService(
-				updatedLoanStatus.dataValues.uid,
-				updatedLoanStatus.dataValues.jobAssignees_id,
-				updatedLoanStatus.dataValues.Loan_state
+				updatedLoanStatus.uid,
+				updatedLoanStatus.jobAssignees_id,
+				updatedLoanStatus.Loan_state
 			);
 		}
 		// storeRequestResponse.response = {
@@ -228,11 +231,11 @@ const getLoanStatusController = async (req, res) => {
 	}
 };
 
-// -----------------------------------------
+// ------------------------------------------------
 // get particular loan data with EMI calculations
-// -----------------------------------------
+// ------------------------------------------------
 const getLoanWithEMIController = async (req, res) => {
-	console.log("loan controller");
+	console.log("loan csontroller");
 	// const storeRequestResponse = {};
 	// const requestObj = {};
 	// requestObj.body = req.body;
@@ -271,48 +274,63 @@ const getLoanWithEMIController = async (req, res) => {
 	}
 };
 
-// -----------------------------------
-// self deduct Seduled EMI
-// -----------------------------------
-
-const selfDeductTransactionController = async (req, res) => {
-	console.log("In Borrower self deduct transaction Controller");
-
+// -----------------------------------------
+// loan Disbursement
+// -----------------------------------------
+const loanDisbursementController = async (req, res) => {
+	console.log("loan controller");
+	// const storeRequestResponse = {};
+	// const requestObj = {};
+	// requestObj.body = req.body;
+	// requestObj.headers = req.rawHeaders;
+	// storeRequestResponse.request = requestObj;
 	try {
-		const startTime = new Date(Date.now() + 5000);
-		const endTime = new Date(startTime.getTime() + 5000);
-		const job = schedule.scheduleJob(
-			{ start: startTime, end: endTime, rule: "*/1 * * * * *" },
-			function () {
-				console.log("Time for tea!");
-			}
-		);
-		try {
-			const transaction = await BorrowerTxnService.createTransaction(req.body);
+		console.log("data", req.body);
 
-			return res.status(201).json({
-				data: transaction,
-				success: true,
-				message: "Successfully created a transaction",
-				err: {},
-			});
-		} catch (error) {
-			console.log("error detected in wallet transaction", typeof error);
-			if (error.error.message === "Please Add Money!") {
-				return res.status(503).json({
-					data: {},
-					success: false,
-					message: "Unable to create transaction",
-					err: error.error.message,
-				});
-			}
+		const updateLoanState = await loanService.updateLoanStatusService(req.body);
+
+		const poolData = {
+			debit_Amount: req.body.amount,
+			txn_type: "loan disbursement",
+			poolId: 1,
+		};
+
+		const walletData = {
+			uid: req.body.uid,
+			LoanID: req.body.LoanID,
+			credit_Amount: req.body.amount,
+			txn_type: "loan amount recieved",
+		};
+
+		if (updateLoanState) {
+			await poolTxnService.createTransaction(poolData);
+			await borrowerTxnService.createTransaction(walletData);
+			await SendAgreementService.sendAgreementUserService(
+				req.body.uid,
+				req.body.jobAssignees_id,
+				req.body.Loan_state
+			);
 		}
+		return res.status(201).json({
+			data: updateLoanState,
+			success: true,
+			message: "Successfully fetched loan status",
+			err: {},
+		});
 	} catch (error) {
+		console.log(error);
+		// storeRequestResponse.response = {
+		//   data: {},
+		//   success: false,
+		//   message: "Unable to updated loan status",
+		//   err: error,
+		// };
+		// saveReqRes(storeRequestResponse);
 		return res.status(500).json({
 			data: {},
 			success: false,
-			message: "Unable to create transaction",
-			err: error.error.message,
+			message: "Unable to disburse loan",
+			err: error,
 		});
 	}
 };
@@ -323,4 +341,5 @@ module.exports = {
 	updateLoanStatusController,
 	getLoanStatusController,
 	getLoanWithEMIController,
+	loanDisbursementController,
 };

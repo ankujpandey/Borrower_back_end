@@ -12,7 +12,6 @@ const createTransactionController = async (req, res) => {
 
 	try {
 		const transaction = await BorrowerTxnService.createTransaction(req.body);
-
 		return res.status(201).json({
 			data: transaction,
 			success: true,
@@ -141,8 +140,40 @@ const findUserTransactionController = async (req, res) => {
 	}
 };
 
+// ---------------------------------------------------------------
+// finding transactions of a particular user of particular loan
+// ---------------------------------------------------------------
+
+const findUserLoanTransactionController = async (req, res) => {
+	console.log("In Borrower Transaction Controller");
+
+	try {
+		const transactions = await BorrowerTxnService.findUserLoanTransaction(
+			req.params.id,
+			req.body.loanId
+		);
+
+		return res.status(201).json({
+			data: transactions,
+			success: true,
+			message: "Successfully fetched user's loan transactions",
+			err: {},
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			data: {},
+			success: false,
+			message: "Unable to fetch user's loan transactions",
+			err: error,
+		});
+	}
+};
+
 module.exports = {
 	createTransactionController,
 	findUserTransactionController,
 	selfDeductTransactionController,
+
+	findUserLoanTransactionController,
 };

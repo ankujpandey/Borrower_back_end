@@ -2,54 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("pool_transactions", {
-      pool_txn_id: {
+    await queryInterface.createTable("pool_tables", {
+      poolId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      poolId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-          model: "pool_tables",
-          key: "poolId",
-        },
-      },
-      txn_type: {
+      pool_type: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      txn_flow: {
+
+      available_balance: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      credit_Amount: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 0,
-      },
-      debit_Amount: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 0,
-      },
-      running_Amount: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 0,
       },
       createdBy: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "admin",
+        defaultValue: "user",
       },
       updatedBy: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "admin",
+        defaultValue: "user",
       },
       isDeleted: {
         allowNull: false,
@@ -67,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("pool_transactions");
+    await queryInterface.dropTable("pool_tables");
   },
 };

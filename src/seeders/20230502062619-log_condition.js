@@ -41,6 +41,18 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        cndtn_name: "loan disbursed",
+        cndtn_code: "1600",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        cndtn_name: "loan repaid",
+        cndtn_code: "1700",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         cndtn_name: "loan and agreement rejected by user",
         cndtn_code: "-1000",
         createdAt: new Date(),
