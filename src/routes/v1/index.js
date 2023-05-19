@@ -308,10 +308,11 @@ router.get(
   "/getParticularPoolData/:id",
   PoolController.getParticularPoolController
 );
+router.get("/getPoolBalance", PoolController.getPoolBalanceController);
 // -----------------------------------------------------------
 // get pool transcations + pool table data for pool dashboard
 // ------------------------------------------------------------
-router.get("/getPoolData", PoolController.getPoolController);
+router.get("/getPoolData", PoolController.getPoolController); //(useless)
 
 router.get(
   "/findAllPoolTransactions",

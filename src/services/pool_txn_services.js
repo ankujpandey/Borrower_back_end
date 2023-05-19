@@ -51,11 +51,11 @@ class poolTxn_Service {
   // get all transactions of pool table
   // ---------------------------------------------
 
-  async findAllTransactions() {
+  async findAllTransactions(req) {
     console.log("Pool Transaction Service");
 
     try {
-      const transactions = await this.poolTxnRepo.findAllTransactions();
+      const transactions = await this.poolTxnRepo.findAllTransactions(req);
       return transactions;
     } catch (error) {
       console.log(
