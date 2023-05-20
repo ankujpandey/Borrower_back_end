@@ -12,4 +12,10 @@ module.exports = {
   EMI_calculator: require("./emiCalculator_controller"),
   JobAssigneeController: require("./JobAssignees_controller"),
   Generate_PdfController: require("./generatePdf_controller"),
+  LogconditionController: require("./logCondition_controller"),
+  AgreementController: require("./sendAgreement_controller"),
+  BorrowerTransactionController: require("./borrower_txn_controller"),
+  PoolTransactionController: require("./pool_txn_controller"),
+  BorrowerWalletController: require("./borrower_wallet_controller"),
+  PoolController: require("./pool_controller"),
 };

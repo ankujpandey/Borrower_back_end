@@ -76,48 +76,51 @@ class EMI_calculator {
 	//	Calculation table
 	// --------------------------------------------
 	clacClosingBalence(data) {
-		// try {
-		let table = [];
+		try {
+			let table = [];
 
-		let closingBalence = data.principle;
-		let i = 0;
+			let closingBalence = data.principle;
+			let i = 0;
 
-		const emi = this.calcEMI(data);
-		let date = data.date;
-		while (closingBalence > 0) {
-			let tableContent = {};
-			tableContent.installmentNo = i + 1;
-			if (Math.round(closingBalence * 100) / 100 === 0) {
-				break;
-			} else {
-				tableContent.openingBalence = Math.round(closingBalence * 100) / 100;
+			const emi = this.calcEMI(data);
+			let date = data.date;
+			while (closingBalence > 0) {
+				let tableContent = {};
+				tableContent.installmentNo = i + 1;
+				if (Math.round(closingBalence * 100) / 100 === 0) {
+					break;
+				} else {
+					tableContent.openingBalence = Math.round(closingBalence * 100) / 100;
 
-				date = moment(date).add(1, "month").format("YYYY-MM-DD");
-				tableContent.installmentDate = moment(date).format("DD-MMM-YYYY");
+					date = moment(date).add(1, "month").format("YYYY-MM-DD");
+					tableContent.installmentDate = moment(date).format("DD-MMM-YYYY");
 
-				let interest = this.calcInterestPerMonth(closingBalence, data.interest);
-				tableContent.interestPerMonth = Math.round(interest * 100) / 100;
-				let principle = emi - interest;
+					let interest = this.calcInterestPerMonth(
+						closingBalence,
+						data.interest
+					);
+					tableContent.interestPerMonth = Math.round(interest * 100) / 100;
+					let principle = emi - interest;
 
-				closingBalence = closingBalence - principle;
+					closingBalence = closingBalence - principle;
 
-				tableContent.closingBalence = Math.round(closingBalence * 100) / 100;
-				tableContent.principle = Math.round(principle * 100) / 100;
+					tableContent.closingBalence = Math.round(closingBalence * 100) / 100;
+					tableContent.principle = Math.round(principle * 100) / 100;
 
-				table[i] = tableContent;
+					table[i] = tableContent;
+				}
+
+				i++;
 			}
 
-			i++;
+			// console.log("table------------->>>>>>>", table);
+			return table;
+		} catch (error) {
+			console.log(
+				"Something went wrong in repository layer in table Calculation.".magenta
+			);
+			throw { error };
 		}
-
-		// console.log("table------------->>>>>>>", table);
-		return table;
-		// } catch (error) {
-		// 	console.log(
-		// 		"Something went wrong in repository layer in table Calculation.".magenta
-		// 	);
-		// 	throw { error };
-		// }
 	}
 }
 

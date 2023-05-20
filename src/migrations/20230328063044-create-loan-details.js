@@ -21,21 +21,34 @@ module.exports = {
       jobAssignees_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        defaultValue: "1",
       },
       Loan_state: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "1200",
+        defaultValue: "1000",
       },
-      amount: {
+      amountAsked: {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      rate_of_interest: {
+      roiAsked: {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      tenure: {
+      tenureAsked: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      amountApproved: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      minRoiApproved: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      tenureApproved: {
         allowNull: true,
         type: Sequelize.STRING,
       },
