@@ -333,8 +333,6 @@ const loanDisbursementController = async (req, res) => {
   try {
     console.log("data", req.body);
 
-    const updateLoanState = await loanService.updateLoanStatusService(req.body);
-
     const poolData = {
       debit_Amount: req.body.amount,
       txn_type: "loan disbursement",
@@ -348,15 +346,22 @@ const loanDisbursementController = async (req, res) => {
       txn_type: "loan amount recieved",
     };
 
-    if (updateLoanState) {
-      await poolTxnService.createTransaction(poolData);
-      await borrowerTxnService.createTransaction(walletData);
-      await SendAgreementService.sendAgreementUserService(
-        req.body.uid,
-        req.body.jobAssignees_id,
-        req.body.Loan_state
+    const poolBalance = await poolTxnService.createTransaction(poolData);
+    if (poolBalance) {
+      const updateLoanState = await loanService.updateLoanStatusService(
+        req.body
       );
+
+      if (updateLoanState) {
+        await borrowerTxnService.createTransaction(walletData);
+        await SendAgreementService.sendAgreementUserService(
+          req.body.uid,
+          req.body.jobAssignees_id,
+          req.body.Loan_state
+        );
+      }
     }
+
     return res.status(201).json({
       data: updateLoanState,
       success: true,
