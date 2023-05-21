@@ -1,11 +1,11 @@
 const agreementTemplate = (UserData, loanData) => {
-	const today = new Date();
+  const today = new Date();
 
-	console.log("data in pdf agreement----->>>>", loanData);
+  console.log("data in pdf agreement----->>>>", loanData);
 
-	let tableData = "";
-	loanData.EMI.table.forEach((row) => {
-		tableData += `
+  let tableData = "";
+  loanData.EMI.table.forEach((row) => {
+    tableData += `
 		<tr key=${row.installmentNo}>
 			<th scope="row">${row.installmentNo}</th>
 				<td>
@@ -29,8 +29,8 @@ const agreementTemplate = (UserData, loanData) => {
 					${row.principle}
 				</td>
 			</tr>`;
-	});
-	let templateString = `<!DOCTYPE html>
+  });
+  let templateString = `<!DOCTYPE html>
 	<html>
 		<head>
 			<title>HTML content</title>
@@ -287,9 +287,9 @@ const agreementTemplate = (UserData, loanData) => {
 								</thead>
 								
 								<tbody id="tableData">`;
-	templateString += tableData;
+  templateString += tableData;
 
-	templateString += `			</tbody>
+  templateString += `			</tbody>
 							</table>
 						</div>
 						
@@ -324,6 +324,6 @@ const agreementTemplate = (UserData, loanData) => {
 		</body>
 	</html>`;
 
-	return templateString;
+  return templateString;
 };
 module.exports = agreementTemplate;

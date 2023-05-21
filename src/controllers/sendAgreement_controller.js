@@ -27,11 +27,7 @@ const sendArgeementController = async (req, res) => {
       loanData.jobAssignees_id
     );
     const sendAgreementControllerData =
-      await SendAgreementService.sendAgreementService(
-        req.body,
-        agent.dataValues,
-        loanData.dataValues.Loan_state
-      );
+      await SendAgreementService.sendAgreementUserService(req.body);
 
     return res.status(201).json({
       data: sendAgreementControllerData,
