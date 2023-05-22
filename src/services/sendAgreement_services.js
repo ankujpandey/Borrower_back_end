@@ -191,11 +191,11 @@ class SendAgreement_service {
   // send email to admin
   // -----------------------------------
 
-  async sendAgreementAdminService() {
+  async sendEmailAdminService() {
     const admin = await this.AdminRepository.getAllAdmins();
 
     let mailList = [];
-    admin.forEach(element => {
+    admin.forEach((element) => {
       mailList.push(element.email);
     });
     console.log("mailList", mailList);
@@ -214,6 +214,41 @@ class SendAgreement_service {
       const message = {
         to: mailList,
         subject: "Pool balance low!! Please add money.",
+        html: html,
+      };
+      const info = await transporter.sendMail(message);
+      console.log(info);
+      return info;
+    } catch (error) {
+      console.log(
+        "Something went wrong in Send Agreement services layer".magenta
+      );
+      throw { error };
+    }
+  }
+
+  // -----------------------------------
+  // send NOC to User
+  // -----------------------------------
+
+  async sendNocUserService(uid, loanState, userData) {
+    try {
+      const usersRepoResult = await this.usersRepository.getUserDataEmail(uid);
+
+      const html = emailTemplateDecide(userData, loanState);
+
+      var transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: "faircentmrborrower@gmail.com",
+          pass: "amdozngheogafooc",
+        },
+      });
+
+      const message = {
+        to: usersRepoResult.email,
+        subject: subjectDecide(loanState),
         html: html,
       };
       const info = await transporter.sendMail(message);

@@ -4,6 +4,8 @@ const {
   poolTxn_Service,
   borrowerTxn_Service,
   BorrowerWallet_service,
+  GeneratePdf_service,
+  UserInfo_service,
 } = require("../services");
 const schedule = require("node-schedule");
 const { saveReqRes } = require("../mongodb/index");
@@ -15,6 +17,8 @@ const SendAgreementService = new SendAgreement_service();
 const poolTxnService = new poolTxn_Service();
 const borrowerTxnService = new borrowerTxn_Service();
 const walletServices = new BorrowerWallet_service();
+const GeneratePdfService = new GeneratePdf_service();
+const UserInfoService = new UserInfo_service();
 
 // -----------------------------------
 // insert into table
@@ -342,7 +346,7 @@ const loanDisbursementController = async (req, res) => {
     // saveReqRes(storeRequestResponse);
 
     if (error.error.message === "Please Add Money!") {
-      await SendAgreementService.sendAgreementAdminService();
+      await SendAgreementService.sendEmailAdminService();
       return res.status(503).json({
         data: {},
         success: false,
@@ -467,12 +471,28 @@ const loanRepaid = async (uid) => {
     Loan_state: 1700,
     uid: uid,
   });
+
   if (updateLoanState) {
-    await SendAgreementService.sendAgreementUserService(
-      updateLoanState.uid,
-      updateLoanState.jobAssignees_id,
-      updateLoanState.Loan_state
-    );
+    const userInfo = await UserInfoService.getUserInfo(uid);
+    // console.log("userData", userData);
+
+    const emi = await loanService.getLoanWithEMIService(uid);
+
+    if (emi) {
+      const userData = {
+        name: userInfo.firstName + " " + userInfo.lastName,
+        LoanId: emi.loanData.LoanId,
+        totalAmount: emi.EMI.total_Amount,
+      };
+
+      const pdf = await GeneratePdfService.generateNocPdfServices(userData);
+
+      await SendAgreementService.sendNocUserService(
+        emi.loanData.uid,
+        emi.loanData.Loan_state,
+        userData
+      );
+    }
   }
 };
 

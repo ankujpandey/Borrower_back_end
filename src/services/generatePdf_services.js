@@ -48,11 +48,10 @@ class GeneratePdf_service {
   // -----------------------------------
   // user noc download
   // -----------------------------------
-  async generateNocPdfServices(id) {
+  async generateNocPdfServices(userData) {
     let object = {};
-    object.id = id;
-    object.UserData = null;
-    object.SecondryData = null;
+    object.id = userData.uid;
+    object.userData = userData;
     object.path = "./src/controllers/noc.pdf";
     object.pdfTemplate = nocTemplate;
     await this.generetePDF.generatedpdfRepo(object);

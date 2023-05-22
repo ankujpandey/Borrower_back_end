@@ -414,7 +414,7 @@ const subjectDecide = (loanState) => {
   } else return "Loan agreement rejected.";
 };
 
-const emailTemplateDecide = (userData, agentData, loanState, agent) => {
+const emailTemplateDecide = (userData, loanState, agentData) => {
   if (loanState == 1200) {
     const userTemplate = appliedUser(userData, agentData);
     const agentTemplate = appliedAgent(userData, agentData);

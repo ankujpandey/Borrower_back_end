@@ -1,4 +1,4 @@
-const nocTemplate = (UserData, loanData) => {
+const nocTemplate = (userData) => {
   const today = new Date();
   return `<!DOCTYPE html>
 	<html>
@@ -15,10 +15,7 @@ const nocTemplate = (UserData, loanData) => {
 		<h1>MrBorrower.com</h1>
 		</div>
 		<div class="d-flex justify-content-center">
-		<p>EVERY % COUNTS</p>
-		</div>
-		<div class="d-flex justify-content-center">
-		<p>SR 31 Siris Road,DLF Phase 3 ,Gurgaon,Haryana,122002 </p>
+		<p>Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011</p>
 		</div>
 		<div class="d-flex justify-content-center">
 		<h3>No Objection Certificate</h3>
@@ -33,7 +30,11 @@ const nocTemplate = (UserData, loanData) => {
 		
 		</div>
                 <div class="ms-5">
-                <p>This is to certify that (-Name------) has made complete payment of &#8377;0 with reference to Loan Id ------ taken on </p>
+                <p>This is to certify that ${
+                  userData.name
+                } has made complete payment of &#8377; ${
+    userData.totalAmount
+  } with reference to Loan Id ${userData.LoanId} taken on </p>
                 </div>
                 <br/>
                 <br/>
@@ -43,13 +44,20 @@ const nocTemplate = (UserData, loanData) => {
                  <br/>
                 <br/>
                 <div class="ms-5 text-danger">
-                <p>Please note that the cheques you had submitted at the time of loan disbursal will be cancelled to avoid misuse</p>
+                <p>Please note that the cheques you had submitted at the time of loan disbursal will be cancelled to avoid misuse.</p>
                 </div>
                 <br/>
                 <br/>
                 <div class="ms-5">
                 <p>Regards</p>
-                <p>MrBorrower.com</p>
+                <p>
+                Team Borrower
+                <br/>
+                Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
+                <br/>
+                +0120 465 9902
+                <br/>
+                faircentmrborrower@gmail.com</p>
                 </div>
 		</body>
 	</html>`;
