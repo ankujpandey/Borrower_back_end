@@ -207,6 +207,10 @@ router.get(
   Generate_PdfController.generateAgreementPdfController
 );
 
+router.get(
+  "/createNocPdf/:id",
+  Generate_PdfController.generateNocPdfController
+);
 // --------------------------------------
 // 	API for Job Assignees
 // --------------------------------------
