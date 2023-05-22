@@ -11,7 +11,7 @@ const saveDocument = async data => {
 
   if (
     Object.keys(data).length > 2 &&
-    (await person.find({ uid: data.uid })).length == 0
+    (await user_document.find({ uid: data.uid })).length == 0
   ) {
     const userData = new user_document({
       uid: data.uid,
