@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "log_condition",
+      modelName: "log_conditions",
     }
   );
   return log_condition;
