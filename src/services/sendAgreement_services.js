@@ -250,6 +250,12 @@ class SendAgreement_service {
         to: usersRepoResult.email,
         subject: subjectDecide(loanState),
         html: html,
+        attachments: [
+          {
+            filename: "noc.pdf",
+            path: "src/controllers/noc.pdf",
+          },
+        ],
       };
       const info = await transporter.sendMail(message);
       console.log(info);
