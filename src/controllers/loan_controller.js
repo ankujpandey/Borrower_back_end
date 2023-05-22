@@ -333,11 +333,15 @@ const loanDisbursementController = async (req, res) => {
   try {
     console.log("data", req.body);
 
+    req.body.amount -= req.body.amount * 0.05;
+
     const poolData = {
       debit_Amount: req.body.amount,
       txn_type: "loan disbursement",
       poolId: 1,
     };
+
+    console.log(poolData);
 
     const walletData = {
       uid: req.body.uid,
@@ -347,6 +351,8 @@ const loanDisbursementController = async (req, res) => {
     };
 
     const poolBalance = await poolTxnService.createTransaction(poolData);
+
+    console.log("poolBalance", poolBalance);
     if (poolBalance) {
       const updateLoanState = await loanService.updateLoanStatusService(
         req.body
