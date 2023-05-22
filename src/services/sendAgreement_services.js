@@ -195,7 +195,7 @@ class SendAgreement_service {
     const admin = await this.AdminRepository.getAllAdmins();
 
     let mailList = [];
-    admin.forEach((element) => {
+    admin.forEach(element => {
       mailList.push(element.email);
     });
     console.log("mailList", mailList);
