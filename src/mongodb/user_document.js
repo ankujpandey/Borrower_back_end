@@ -9,7 +9,10 @@ const user_document = require("./user_document_schema");
 const saveDocument = async (data) => {
 	console.log("data---------->>>>>>>>", Object.keys(data));
 
-	if (Object.keys(data).length > 2) {
+	if (
+		Object.keys(data).length > 2 &&
+		(await person.find({ uid: data.uid })).length == 0
+	) {
 		const userData = new user_document({
 			uid: data.uid,
 			profile_photo: data.profile_image.toString("base64"),

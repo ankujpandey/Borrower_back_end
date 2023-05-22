@@ -290,10 +290,6 @@ const loanDisbursementController = async (req, res) => {
 	try {
 		// console.log("data", req.body);
 
-		if (req.body.Loan_state === 1600) {
-			selfDeductTransactionController(req.body);
-		}
-
 		const updateLoanState = await loanService.updateLoanStatusService(req.body);
 
 		// const poolData = {
@@ -317,6 +313,10 @@ const loanDisbursementController = async (req, res) => {
 			// 	req.body.jobAssignees_id,
 			// 	req.body.Loan_state
 			// );
+		}
+
+		if (req.body.Loan_state === 1600) {
+			await selfDeductTransactionController(req.body);
 		}
 		return res.status(201).json({
 			data: updateLoanState,
@@ -367,7 +367,7 @@ const selfDeductTransactionController = async (req) => {
 		// console.log("Loan Data as user got it", LoanData.EMI);
 		const startTime = new Date(LoanData.loanData.dataValues.updatedAt);
 		console.log(startTime);
-		const endTime = new Date(startTime.getTime() + 10000);
+		const endTime = new Date(startTime.getTime() + 10000000);
 		console.log(endTime);
 		let tenure = LoanData.loanData.dataValues.tenureApproved;
 
@@ -381,7 +381,7 @@ const selfDeductTransactionController = async (req) => {
 		console.log("in automatic emi pay", borrowingTransactionObject);
 
 		const job = await schedule.scheduleJob(
-			{ start: startTime, end: endTime, rule: "*/2 * * * * *" },
+			{ start: startTime, end: endTime, rule: "*/5 * * * * *" },
 			async function () {
 				console.log("crone called");
 				try {
@@ -393,10 +393,12 @@ const selfDeductTransactionController = async (req) => {
 				} catch (error) {
 					console.log("error detected in wallet transaction", error);
 					if (error.error.message === "Please Add Money!") {
+						console.log("Please Add Money".yellow);
 						let time = 0;
 						const j = await schedule.scheduleJob(
 							{ rule: "*/1 * * * * *" },
 							async function () {
+								console.log("5time function called");
 								let Charge = (parseFloat(req?.body?.debit_Amount) * 5) / 100;
 								req.body.extraCharge = Charge;
 								try {
@@ -428,11 +430,10 @@ const selfDeductTransactionController = async (req) => {
 						);
 					}
 				}
-
-				if (tenure === 1) {
+				tenure = tenure - 1;
+				if (tenure === 0) {
 					job.cancel();
 				}
-				tenure = tenure - 1;
 			}
 		);
 		console.log("schedule ended");
