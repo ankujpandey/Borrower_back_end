@@ -288,15 +288,13 @@ const loanDisbursementController = async (req, res) => {
 	// requestObj.headers = req.rawHeaders;
 	// storeRequestResponse.request = requestObj;
 	try {
-		// console.log("data", req.body);
+		console.log("data", req.body);
 
-		const updateLoanState = await loanService.updateLoanStatusService(req.body);
-
-		// const poolData = {
-		// 	debit_Amount: req.body.amount,
-		// 	txn_type: "loan disbursement",
-		// 	poolId: 1,
-		// };
+		const poolData = {
+			debit_Amount: req.body.amount,
+			txn_type: "loan disbursement",
+			poolId: 1,
+		};
 
 		const walletData = {
 			uid: req.body.uid,
@@ -305,19 +303,26 @@ const loanDisbursementController = async (req, res) => {
 			txn_type: "loan amount recieved",
 		};
 
-		if (updateLoanState) {
-			// await poolTxnService.createTransaction(poolData);
-			await borrowerTxnService.createTransaction(walletData);
-			// await SendAgreementService.sendAgreementUserService(
-			// 	req.body.uid,
-			// 	req.body.jobAssignees_id,
-			// 	req.body.Loan_state
-			// );
+		const poolBalance = await poolTxnService.createTransaction(poolData);
+		if (poolBalance) {
+			const updateLoanState = await loanService.updateLoanStatusService(
+				req.body
+			);
+
+			if (updateLoanState) {
+				await borrowerTxnService.createTransaction(walletData);
+				await SendAgreementService.sendAgreementUserService(
+					req.body.uid,
+					req.body.jobAssignees_id,
+					req.body.Loan_state
+				);
+			}
 		}
 
 		if (req.body.Loan_state === 1600) {
 			await selfDeductTransactionController(req.body);
 		}
+
 		return res.status(201).json({
 			data: updateLoanState,
 			success: true,
