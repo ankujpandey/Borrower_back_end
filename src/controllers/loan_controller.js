@@ -305,9 +305,7 @@ const loanDisbursementController = async (req, res) => {
 
 		const poolBalance = await poolTxnService.createTransaction(poolData);
 		if (poolBalance) {
-			const updateLoanState = await loanService.updateLoanStatusService(
-				req.body
-			);
+			var updateLoanState = await loanService.updateLoanStatusService(req.body);
 
 			if (updateLoanState) {
 				await borrowerTxnService.createTransaction(walletData);
@@ -400,11 +398,12 @@ const selfDeductTransactionController = async (req) => {
 					if (error.error.message === "Please Add Money!") {
 						console.log("Please Add Money".yellow);
 						let time = 0;
+						let charge = 0;
 						const j = await schedule.scheduleJob(
 							{ rule: "*/1 * * * * *" },
 							async function () {
 								console.log("5time function called");
-								let Charge = (parseFloat(req?.body?.debit_Amount) * 5) / 100;
+								charge = (parseFloat(req?.body?.debit_Amount) * 5) / 100;
 								req.body.extraCharge = Charge;
 								try {
 									console.log("transaction---->>>>>>>>>>", req.body);
