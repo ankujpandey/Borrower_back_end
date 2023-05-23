@@ -25,8 +25,8 @@ const nocTemplate = (userData) => {
 		<p>Date: ${`${today.getDate()}-${
       today.getMonth() + 1
     }-${today.getFullYear()}`}</p>
-		<p>Name:</p>
-		<p>Loan Id: </p>
+		<p>Name: ${userData.name}</p>
+		<p>Loan Id: ${userData.LoanId} </p>
 		
 		</div>
                 <div class="ms-5">
@@ -34,7 +34,7 @@ const nocTemplate = (userData) => {
                   userData.name
                 } has made complete payment of &#8377; ${
     userData.totalAmount
-  } with reference to Loan Id ${userData.LoanId} taken on </p>
+  } with reference to Loan Id ${userData.LoanId}.</p>
                 </div>
                 <br/>
                 <br/>
@@ -58,6 +58,10 @@ const nocTemplate = (userData) => {
                 +0120 465 9902
                 <br/>
                 faircentmrborrower@gmail.com</p>
+
+                <br/>
+                <br/>
+                <p class = "text-center font-italic">This is a system generated mail and does not require any signature.</p>
                 </div>
 		</body>
 	</html>`;

@@ -25,6 +25,7 @@ class SendAgreement_service {
   // send email to user
   // -----------------------------------
   async sendAgreementUserService(uid, jobAssignees_id, loanStatus) {
+    console.log("loanStatus", loanStatus);
     const usersRepoResult = await this.usersRepository.getUserDataEmail(uid);
     const userInfoRepoResult =
       await this.userinfoRepository.getUserInfoDataEmail(uid);
@@ -46,7 +47,7 @@ class SendAgreement_service {
       email: jobAssigneeRepoData.email,
     };
 
-    const html = emailTemplateDecide(userData, agentData, loanStatus);
+    const html = emailTemplateDecide(userData, loanStatus, agentData);
     console.log("html-----", html);
     try {
       var transporter = nodemailer.createTransport({
@@ -129,7 +130,7 @@ class SendAgreement_service {
       email: jobAssigneeRepoData.email,
     };
 
-    const html = emailTemplateDecide(userData, agentData, loanStatus);
+    const html = emailTemplateDecide(userData, loanStatus, agentData);
     console.log("html-----", html);
 
     try {

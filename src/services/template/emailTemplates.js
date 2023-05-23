@@ -281,12 +281,6 @@ const loanDisburse = (userData) => {
 
 			</div>
 	  
-			
-  
-		 <br/>
-		 You can find the attachment of the agreement with this email.
-  
-		 <br/>
 			 
 			  </div>
 			  <br/>
@@ -410,11 +404,12 @@ const subjectDecide = (loanState) => {
   } else if (loanState == 1600) {
     return "Loan disbursed.";
   } else if (loanState == 1700) {
-    return "Loan repaid.";
+    return "Loan repaid successfully, NOC generated";
   } else return "Loan agreement rejected.";
 };
 
 const emailTemplateDecide = (userData, loanState, agentData) => {
+  console;
   if (loanState == 1200) {
     const userTemplate = appliedUser(userData, agentData);
     const agentTemplate = appliedAgent(userData, agentData);
