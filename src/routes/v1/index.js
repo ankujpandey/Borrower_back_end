@@ -20,6 +20,12 @@ const {
 	EMI_calculator,
 	JobAssigneeController,
 	Generate_PdfController,
+	LogconditionController,
+	AgreementController,
+	BorrowerTransactionController,
+	PoolTransactionController,
+	BorrowerWalletController,
+	PoolController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -55,7 +61,7 @@ router.get(
 // ------------------------------------------
 
 router.post("/signUp", UsersController.create);
-router.get("/logIn/", UsersController.get);
+router.get("/logIn/", UsersController.get); //Login API
 router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
@@ -72,6 +78,35 @@ router.post(
 	"/createLoan",
 	JWTToken.verifyToken,
 	LoanController.createLoanController
+);
+router.get(
+	"/getLoan/:id",
+	JWTToken.verifyToken,
+	LoanController.getLoanDataController
+);
+
+router.get(
+	"/getLoanStatus/:id",
+	JWTToken.verifyToken,
+	LoanController.getLoanStatusController
+);
+
+router.post(
+	"/updateLoanStatus",
+	JWTToken.verifyToken,
+	LoanController.updateLoanStatusController
+);
+
+router.get(
+	"/getLoanWithEMI/:id",
+	JWTToken.verifyToken,
+	LoanController.getLoanWithEMIController
+);
+
+router.post(
+	"/disburseLoan",
+	JWTToken.verifyToken,
+	LoanController.loanDisbursementController
 );
 
 // ------------------------------------------
@@ -100,15 +135,25 @@ router.get("/getAllCompany", CompanyController.getAllCompanyController);
 // ------------------------------------------
 // route for Admin Table
 // ------------------------------------------
+
 router.post("/admin", AdminController.createAdminController);
 router.get("/admin/:id", AdminController.getAdminController);
 router.get("/admins", AdminController.getAllAdminController);
 
-// ------------------------------------------
-// route to fetch all data
-// ------------------------------------------
+// -------------------------------------
+// get all data for user details page
+// -------------------------------------
 router.get("/getAllData/:id", UsersController.getAllData);
+
+// --------------------------------------------------
+// get user+user_info data for admin dashboard table
+// --------------------------------------------------
 router.get("/getUserData", UsersController.getUserData);
+
+// --------------------------------------------------
+// get user+user_info data for agent dashboard table
+// --------------------------------------------------
+router.get("/getUserDataAgent", UsersController.getUserDataAgent);
 
 // -------------------------------------------
 //  Aadhaar Card Verification
@@ -163,6 +208,10 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 // --------------------------------------
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
+router.get(
+	"/createAgreementPdf/:id",
+	Generate_PdfController.generateAgreementPdfController
+);
 
 // --------------------------------------
 // 	API for Job Assignees
@@ -181,10 +230,88 @@ router.get(
 	JobAssigneeController.getAllJobAssigneeController
 );
 router.get("/sort/JobAssignee", JobAssigneeController.assignAgentsController);
+
 router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
+
 router.post(
 	"/updateJobsAssigned/:id",
 	JobAssigneeController.UpdateJobsAssignedController
+);
+
+// ------------------------------------------
+// route for log condition table
+// ------------------------------------------
+router.get(
+	"/getlogCondition",
+	LogconditionController.getLogConditionController
+);
+
+// ------------------------------------------
+// route to send Agreement
+// ------------------------------------------
+router.post("/sendAgreement", AgreementController.sendArgeementController);
+
+// ------------------------------------------
+// routes for Borrower Transactions
+// ------------------------------------------
+router.post(
+	"/createBorrowerTransaction",
+	BorrowerTransactionController.createTransactionController
+);
+
+router.get(
+	"/getUserTransaction/:id",
+	BorrowerTransactionController.findUserTransactionController
+);
+
+// ------------------------------------------
+// routes for Borrower Wallet
+// ------------------------------------------
+router.post(
+	"/createBorrowerWallet",
+	BorrowerWalletController.createWalletController
+);
+
+router.get(
+	"/getBorrowerWallet/:id",
+	BorrowerWalletController.getWalletController
+);
+
+router.get(
+	"/getUserLoanTransaction/:id",
+	BorrowerTransactionController.findUserLoanTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Transactions
+// ------------------------------------------
+router.post(
+	"/createPoolTransaction",
+	PoolTransactionController.createTransactionController
+);
+
+router.get(
+	"/getPoolTransaction/:id",
+	PoolTransactionController.getParticularTransactionController
+);
+
+// ------------------------------------------
+// routes for Pool Table
+// ------------------------------------------
+router.post("/addPoolBalance", PoolController.createPoolController);
+router.get(
+	"/getParticularPoolData/:id",
+	PoolController.getParticularPoolController
+);
+router.get("/getPoolBalance", PoolController.getPoolBalanceController);
+// -----------------------------------------------------------
+// get pool transcations + pool table data for pool dashboard
+// ------------------------------------------------------------
+router.get("/getPoolData", PoolController.getPoolController); //(useless)
+
+router.get(
+	"/findAllPoolTransactions",
+	PoolTransactionController.findAllTransactionsController
 );
 
 module.exports = router;

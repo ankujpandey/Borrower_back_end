@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       LoanId: {
-        unique: true,
         allowNull: true,
         type: DataTypes.INTEGER,
       },
