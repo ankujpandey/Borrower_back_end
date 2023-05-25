@@ -349,6 +349,12 @@ const sendEmailtoAdmin = () => {
 	  </html>`;
 };
 
+// ------------------------------------------------------------------------
+// Email template for Loan_state = 1700
+// The user has repaid the loan successfull and a NOC has been generated
+// for the user and attached to this mail.
+// ------------------------------------------------------------------------
+
 const loanRepaidUser = (userData) => {
   return `<!DOCTYPE html>
 		<html>
