@@ -42,14 +42,14 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 // ------------------------------------------
 
 // router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.create);
+// router.delete(
+//   "/user_info/:id",
+//   JWTToken.verifyToken,
+//   UserInfoController.destroy
+// );
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
-router.delete(
-  "/user_info/:id",
-  JWTToken.verifyToken,
-  UserInfoController.destroy
-);
 router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
-router.get("/user_info", UserInfoController.getAll);
+router.get("/user_info", JWTToken.verifyToken, UserInfoController.getAll);
 router.get(
   "/user_info/admin/admin",
   JWTToken.verifyToken,
@@ -62,7 +62,6 @@ router.get(
 
 router.post("/signUp", UsersController.create);
 router.get("/logIn/", UsersController.get); //Login API
-router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
 router.get(
@@ -70,6 +69,7 @@ router.get(
   JWTToken.verifyToken,
   UsersController.getAllByAdmin
 );
+// router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 
 // ------------------------------------------
 // route for Loan Table
