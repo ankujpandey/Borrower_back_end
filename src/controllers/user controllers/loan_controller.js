@@ -11,6 +11,7 @@ const schedule = require("node-schedule");
 const { saveReqRes } = require("../../mongodb/index");
 const { createLogController } = require("../admin controllers/log_controller");
 const { LoanCombineData } = require("../common controllers/log_combine_data");
+const { GenerateRequest } = require("../../utils/Request_Response");
 
 const loanService = new Loan_service();
 const SendAgreementService = new SendAgreement_service();
@@ -24,22 +25,21 @@ const UserInfoService = new UserInfo_service();
 // insert into table
 // -----------------------------------
 const createLoanController = async (req, res) => {
-  // console.log("loan contorller");
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     const loanData = await loanService.createLoanService(req.body);
     console.log("loanData-----", loanData);
-    // storeRequestResponse.response = {
-    //   data: loanData,
-    //   success: true,
-    //   message: "Successfully Inserted Loan Data",
-    //   err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: result,
+      success: true,
+      message: "Successfully updated User Info",
+      err: {},
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     if (req.body.emailUser) {
       const emailReq = await SendAgreementService.sendAgreementUserService(
         loanData.uid,
@@ -71,13 +71,15 @@ const createLoanController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Not able to insert into Loan Data",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to insert into Loan Data",
+      err: error,
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -93,20 +95,21 @@ const createLoanController = async (req, res) => {
 
 const getLoanDataController = async (req, res) => {
   console.log("loan controller");
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     const LoanStatus = await loanService.getLoanDataService(req.params.id);
-    // storeRequestResponse.response = {
-    //   data: LoanStatus,
-    //   success: true,
-    //   message: "Successfully Inserted Loan Data",
-    //   err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: LoanStatus,
+      success: true,
+      message: "Successfully Inserted Loan Data",
+      err: {},
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(201).json({
       data: LoanStatus,
       success: true,
@@ -115,13 +118,15 @@ const getLoanDataController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Unable to fetched loan status",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetched loan status",
+      err: error,
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -134,16 +139,11 @@ const getLoanDataController = async (req, res) => {
 // -----------------------------------------
 // update loan status in the table
 // -----------------------------------------
-
 const updateLoanStatusController = async (req, res) => {
   // console.log("loan controller");
 
-  console.log("this is body----->>>>>>>>>>>>>>>>>", req.body);
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+  // console.log("this is body----->>>>>>>>>>>>>>>>>", req.body);
+
   try {
     const updatedLoanStatus = await loanService.updateLoanStatusService(
       req.body
@@ -202,20 +202,21 @@ const updateLoanStatusController = async (req, res) => {
 
 const getLoanStatusController = async (req, res) => {
   console.log("loan controller");
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     const loanStatus = await loanService.getLoanStatusService(req.params.id);
-    // storeRequestResponse.response = {
-    //   data: loanStatus,
-    //   success: true,
-    //   message: "Successfully updated Loan status",
-    //   err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: loanStatus,
+      success: true,
+      message: "Successfully updated Loan status",
+      err: {},
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(201).json({
       data: loanStatus,
       success: true,
@@ -224,13 +225,15 @@ const getLoanStatusController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Unable to updated loan status",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch loan status",
+      err: error,
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -245,20 +248,21 @@ const getLoanStatusController = async (req, res) => {
 // ------------------------------------------------
 const getLoanWithEMIController = async (req, res) => {
   console.log("loan controller");
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     const loanStatus = await loanService.getLoanWithEMIService(req.params.id);
-    // storeRequestResponse.response = {
-    //   data: loanStatus,
-    //   success: true,
-    //   message: "Successfully updated Loan status",
-    //   err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: loanStatus,
+      success: true,
+      message: "Successfully updated Loan status",
+      err: {},
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(201).json({
       data: loanStatus,
       success: true,
@@ -267,13 +271,15 @@ const getLoanWithEMIController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Unable to updated loan status",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch loan status",
+      err: error,
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -288,11 +294,10 @@ const getLoanWithEMIController = async (req, res) => {
 // -----------------------------------------
 const loanDisbursementController = async (req, res) => {
   console.log("loan controller");
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     console.log("data", req.body);
 
@@ -329,6 +334,14 @@ const loanDisbursementController = async (req, res) => {
       await selfDeductTransactionController(req.body);
     }
 
+    dataReqRes.response = GenerateResponse({
+      data: updateLoanState,
+      success: true,
+      message: "Successfully fetched loan status",
+      err: {},
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(201).json({
       data: updateLoanState,
       success: true,
@@ -337,14 +350,15 @@ const loanDisbursementController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Unable to updated loan status",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
 
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to disburse loan",
+      err: error,
+    });
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     if (error.error.message === "Please Add Money!") {
       await SendAgreementService.sendEmailAdminService();
       return res.status(503).json({
@@ -370,6 +384,9 @@ const loanDisbursementController = async (req, res) => {
 const selfDeductTransactionController = async (req) => {
   console.log("In Borrower self deduct transaction Controller");
 
+  const dataReqRes = {};
+  // generate  request
+  dataReqRes.request = GenerateRequest(req);
   try {
     // console.log("in automatic emi pay", req);
 
