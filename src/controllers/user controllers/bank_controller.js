@@ -1,4 +1,8 @@
 const { Bank_service } = require("../../services");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 const { saveReqRes } = require("../../mongodb/index");
 
 const bankService = new Bank_service();
@@ -7,22 +11,24 @@ const bankService = new Bank_service();
 // insert into table
 // -----------------------------------
 const createBankController = async (req, res) => {
-  console.log("bank contorller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const bankData = await bankService.createBankService(req.body);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: bankData,
       success: true,
       message: "Successfully Inserted Bank Data",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: bankData,
       success: true,
@@ -30,13 +36,19 @@ const createBankController = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    storeRequestResponse.response = {
+    console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able to insert into Bank Data",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -50,18 +62,24 @@ const createBankController = async (req, res) => {
 // update into table using uid
 // -----------------------------------
 const updateBankController = async (req, res) => {
-  console.log("Bank controller");
-  const responseObj = {};
-  responseObj.request = req.body;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const bankData = await bankService.updateBankService(req.body);
-    responseObj.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: bankData,
       success: true,
       message: "Successfully Inserted Bank Details",
       err: {},
-    };
-    saveReqRes(responseObj);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: bankData,
       success: true,
@@ -70,13 +88,18 @@ const updateBankController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    responseObj.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
-      message: "Not able to insert into Bank Details",
+      message: "Not able to insert Bank Details",
       err: error,
-    };
-    saveReqRes(responseObj);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

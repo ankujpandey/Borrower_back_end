@@ -1,4 +1,9 @@
 const { poolTxn_Service } = require("../../services");
+const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const PoolTxnService = new poolTxn_Service();
 
@@ -7,10 +12,23 @@ const PoolTxnService = new poolTxn_Service();
 // -----------------------------------
 
 const createTransactionController = async (req, res) => {
-  console.log("In Pool Transaction Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const transaction = await PoolTxnService.createTransaction(req.body);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: transaction,
+      success: true,
+      message: "Successfully created a transaction",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: transaction,
@@ -19,6 +37,19 @@ const createTransactionController = async (req, res) => {
       err: {},
     });
   } catch (error) {
+    console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to create transaction",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -33,10 +64,23 @@ const createTransactionController = async (req, res) => {
 // -----------------------------------
 
 const findAllTransactionsController = async (req, res) => {
-  console.log("In Pool Transaction Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const transactions = await PoolTxnService.findAllTransactions(req.query);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: transactions,
+      success: true,
+      message: "Successfully fetched all transactions",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: transactions,
@@ -46,6 +90,18 @@ const findAllTransactionsController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch transactions",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -59,10 +115,24 @@ const findAllTransactionsController = async (req, res) => {
 // find Particular transactions using pool Id
 // ---------------------------------------------------
 const getParticularTransactionController = async (req, res) => {
-  console.log(" find Particular transactions using pool Id Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const getParticularTransactionControllerData =
       await PoolTxnService.getParticularTransacationService(req.params.id);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: getParticularTransactionControllerData,
+      success: true,
+      message: "Successfully fetch particular transactions table",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: getParticularTransactionControllerData,
@@ -72,6 +142,18 @@ const getParticularTransactionController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch particular transactions table",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

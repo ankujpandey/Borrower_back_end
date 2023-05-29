@@ -1,5 +1,11 @@
 const { JobAssignees_service } = require("../../services");
 
+const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
+
 const JobAssigneeService = new JobAssignees_service();
 
 // -----------------------------------
@@ -7,22 +13,25 @@ const JobAssigneeService = new JobAssignees_service();
 // -----------------------------------
 
 const createJobAssigneesController = async (req, res) => {
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const JobAssigneeData = await JobAssigneeService.createJobAssigneesService(
       req.body
     );
-    // storeRequestResponse.response = {
-    // 	data: adminData,
-    // 	success: true,
-    // 	message: "Successfully inserted data to Admin model",
-    // 	err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: JobAssigneeData,
+      success: true,
+      message: "Successfully inserted data to Job Assignee model",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: JobAssigneeData,
@@ -32,13 +41,18 @@ const createJobAssigneesController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    // 	data: {},
-    // 	success: false,
-    // 	message: "Failed to insert data to Admin model",
-    // 	err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Failed to insert data to Job Assignee model",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: {},
       success: false,
@@ -53,22 +67,26 @@ const createJobAssigneesController = async (req, res) => {
 // -----------------------------------
 
 const getJobAssigneeController = async (req, res) => {
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.params.id;
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await JobAssigneeService.getJobAssigneesService(
       req.params.id
     );
-    // storeRequestResponse.response = {
-    // 	data: response,
-    // 	success: true,
-    // 	message: "Successfully fetched Assignee Info",
-    // 	err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: response,
+      success: true,
+      message: "Successfully fetched Assignee Info",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -77,13 +95,18 @@ const getJobAssigneeController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    // 	data: {},
-    // 	success: false,
-    // 	message: "Unable fetch Assignee Info",
-    // 	err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable fetch Assignee Info",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -98,20 +121,24 @@ const getJobAssigneeController = async (req, res) => {
 // -----------------------------------
 
 const getAllJobAssigneeController = async (req, res) => {
-  // const storeRequestResponse = {};
-  // const requestObj = {};
-  // requestObj.body = req.body || "";
-  // requestObj.headers = req.rawHeaders;
-  // storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await JobAssigneeService.getAllJobAssigneesService();
-    // storeRequestResponse.response = {
-    //   data: response,
-    //   success: true,
-    //   message: "Successfully fetched JobAssignees Info",
-    //   err: {},
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: response,
+      success: true,
+      message: "Successfully fetched Job Assignees Info",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -120,13 +147,18 @@ const getAllJobAssigneeController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // storeRequestResponse.response = {
-    //   data: {},
-    //   success: false,
-    //   message: "Unable fetch Job Assignees Info",
-    //   err: error,
-    // };
-    // saveReqRes(storeRequestResponse);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable fetch Job Assignees Info",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

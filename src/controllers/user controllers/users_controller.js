@@ -15,13 +15,15 @@ const usersService = new Users_service();
 // -----------------------------------
 // insert into table
 // -----------------------------------
+
 const create = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const user = await usersService.createUser(req.body);
-    console.log("wrng in controller", user);
+
     // generate  response
     dataReqRes.response = GenerateResponse({
       data: user,
@@ -42,13 +44,17 @@ const create = async (req, res) => {
   } catch (error) {
     console.log(error);
 
+    // generate  response
     dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able to insert into User Info",
       err: error,
     });
+
+    // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -61,10 +67,12 @@ const create = async (req, res) => {
 // -----------------------------------
 // delete from table
 // -----------------------------------
+
 const destroy = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await usersService.deleteUser(req.params.id);
 
@@ -75,8 +83,10 @@ const destroy = async (req, res) => {
       message: "Successfully deleted User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -93,8 +103,10 @@ const destroy = async (req, res) => {
       message: "Not able delete from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -107,10 +119,12 @@ const destroy = async (req, res) => {
 // -----------------------------------
 // update table
 // -----------------------------------
+
 const update = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await usersService.updateUser(req.params.id, req.body);
 
@@ -121,8 +135,10 @@ const update = async (req, res) => {
       message: "Successfully updated User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -139,8 +155,10 @@ const update = async (req, res) => {
       message: "Not able update User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -153,9 +171,10 @@ const update = async (req, res) => {
 // -----------------------------------
 // get from table
 // -----------------------------------
+
 const get = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
 
   try {
@@ -168,8 +187,10 @@ const get = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -186,8 +207,10 @@ const get = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -200,10 +223,12 @@ const get = async (req, res) => {
 // -----------------------------------
 // get all data from table
 // -----------------------------------
+
 const getAll = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await usersService.getAllUser();
 
@@ -214,6 +239,7 @@ const getAll = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
 
@@ -233,8 +259,10 @@ const getAll = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -247,12 +275,15 @@ const getAll = async (req, res) => {
 // -----------------------------------
 // get all data from table for admin
 // -----------------------------------
+
 const getAllByAdmin = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await usersService.getAllUserByAdmin();
+
     // generate  response
     dataReqRes.response = GenerateResponse({
       data: response,
@@ -260,8 +291,10 @@ const getAllByAdmin = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -278,8 +311,10 @@ const getAllByAdmin = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -294,9 +329,10 @@ const getAllByAdmin = async (req, res) => {
 // -------------------------------------
 
 const getAllData = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await usersService.getAllData(req.params.id);
 
@@ -307,8 +343,10 @@ const getAllData = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -323,8 +361,10 @@ const getAllData = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     console.log(error);
     return res.status(500).json({
       data: {},
@@ -340,12 +380,11 @@ const getAllData = async (req, res) => {
 // --------------------------------------------------
 
 const getUserData = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
-  try {
-    console.log("req----------->>>>>>", req.query);
 
+  try {
     // generate  response
     dataReqRes.response = GenerateResponse({
       data: response,
@@ -353,8 +392,10 @@ const getUserData = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -371,8 +412,10 @@ const getUserData = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -387,11 +430,11 @@ const getUserData = async (req, res) => {
 // --------------------------------------------------
 
 const getUserDataAgent = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
-    console.log("req----------->>>>>>", req.query);
     const response = await usersService.getUserDataAgent(req.query);
 
     // generate  response
@@ -401,8 +444,10 @@ const getUserDataAgent = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -419,8 +464,10 @@ const getUserDataAgent = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -438,8 +485,10 @@ const updateUser = async (req, res) => {
   const data = req.body;
   const id = req.params.id;
   const dataReqRes = {};
+
   // generate  request
   dataReqRes.request = GenerateRequest(req);
+
   try {
     console.log("In controller id:- ", id);
     console.log("In controller data:-", data);
@@ -459,6 +508,7 @@ const updateUser = async (req, res) => {
       message: "Successfully updated User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
 
@@ -476,8 +526,10 @@ const updateUser = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

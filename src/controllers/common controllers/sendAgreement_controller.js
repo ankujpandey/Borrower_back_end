@@ -4,6 +4,13 @@ const {
   JobAssignees_service,
   GeneratePdf_service,
 } = require("../../services");
+
+const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
+
 const SendAgreementService = new SendAgreement_service();
 const LoanService = new Loan_service();
 const JobAssigneesService = new JobAssignees_service();
@@ -14,7 +21,10 @@ const GeneratePdfService = new GeneratePdf_service();
 // -----------------------------------
 
 const sendArgeementController = async (req, res) => {
-  console.log("----------controller----------", req.body);
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const loanData = await LoanService.getLoanWithEMIService(req.body.uid);
 
@@ -29,6 +39,17 @@ const sendArgeementController = async (req, res) => {
     const sendAgreementControllerData =
       await SendAgreementService.sendAgreementUserService(req.body);
 
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: sendAgreementControllerData,
+      success: true,
+      message: "Successful sent agreement",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: sendAgreementControllerData,
       success: true,
@@ -39,6 +60,18 @@ const sendArgeementController = async (req, res) => {
     // res.sendFile(`${__dirname}/result.pdf`);
   } catch (error) {
     console.log("error", error.message);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to sent agreement",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

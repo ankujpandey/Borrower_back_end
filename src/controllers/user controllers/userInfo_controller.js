@@ -9,12 +9,12 @@ const userInfoService = new UserInfo_service();
 // -----------------------------------
 // insert into table
 // -----------------------------------
-const create = async (req, res) => {
-  // console.log(colors.bgGreen("userData in controller------->>>>>>", req.body));
 
-  const dataReqRes = {};
+const create = async (req, res) => {
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const userInfo = await userInfoService.createUserInfo(
       req.body,
@@ -29,6 +29,7 @@ const create = async (req, res) => {
       message: "Successfully Inserted User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
 
@@ -48,8 +49,10 @@ const create = async (req, res) => {
       message: "Not able to insert into User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -62,10 +65,12 @@ const create = async (req, res) => {
 // -----------------------------------
 // delete from table
 // -----------------------------------
+
 const destroy = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.deleteUserInfo(req.params.id);
 
@@ -76,8 +81,10 @@ const destroy = async (req, res) => {
       message: "Successfully deleted User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -94,8 +101,10 @@ const destroy = async (req, res) => {
       message: "Not able delete from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -108,10 +117,12 @@ const destroy = async (req, res) => {
 // -----------------------------------
 // update table
 // -----------------------------------
+
 const update = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.updateUserInfo(
       req.params.id,
@@ -125,11 +136,14 @@ const update = async (req, res) => {
       message: "Successfully updated User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     // ------------------------------
     // Creating log
     // ------------------------------
+
     const Data = {};
     Data.oldState = "1000";
     Data.currentState = "1000";
@@ -154,8 +168,10 @@ const update = async (req, res) => {
       message: "Not able update User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -168,10 +184,12 @@ const update = async (req, res) => {
 // -----------------------------------
 // get from table
 // -----------------------------------
+
 const get = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getUserInfo(req.params.id);
 
@@ -182,8 +200,10 @@ const get = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -192,6 +212,7 @@ const get = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
     // generate  response
     dataReqRes.response = GenerateResponse({
       data: {},
@@ -199,8 +220,10 @@ const get = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -213,10 +236,12 @@ const get = async (req, res) => {
 // -----------------------------------
 // get all data from table
 // -----------------------------------
+
 const getAll = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getAllUserInfo(req.query);
 
@@ -227,8 +252,10 @@ const getAll = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -245,8 +272,10 @@ const getAll = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -259,10 +288,12 @@ const getAll = async (req, res) => {
 // -----------------------------------
 // get all data from table
 // -----------------------------------
+
 const getAllByAdmin = async (req, res) => {
-  const dataReqRes = {};
   // generate  request
+  const dataReqRes = {};
   dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getAllUserInfoByAdmin(req.query);
 
@@ -273,8 +304,10 @@ const getAllByAdmin = async (req, res) => {
       message: "Successfully fetched User Info",
       err: {},
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -291,8 +324,10 @@ const getAllByAdmin = async (req, res) => {
       message: "Not able fetch data from User Info",
       err: error,
     });
+
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
