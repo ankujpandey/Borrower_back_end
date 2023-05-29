@@ -1,6 +1,6 @@
 const GenerateRequest = (req) => {
   const requestObj = {};
-  requestObj.body = req.body || req.query || req.params.id || "";
+  requestObj.body = req.body || req.query || req.params.id || req.files || "";
   requestObj.headers = req.rawHeaders;
   return requestObj;
 };

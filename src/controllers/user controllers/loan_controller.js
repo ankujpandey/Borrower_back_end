@@ -10,7 +10,7 @@ const {
 const schedule = require("node-schedule");
 const { saveReqRes } = require("../../mongodb/index");
 const { createLogController } = require("../admin controllers/log_controller");
-const { LoanCombineData } = require("../common controllers/log_combine_data");
+const { LoanCombineData } = require("../../utils/log_combine_data");
 const { GenerateRequest } = require("../../utils/Request_Response");
 
 const loanService = new Loan_service();

@@ -5,18 +5,34 @@ const GeneratePdfService = new GeneratePdf_service();
 const loaService = new Loan_service();
 
 const fs = require("fs");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
+const { saveReqRes } = require("../../mongodb");
 
 // -----------------------------------
 // Generate user prfile Pdf for admin
 // -----------------------------------
 const generatepdfController = async (req, res) => {
   console.log("backend====", req.params.id);
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
   try {
     const generatepdfControllerData =
       await GeneratePdfService.generateUserPdfServices(req.params.id);
-    // res.sendFile(
-    //   `/home/mohdazharuddin/Desktop/projectborrower/Borrower_back_end/Borrower_back_end/src/result.pdf`
-    // );
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: generatepdfControllerData,
+      success: true,
+      message: "Successfully Generated Pdf Data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     res.sendFile(`${__dirname}/pdf/userData.pdf`);
 
     // return res.status(201).json({
@@ -27,6 +43,16 @@ const generatepdfController = async (req, res) => {
     // });
   } catch (error) {
     console.log("error", error.message);
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to Generated Pdf Data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -41,6 +67,9 @@ const generatepdfController = async (req, res) => {
 // -----------------------------------
 const generateAgreementPdfController = async (req, res) => {
   console.log("backend====", req.params.id);
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
   try {
     const loanData = await loaService.getLoanWithEMIService(req.params.id);
     const generatepdfControllerData =
@@ -48,9 +77,17 @@ const generateAgreementPdfController = async (req, res) => {
         req.params.id,
         loanData
       );
-    // res.sendFile(
-    //   `/home/mohdazharuddin/Desktop/projectborrower/Borrower_back_end/Borrower_back_end/src/result.pdf`
-    // );
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: generatepdfControllerData,
+      success: true,
+      message: "Successfully Generated Pdf Data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     res.sendFile(`${__dirname}/pdf/agreement.pdf`);
 
     // return res.status(201).json({
@@ -61,6 +98,16 @@ const generateAgreementPdfController = async (req, res) => {
     // });
   } catch (error) {
     console.log("error", error.message);
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to Generated Pdf Data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
@@ -76,9 +123,23 @@ const generateAgreementPdfController = async (req, res) => {
 
 const generateNocPdfController = async (req, res) => {
   console.log("backend====", req.params.id);
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
   try {
     const generateNocPdfControllerData =
       await GeneratePdfService.generateNocPdfServices(req.params.id);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: generateNocPdfControllerData,
+      success: true,
+      message: "Successfully Generated Pdf Data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: generateNocPdfControllerData,
@@ -88,6 +149,16 @@ const generateNocPdfController = async (req, res) => {
     });
   } catch (error) {
     console.log("error", error.message);
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to Generated Pdf Data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,

@@ -2,7 +2,7 @@ const colors = require("colors");
 const { UserInfo_service } = require("../../services");
 const { saveReqRes } = require("../../mongodb/index");
 const { createLogController } = require("../admin controllers/log_controller");
-const { LogCombineData } = require("../common controllers/log_combine_data");
+const { LogCombineData } = require("../../utils/log_combine_data");
 
 const userInfoService = new UserInfo_service();
 
