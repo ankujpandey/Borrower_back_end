@@ -1,8 +1,10 @@
 const colors = require("colors");
 const { UserInfo_service } = require("../../services");
 const { saveReqRes } = require("../../mongodb/index");
-const { createLogController } = require("../admin controllers/log_controller");
-const { LogCombineData } = require("../../utils/log_combine_data");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const userInfoService = new UserInfo_service();
 
@@ -140,18 +142,6 @@ const update = async (req, res) => {
     // store request response in mongodb
     saveReqRes(dataReqRes);
 
-    // ------------------------------
-    // Creating log
-    // ------------------------------
-
-    const Data = {};
-    Data.oldState = "1000";
-    Data.currentState = "1000";
-    Data.req = req;
-    console.log("------------------1", Data);
-    const data = LogCombineData(Data);
-    console.log("-----------------", data);
-    createLogController(data);
     return res.status(201).json({
       data: response,
       success: true,

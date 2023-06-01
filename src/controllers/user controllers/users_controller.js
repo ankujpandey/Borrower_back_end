@@ -9,6 +9,7 @@ const {
   GenerateRequest,
   GenerateResponse,
 } = require("../../utils/Request_Response");
+const { createLogController } = require("../admin controllers/log_controller");
 
 const usersService = new Users_service();
 
@@ -34,6 +35,21 @@ const create = async (req, res) => {
 
     // store request response in mongodb
     saveReqRes(dataReqRes);
+
+    // ------------------------------
+    // Creating log
+    // ------------------------------
+
+    const data = {
+      uid: user.result.loanData.uid,
+      LoanId: user.result.loanData.LoanId,
+      assigned: user.result.loanData.jobAssignees_id,
+      old_state: "1000",
+      current_state: user.result.loanData.Loan_state,
+      user_ip: req.socket.remoteAddress,
+    };
+
+    createLogController(data);
 
     return res.status(201).json({
       data: user,

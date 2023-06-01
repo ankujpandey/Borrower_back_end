@@ -53,12 +53,13 @@ class Users_repository {
         uid: user.uid,
       });
 
-      await loan_details.create({
+      const loanUser = await loan_details.create({
         uid: user.uid,
         Loan_state: 1000,
         jobAssignees_id: 1,
       });
 
+      obj.loanData = loanUser;
       obj.signUp = user;
       obj.userName = userInfo;
       return obj;

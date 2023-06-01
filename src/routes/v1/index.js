@@ -34,8 +34,8 @@ const {
 
 const Jwt = require("jsonwebtoken");
 const jwtKey = "anakaz";
-// const verifyToken = require("../../middleware/index").verifyToken;
 const { JWTToken, UploadAadhaar } = require("../../middleware/index");
+// const verifyToken = require("../../middleware/index").verifyToken;
 
 // ------------------------------------------
 // route for User_Info Table
@@ -48,8 +48,11 @@ const { JWTToken, UploadAadhaar } = require("../../middleware/index");
 //   UserInfoController.destroy
 // );
 router.get("/user_info/:id", JWTToken.verifyToken, UserInfoController.get);
+
 router.post("/user_info/:id", JWTToken.verifyToken, UserInfoController.update);
+
 router.get("/user_info", JWTToken.verifyToken, UserInfoController.getAll);
+
 router.get(
   "/user_info/admin/admin",
   JWTToken.verifyToken,
@@ -61,9 +64,13 @@ router.get(
 // ------------------------------------------
 
 router.post("/signUp", UsersController.create);
+
 router.get("/logIn/", UsersController.get); //Login API
+
 router.patch("/user/:id", JWTToken.verifyToken, UsersController.update);
+
 router.get("/user", JWTToken.verifyToken, UsersController.getAll);
+
 router.get(
   "/user/admin/admin",
   JWTToken.verifyToken,
@@ -74,6 +81,7 @@ router.get(
 // ------------------------------------------
 // route for Loan Table
 // ------------------------------------------
+
 router.post(
   "/createLoan",
   JWTToken.verifyToken,
@@ -93,7 +101,7 @@ router.get(
 
 router.post(
   "/updateLoanStatus",
-  JWTToken.verifyToken,
+  // JWTToken.verifyToken,
   LoanController.updateLoanStatusController
 );
 
@@ -112,6 +120,7 @@ router.post(
 // ------------------------------------------
 // route for Bank Table
 // ------------------------------------------
+
 router.post(
   "/createBank",
   JWTToken.verifyToken,
@@ -121,6 +130,7 @@ router.post(
 // ------------------------------------------
 // route for Employement Table
 // ------------------------------------------
+
 router.post(
   "/createEmployment",
   JWTToken.verifyToken,
@@ -130,6 +140,7 @@ router.post(
 // ------------------------------------------
 // route for Company Table
 // ------------------------------------------
+
 router.get("/getAllCompany", CompanyController.getAllCompanyController);
 
 // ------------------------------------------
@@ -137,7 +148,9 @@ router.get("/getAllCompany", CompanyController.getAllCompanyController);
 // ------------------------------------------
 
 router.post("/admin", AdminController.createAdminController);
+
 router.get("/admin/:id", AdminController.getAdminController);
+
 router.get("/admins", AdminController.getAllAdminController);
 
 // -------------------------------------
@@ -208,6 +221,7 @@ router.post("/calculateEMI", EMI_calculator.getEmiCalculations);
 // --------------------------------------
 
 router.get("/createPdf/:id", Generate_PdfController.generatepdfController);
+
 router.get(
   "/createAgreementPdf/:id",
   Generate_PdfController.generateAgreementPdfController
@@ -217,6 +231,7 @@ router.get(
   "/createNocPdf/:id",
   Generate_PdfController.generateNocPdfController
 );
+
 // --------------------------------------
 // 	API for Job Assignees
 // --------------------------------------
@@ -225,14 +240,17 @@ router.post(
   "/insert/JobAssignee",
   JobAssigneeController.createJobAssigneesController
 );
+
 router.get(
   "/get/JobAssignee/:id",
   JobAssigneeController.getJobAssigneeController
 );
+
 router.get(
   "/getAll/JobAssignee",
   JobAssigneeController.getAllJobAssigneeController
 );
+
 router.get("/sort/JobAssignee", JobAssigneeController.assignAgentsController);
 
 router.get("/assignAgent", JobAssigneeController.MinJobAgentController);
@@ -245,6 +263,7 @@ router.post(
 // ------------------------------------------
 // route for log condition table
 // ------------------------------------------
+
 router.get(
   "/getlogCondition",
   LogconditionController.getLogConditionController
@@ -253,11 +272,13 @@ router.get(
 // ------------------------------------------
 // route to send Agreement
 // ------------------------------------------
+
 router.post("/sendAgreement", AgreementController.sendArgeementController);
 
 // ------------------------------------------
 // routes for Borrower Transactions
 // ------------------------------------------
+
 router.post(
   "/createBorrowerTransaction",
   BorrowerTransactionController.createTransactionController
@@ -271,6 +292,7 @@ router.get(
 // ------------------------------------------
 // routes for Borrower Wallet
 // ------------------------------------------
+
 router.post(
   "/createBorrowerWallet",
   BorrowerWalletController.createWalletController
@@ -289,6 +311,7 @@ router.get(
 // ------------------------------------------
 // routes for Pool Transactions
 // ------------------------------------------
+
 router.post(
   "/createPoolTransaction",
   PoolTransactionController.createTransactionController
@@ -302,15 +325,20 @@ router.get(
 // ------------------------------------------
 // routes for Pool Table
 // ------------------------------------------
+
 router.post("/addPoolBalance", PoolController.createPoolController);
+
 router.get(
   "/getParticularPoolData/:id",
   PoolController.getParticularPoolController
 );
+
 router.get("/getPoolBalance", PoolController.getPoolBalanceController);
+
 // -----------------------------------------------------------
 // get pool transcations + pool table data for pool dashboard
 // ------------------------------------------------------------
+
 router.get("/getPoolData", PoolController.getPoolController); //(useless)
 
 router.get(
