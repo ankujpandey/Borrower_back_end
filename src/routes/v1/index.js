@@ -76,7 +76,7 @@ router.get(
   JWTToken.verifyToken,
   UsersController.getAllByAdmin
 );
-// router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
+router.delete("/user/:id", JWTToken.verifyToken, UsersController.destroy);
 
 // ------------------------------------------
 // route for Loan Table
@@ -101,7 +101,7 @@ router.get(
 
 router.post(
   "/updateLoanStatus",
-  // JWTToken.verifyToken,
+  JWTToken.verifyToken,
   LoanController.updateLoanStatusController
 );
 

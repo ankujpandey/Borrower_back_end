@@ -401,6 +401,8 @@ const getUserData = async (req, res) => {
   dataReqRes.request = GenerateRequest(req);
 
   try {
+    const response = await usersService.getUserData(req.query);
+
     // generate  response
     dataReqRes.response = GenerateResponse({
       data: response,
