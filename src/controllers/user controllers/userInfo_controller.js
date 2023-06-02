@@ -1,34 +1,39 @@
 const colors = require("colors");
 const { UserInfo_service } = require("../../services");
 const { saveReqRes } = require("../../mongodb/index");
-const { createLogController } = require("../admin controllers/log_controller");
-const { LogCombineData } = require("../common controllers/log_combine_data");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const userInfoService = new UserInfo_service();
 
 // -----------------------------------
 // insert into table
 // -----------------------------------
+
 const create = async (req, res) => {
-  // console.log(colors.bgGreen("userData in controller------->>>>>>", req.body));
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const userInfo = await userInfoService.createUserInfo(
       req.body,
       req.params.id
     );
     console.log("wrng in controller", userInfo);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: userInfo,
       success: true,
       message: "Successfully Inserted User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: userInfo,
@@ -38,13 +43,18 @@ const create = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able to insert into User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -57,21 +67,26 @@ const create = async (req, res) => {
 // -----------------------------------
 // delete from table
 // -----------------------------------
+
 const destroy = async (req, res) => {
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.params.id;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.deleteUserInfo(req.params.id);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully deleted User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -80,13 +95,18 @@ const destroy = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able delete from User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -99,35 +119,29 @@ const destroy = async (req, res) => {
 // -----------------------------------
 // update table
 // -----------------------------------
+
 const update = async (req, res) => {
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.updateUserInfo(
       req.params.id,
       req.body
     );
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully updated User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
-    // ------------------------------
-    // Creating log
-    // ------------------------------
-    const Data = {};
-    Data.oldState = "1000";
-    Data.currentState = "1000";
-    Data.req = req;
-    console.log("------------------1", Data);
-    const data = LogCombineData(Data);
-    console.log("-----------------", data);
-    createLogController(data);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -136,13 +150,18 @@ const update = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able update User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -155,21 +174,26 @@ const update = async (req, res) => {
 // -----------------------------------
 // get from table
 // -----------------------------------
+
 const get = async (req, res) => {
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.params.id;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getUserInfo(req.params.id);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully fetched User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -178,13 +202,18 @@ const get = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able fetch data from User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -197,21 +226,26 @@ const get = async (req, res) => {
 // -----------------------------------
 // get all data from table
 // -----------------------------------
+
 const getAll = async (req, res) => {
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.query;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getAllUserInfo(req.query);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully fetched User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -220,13 +254,18 @@ const getAll = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able fetch data from User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -239,21 +278,26 @@ const getAll = async (req, res) => {
 // -----------------------------------
 // get all data from table
 // -----------------------------------
+
 const getAllByAdmin = async (req, res) => {
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.query;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await userInfoService.getAllUserInfoByAdmin(req.query);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully fetched User Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -262,13 +306,18 @@ const getAllByAdmin = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able fetch data from User Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

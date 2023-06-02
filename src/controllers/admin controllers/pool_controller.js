@@ -1,4 +1,9 @@
 const { Pool_Service } = require("../../services");
+const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const PoolService = new Pool_Service();
 
@@ -7,11 +12,25 @@ const PoolService = new Pool_Service();
 // -----------------------------------
 
 const createPoolController = async (req, res) => {
-  console.log("Pool create Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const createPoolControllerData = await PoolService.createPoolService(
       req.body
     );
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: createPoolControllerData,
+      success: true,
+      message: "Successfully created a pool table data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: createPoolControllerData,
@@ -21,6 +40,18 @@ const createPoolController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to create pool table data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -35,10 +66,24 @@ const createPoolController = async (req, res) => {
 // -----------------------------------
 
 const getParticularPoolController = async (req, res) => {
-  console.log("Pool get Particular Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const getParticularPoolControllerData =
       await PoolService.getParticularPoolService(req.params.id);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: getParticularPoolControllerData,
+      success: true,
+      message: "Successfully fetch particular pool table",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: getParticularPoolControllerData,
@@ -48,6 +93,18 @@ const getParticularPoolController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch particular pool table",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -61,10 +118,23 @@ const getParticularPoolController = async (req, res) => {
 // get pool+pool_transcation  data for pool table
 // --------------------------------------------------
 const getPoolController = async (req, res) => {
-  console.log("Pool get Controller", req.query);
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const getPoolControllerData = await PoolService.getPoolService(req.query);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: getPoolControllerData,
+      success: true,
+      message: "Successfully fetch  pool table data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: getPoolControllerData,
@@ -74,6 +144,18 @@ const getPoolController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to fetch pool table data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

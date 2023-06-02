@@ -1,5 +1,9 @@
 const { Employment_service } = require("../../services");
 const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const employmentService = new Employment_service();
 
@@ -7,23 +11,25 @@ const employmentService = new Employment_service();
 // insert into table
 // -----------------------------------
 const createEmploymentController = async (req, res) => {
-  console.log("employemnt contorller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const employmentData = await employmentService.createEmploymentService(
       req.body
     );
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: employmentData,
       success: true,
       message: "Successfully Inserted Employement Details",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: employmentData,
@@ -33,13 +39,18 @@ const createEmploymentController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able to insert Employement Details",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -52,24 +63,28 @@ const createEmploymentController = async (req, res) => {
 // -----------------------------------
 // update into table using uid
 // -----------------------------------
+
 const updateEmploymentController = async (req, res) => {
-  console.log("employment controller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const employmentData = await employmentService.updateEmploymentService(
       req.body
     );
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: employmentData,
       success: true,
       message: "Successfully Inserted Employement Details",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: employmentData,
       success: true,
@@ -78,12 +93,17 @@ const updateEmploymentController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Not able to insert Employement Details",
       err: error,
-    };
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     saveReqRes(storeRequestResponse);
     return res.status(500).json({
       data: {},

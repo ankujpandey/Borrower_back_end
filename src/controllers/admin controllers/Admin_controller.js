@@ -1,5 +1,10 @@
 const { Admin_service } = require("../../services");
 const { saveReqRes } = require("../../mongodb/index");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
+
 const adminService = new Admin_service();
 
 // -----------------------------------
@@ -7,21 +12,23 @@ const adminService = new Admin_service();
 // -----------------------------------
 
 const createAdminController = async (req, res) => {
-  console.log("admin controller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const adminData = await adminService.createAdminService(req.body);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: adminData,
       success: true,
       message: "Successfully inserted data to Admin model",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: adminData,
@@ -31,13 +38,18 @@ const createAdminController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Failed to insert data to Admin model",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: {},
       success: false,
@@ -52,21 +64,24 @@ const createAdminController = async (req, res) => {
 // -----------------------------------
 
 const getAdminController = async (req, res) => {
-  console.log("admin controller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.params.id;
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await adminService.getAdminService(req.params.id);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully fetched Admin Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -75,13 +90,18 @@ const getAdminController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Unable fetch Admin Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -96,21 +116,24 @@ const getAdminController = async (req, res) => {
 // -----------------------------------
 
 const getAllAdminController = async (req, res) => {
-  console.log("admin controller");
-  const storeRequestResponse = {};
-  const requestObj = {};
-  requestObj.body = req.body || "";
-  requestObj.headers = req.rawHeaders;
-  storeRequestResponse.request = requestObj;
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const response = await adminService.getAllAdminsService();
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: response,
       success: true,
       message: "Successfully fetched Admins Info",
       err: {},
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(201).json({
       data: response,
       success: true,
@@ -119,13 +142,18 @@ const getAllAdminController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    storeRequestResponse.response = {
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
       data: {},
       success: false,
       message: "Unable fetch Admins Info",
       err: error,
-    };
-    saveReqRes(storeRequestResponse);
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,

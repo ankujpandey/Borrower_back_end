@@ -1,4 +1,8 @@
 const { BorrowerWallet_service } = require("../../services");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const BorrowerWalletService = new BorrowerWallet_service();
 
@@ -7,12 +11,25 @@ const BorrowerWalletService = new BorrowerWallet_service();
 // -----------------------------------
 
 const createWalletController = async (req, res) => {
-  console.log("In Borrower Wallet Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const transaction = await BorrowerWalletService.createWalletServices(
       req.body
     );
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: transaction,
+      success: true,
+      message: "Successfully created a wallet",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: transaction,
@@ -22,6 +39,18 @@ const createWalletController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to create wallet",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
@@ -36,12 +65,25 @@ const createWalletController = async (req, res) => {
 // -----------------------------------
 
 const getWalletController = async (req, res) => {
-  console.log("In Borrower Wallet Controller");
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
 
   try {
     const transaction = await BorrowerWalletService.getWalletServices(
       req.params.id
     );
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: transaction,
+      success: true,
+      message: "Successfully got wallet data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
 
     return res.status(201).json({
       data: transaction,
@@ -51,6 +93,18 @@ const getWalletController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to get wallet data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
     return res.status(500).json({
       data: {},
       success: false,
