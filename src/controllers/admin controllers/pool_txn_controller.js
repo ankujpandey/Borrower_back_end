@@ -19,7 +19,7 @@ const createTransactionController = async (req, res) => {
 	try {
 		const transaction = await PoolTxnService.createTransaction(req.body);
 
-		// generate  response
+		//generate response
 		dataReqRes.response = GenerateResponse({
 			data: transaction,
 			success: true,
