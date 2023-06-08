@@ -1,7 +1,5 @@
 const uploadImage = require("../../middleware/uploadImage");
 const { PanCardAnalyzer } = require("../../services/index");
-const { LogCombineData } = require("./log_combine_data");
-const { createLogController } = require("../admin controllers/log_controller");
 const { saveReqRes } = require("../../mongodb/index");
 const {
   GenerateRequest,
@@ -25,15 +23,6 @@ const checkDataController = async (req, res) => {
     );
 
     console.log("analysis======>>>>>", analysis);
-    // ------------------------------
-    // Creating log
-    // ------------------------------
-    const Data = {};
-    Data.oldState = "1000";
-    Data.currentState = "1100";
-    Data.req = req;
-    const data = LogCombineData(Data);
-    createLogController(data);
 
     // generate  response
     dataReqRes.response = GenerateResponse({

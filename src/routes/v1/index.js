@@ -26,6 +26,7 @@ const {
   PoolTransactionController,
   BorrowerWalletController,
   PoolController,
+  LogController,
 } = require("../../controllers");
 
 // ----------------------------------------
@@ -249,6 +250,12 @@ router.get(
   "/getlogCondition",
   LogconditionController.getLogConditionController
 );
+
+// ------------------------------------------
+// route for log  table
+// ------------------------------------------
+
+router.get("/getlogData/:id", LogController.getLogController);
 
 // ------------------------------------------
 // route to send Agreement
