@@ -15,6 +15,21 @@ class Log_repository {
       throw { error };
     }
   }
+
+  async getLogRepo(id) {
+    try {
+      const getLogData = await Log_table.findAll({
+        where: {
+          uid: id,
+          isDeleted: false,
+        },
+      });
+      return getLogData;
+    } catch (error) {
+      console.log("Something went wrong Log repository layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Log_repository;

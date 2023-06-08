@@ -18,6 +18,16 @@ class Log_service {
       throw { error };
     }
   }
+
+  async getLogService(id) {
+    try {
+      const getLogData = await this.Log_repository.getLogRepo(id);
+      return getLogData;
+    } catch (error) {
+      console.log("Something went wrong in log services layer".magenta);
+      throw { error };
+    }
+  }
 }
 
 module.exports = Log_service;

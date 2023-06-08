@@ -18,4 +18,5 @@ module.exports = {
   PoolTransactionController: require("./admin controllers/pool_txn_controller"),
   BorrowerWalletController: require("./user controllers/borrower_wallet_controller"),
   PoolController: require("./admin controllers/pool_controller"),
+  LogController: require("./admin controllers/log_controller"),
 };
