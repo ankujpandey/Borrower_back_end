@@ -10,8 +10,10 @@ const {
 const schedule = require("node-schedule");
 const { saveReqRes } = require("../../mongodb/index");
 const { createLogController } = require("../admin controllers/log_controller");
-const { LoanCombineData } = require("../../utils/log_combine_data");
-const { GenerateRequest } = require("../../utils/Request_Response");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const loanService = new Loan_service();
 const SendAgreementService = new SendAgreement_service();
@@ -60,18 +62,6 @@ const createLoanController = async (req, res) => {
       );
     }
 
-    // ------------------------------
-    // Creating log
-    // ------------------------------
-
-    const Data = {};
-    Data.oldState = "1100";
-    Data.loanData = loanData;
-    Data.req = req;
-    // console.log("------------------1", Data);
-    const data = LoanCombineData(Data);
-    // console.log("-----------------", data);
-    createLogController(data);
     return res.status(201).json({
       data: loanData,
       success: true,
@@ -158,55 +148,84 @@ const getLoanDataController = async (req, res) => {
 // -----------------------------------------
 
 const updateLoanStatusController = async (req, res) => {
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
+    const loanstatus = await loanService.getLoanStatusService(req.body.uid);
+
     const updatedLoanStatus = await loanService.updateLoanStatusService(
       req.body
     );
 
-    console.log("updated loan status", updatedLoanStatus);
+    // ------------------------------
+    // Creating log
+    // ------------------------------
 
-    // if (req.body.emailUser) {
-    //   const emailReq = await SendAgreementService.sendAgreementUserService(
-    //     updatedLoanStatus.uid,
-    //     updatedLoanStatus.jobAssignees_id,
-    //     updatedLoanStatus.Loan_state
-    //   );
-    // }
-    // if (req.body.emailAgent) {
-    //   const emailReq = await SendAgreementService.sendAgreementAgentService(
-    //     updatedLoanStatus.uid,
-    //     updatedLoanStatus.jobAssignees_id,
-    //     updatedLoanStatus.Loan_state
-    //   );
-    // }
-    // // storeRequestResponse.response = {
-    // //   data: updatedLoanStatus,
-    // //   success: true,
-    // //   message: "Successfully updated Loan status",
-    // //   err: {},
-    // // };
-    // // saveReqRes(storeRequestResponse);
-    // return res.status(201).json({
-    //   data: updatedLoanStatus,
-    //   success: true,
-    //   message: "Successfully updated loan status",
-    //   err: {},
-    // });
+    const data = {
+      uid: updatedLoanStatus.uid,
+      LoanId: updatedLoanStatus.LoanId,
+      old_state: loanstatus.Loan_state,
+      current_state: updatedLoanStatus.Loan_state,
+      assigned: updatedLoanStatus.jobAssignees_id,
+      user_ip: req.socket.remoteAddress,
+    };
+
+    createLogController(data);
+
+    if (req.body.emailUser) {
+      const emailReq = await SendAgreementService.sendAgreementUserService(
+        updatedLoanStatus.uid,
+        updatedLoanStatus.jobAssignees_id,
+        updatedLoanStatus.Loan_state
+      );
+    }
+    if (req.body.emailAgent) {
+      const emailReq = await SendAgreementService.sendAgreementAgentService(
+        updatedLoanStatus.uid,
+        updatedLoanStatus.jobAssignees_id,
+        updatedLoanStatus.Loan_state
+      );
+    }
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: updatedLoanStatus,
+      success: true,
+      message: "Successfully updated loan status",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
+    return res.status(201).json({
+      data: updatedLoanStatus,
+      success: true,
+      message: "Successfully updated loan status",
+      err: {},
+    });
   } catch (error) {
-    // console.log(error);
-    // // storeRequestResponse.response = {
-    // //   data: {},
-    // //   success: false,
-    // //   message: "Unable to updated loan status",
-    // //   err: error,
-    // // };
-    // // saveReqRes(storeRequestResponse);
-    // return res.status(500).json({
-    //   data: {},
-    //   success: false,
-    //   message: "Unable to updated loan status",
-    //   err: error,
-    // });
+    console.log(error);
+
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Unable to updated loan status",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
+
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Unable to updated loan status",
+      err: error,
+    });
   }
 };
 

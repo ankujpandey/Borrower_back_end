@@ -1,10 +1,14 @@
 const uploadImage = require("../../middleware/uploadImage");
 const { PanCardAnalyzer } = require("../../services/index");
+const { createLogController } = require("../admin controllers/log_controller");
 const { saveReqRes } = require("../../mongodb/index");
 const {
   GenerateRequest,
   GenerateResponse,
 } = require("../../utils/Request_Response");
+const { Loan_service } = require("../../services");
+
+const loanService = new Loan_service();
 
 // ------------------------------------------------
 //	Save images and send Analysis of Pancard
@@ -21,8 +25,6 @@ const checkDataController = async (req, res) => {
       req.files[0].filename,
       req.params.id
     );
-
-    console.log("analysis======>>>>>", analysis);
 
     // generate  response
     dataReqRes.response = GenerateResponse({
