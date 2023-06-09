@@ -3,7 +3,7 @@ const { UserInfo_repository } = require("../../repository");
 const fs = require("fs");
 const { saveDocument } = require("../../mongodb/user_document");
 
-let CoreAPI = new IDAnalyzer.CoreAPI("5X5kTaSwcEz6AxoDMZsE6B0Iaio4ryU5", "US");
+let CoreAPI = new IDAnalyzer.CoreAPI("yMKtZZ38ms2hhKraQvbvoXxs79YtlRtk", "US");
 
 const userinfoRepository = new UserInfo_repository();
 

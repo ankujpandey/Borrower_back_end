@@ -1,4 +1,9 @@
+const { saveReqRes } = require("../../mongodb");
 const { Log_service } = require("../../services");
+const {
+  GenerateRequest,
+  GenerateResponse,
+} = require("../../utils/Request_Response");
 
 const logService = new Log_service();
 
@@ -20,8 +25,22 @@ const createLogController = async (data) => {
 // ----------------------------------------
 
 const getLogController = async (req, res) => {
+  // generate  request
+  const dataReqRes = {};
+  dataReqRes.request = GenerateRequest(req);
+
   try {
     const getlogControllerData = await logService.getLogService(req.params.id);
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: getlogControllerData,
+      success: true,
+      message: "Successfully fetched Log data",
+      err: {},
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(201).json({
       data: getlogControllerData,
       success: true,
@@ -29,6 +48,16 @@ const getLogController = async (req, res) => {
       err: {},
     });
   } catch (error) {
+    // generate  response
+    dataReqRes.response = GenerateResponse({
+      data: {},
+      success: false,
+      message: "Not able to  fetched Log data",
+      err: error,
+    });
+
+    // store request response in mongodb
+    saveReqRes(dataReqRes);
     return res.status(500).json({
       data: {},
       success: false,
