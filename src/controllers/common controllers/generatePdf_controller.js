@@ -33,7 +33,8 @@ const generatepdfController = async (req, res) => {
 
 		// store request response in mongodb
 		saveReqRes(dataReqRes);
-		res.sendFile(`${__dirname}/pdf/userData.pdf`);
+		console.log(`${__dirname}/pdf/userData.pdf`);
+		res.sendFile(`${process.cwd()}/src/controllers/pdf/userData.pdf`);
 
 		// return res.status(201).json({
 		//   data: generatepdfControllerData,

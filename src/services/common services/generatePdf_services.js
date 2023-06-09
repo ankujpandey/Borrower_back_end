@@ -23,7 +23,7 @@ class GeneratePdf_service {
 		const imageData = await getImages(id);
 
 		object.UserData = UserData;
-		object.SecondryData = imageData;
+		object.SecondaryData = imageData;
 		object.path = "./src/controllers/pdf/userData.pdf";
 		object.pdfTemplate = userDetailsPdf;
 		await this.generetePDF.generatedpdfRepo(object);
