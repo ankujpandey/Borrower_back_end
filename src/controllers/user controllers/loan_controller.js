@@ -38,7 +38,7 @@ const createLoanController = async (req, res) => {
 
     // generate  response
     dataReqRes.response = GenerateResponse({
-      data: result,
+      data: loanData,
       success: true,
       message: "Successfully updated User Info",
       err: {},
