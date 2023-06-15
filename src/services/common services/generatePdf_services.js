@@ -51,7 +51,7 @@ class GeneratePdf_service {
 	async generateNocPdfServices(userData) {
 		let object = {};
 		object.id = userData.uid;
-		object.userData = userData;
+		object.UserData = userData;
 		object.path = "./src/controllers/pdf/noc.pdf";
 		object.pdfTemplate = nocTemplate;
 		await this.generetePDF.generatedpdfRepo(object);

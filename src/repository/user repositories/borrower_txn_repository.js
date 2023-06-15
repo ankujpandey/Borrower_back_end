@@ -7,13 +7,13 @@ class borrowerTxn_Repo {
 
 	async createTransaction(data) {
 		console.log("Borrower Transaction Repository".magenta);
+		console.log(data);
 
 		try {
 			const transaction = await borrower_transaction.create(data);
 			return transaction;
 		} catch (error) {
 			console.log("Something went wrong in Borrower Transaction Repo".magenta);
-
 			throw { error };
 		}
 	}

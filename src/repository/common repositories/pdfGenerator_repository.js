@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
 
 class Generate_Pdf {
 	async generatedpdfRepo(data) {
-		console.log("service====+++==========", data);
+		console.log("service====+++==========", data.UserData);
 
 		// Create a browser instance
 		const browser = await puppeteer.launch();
