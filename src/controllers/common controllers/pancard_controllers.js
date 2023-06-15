@@ -1,6 +1,5 @@
 const uploadImage = require("../../middleware/uploadImage");
 const { PanCardAnalyzer } = require("../../services/index");
-const { createLogController } = require("../admin controllers/log_controller");
 const { saveReqRes } = require("../../mongodb/index");
 const {
   GenerateRequest,
