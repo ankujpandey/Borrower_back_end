@@ -7,54 +7,54 @@ const nocTemplate = require("../template/nocTemplate");
 // const puppeteer = require("puppeteer");
 
 class GeneratePdf_service {
-  constructor() {
-    this.usersRepository = new Users_repository();
-    this.generetePDF = new Generate_Pdf();
-  }
-  // -----------------------------------
-  // user details pdf download by admin
-  // -----------------------------------
-  async generateUserPdfServices(id) {
-    let object = {};
-    object.id = id;
+	constructor() {
+		this.usersRepository = new Users_repository();
+		this.generetePDF = new Generate_Pdf();
+	}
+	// -----------------------------------
+	// user details pdf download by admin
+	// -----------------------------------
+	async generateUserPdfServices(id) {
+		let object = {};
+		object.id = id;
 
-    console.log("service==============", id);
-    const UserData = await this.usersRepository.getAllData(id);
-    const imageData = await getImages(id);
+		console.log("service==============", id);
+		const UserData = await this.usersRepository.getAllData(id);
+		const imageData = await getImages(id);
 
-    object.UserData = UserData;
-    object.SecondryData = imageData;
-    object.path = "./src/controllers/pdf/userData.pdf";
-    object.pdfTemplate = userDetailsPdf;
-    await this.generetePDF.generatedpdfRepo(object);
-  }
+		object.UserData = UserData;
+		object.SecondaryData = imageData;
+		object.path = "./src/controllers/pdf/userData.pdf";
+		object.pdfTemplate = userDetailsPdf;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
 
-  // -----------------------------------
-  // user agreement download
-  // -----------------------------------
-  async generateAgreementPdfServices(id, loanData) {
-    let object = {};
-    object.id = id;
+	// -----------------------------------
+	// user agreement download
+	// -----------------------------------
+	async generateAgreementPdfServices(id, loanData) {
+		let object = {};
+		object.id = id;
 
-    console.log("service==============", loanData);
-    const UserData = await this.usersRepository.getAllData(id);
+		console.log("service==============", loanData);
+		const UserData = await this.usersRepository.getAllData(id);
 
-    object.UserData = UserData;
-    object.SecondryData = loanData;
-    object.path = "./src/controllers/pdf/agreement.pdf";
-    object.pdfTemplate = agreementTemplate;
-    await this.generetePDF.generatedpdfRepo(object);
-  }
-  // -----------------------------------
-  // user noc download
-  // -----------------------------------
-  async generateNocPdfServices(userData) {
-    let object = {};
-    object.id = userData.uid;
-    object.userData = userData;
-    object.path = "./src/controllers/pdf/noc.pdf";
-    object.pdfTemplate = nocTemplate;
-    await this.generetePDF.generatedpdfRepo(object);
-  }
+		object.UserData = UserData;
+		object.SecondaryData = loanData;
+		object.path = "./src/controllers/pdf/agreement.pdf";
+		object.pdfTemplate = agreementTemplate;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
+	// -----------------------------------
+	// user noc download
+	// -----------------------------------
+	async generateNocPdfServices(userData) {
+		let object = {};
+		object.id = userData.uid;
+		object.UserData = userData;
+		object.path = "./src/controllers/pdf/noc.pdf";
+		object.pdfTemplate = nocTemplate;
+		await this.generetePDF.generatedpdfRepo(object);
+	}
 }
 module.exports = GeneratePdf_service;

@@ -1,6 +1,7 @@
 const nocTemplate = (userData) => {
-  const today = new Date();
-  return `<!DOCTYPE html>
+	console.log("IN NOC TEMPLATE------->>>", userData);
+	const today = new Date();
+	return `<!DOCTYPE html>
 	<html>
 		<head>
 			<title>HTML content</title>
@@ -23,18 +24,18 @@ const nocTemplate = (userData) => {
 		<br/>
 		<div class="ms-5">
 		<p>Date: ${`${today.getDate()}-${
-      today.getMonth() + 1
-    }-${today.getFullYear()}`}</p>
+			today.getMonth() + 1
+		}-${today.getFullYear()}`}</p>
 		<p>Name: ${userData.name}</p>
 		<p>Loan Id: ${userData.LoanId} </p>
 		
 		</div>
                 <div class="ms-5">
                 <p>This is to certify that ${
-                  userData.name
-                } has made complete payment of &#8377; ${
-    userData.totalAmount
-  } with reference to Loan Id ${userData.LoanId}.</p>
+									userData.name
+								} has made complete payment of &#8377; ${
+		userData.totalAmount
+	} with reference to Loan Id ${userData.LoanId}.</p>
                 </div>
                 <br/>
                 <br/>
