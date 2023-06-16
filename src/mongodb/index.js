@@ -14,7 +14,7 @@ const saveReqRes = async (data) => {
     response: data.response,
   });
   let result = await reqresdata.save();
-  console.log(result);
+  // console.log(result);
 };
 
 module.exports = {
