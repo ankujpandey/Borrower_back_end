@@ -88,6 +88,7 @@ router.post(
   JWTToken.verifyToken,
   LoanController.createLoanController
 );
+
 router.get(
   "/getLoan/:id",
   JWTToken.verifyToken,

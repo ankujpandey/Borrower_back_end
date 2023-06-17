@@ -26,10 +26,6 @@ module.exports = {
         defaultValue: 0,
         allowNull: false,
       },
-      status: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

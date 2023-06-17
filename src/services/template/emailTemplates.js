@@ -400,6 +400,60 @@ const loanRepaidUser = (userData) => {
 		</html>`;
 };
 
+// ------------------------------------------------------------------------
+// Email template for Loan_state = -1700
+// The user wallet has low balance. This email awares the user about it.
+// ------------------------------------------------------------------------
+
+const lowBalanceAlert = (userData) => {
+  return `<!DOCTYPE html>
+		  <html>
+			  <head>
+				  <title>Email Template</title>
+				  <link
+			  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+			  rel="stylesheet"
+			/>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+			  </head>
+			  <body>
+	  
+		  <br/>
+		  <div class="fw-bold">
+			  Hello ${userData.name} !
+			</div>
+			
+			<br/>
+		  <div>
+	  
+		  <div>
+		  Dear borrower, your wallet balance is low! The EMI can not be deducted from your wallet. Kindly add balance to your wallet so that the EMI can be deducted.
+		  If you will not pay your EMI on time you will be charged extra for the delay in EMI payment process. 
+
+		  To avoid extra charges, kindly add balance to your wallet.
+		  
+	  
+		  </div>
+	  
+		  
+			</div>
+			<br/>
+			<br/>
+			
+			<div>Regards,
+			<br/>
+			Team Borrower
+			<br/>
+			Lemon Tree Hotel, 5C & 5D, 5th Floor, Sector 60, Gurugram, Haryana 122011
+			<br/>
+			+0120 465 9902
+			<br/>
+			faircentmrborrower@gmail.com</div>
+	  
+			  </body>
+		  </html>`;
+};
+
 const subjectDecide = (loanState) => {
   if (loanState == 1200) {
     return "Loan application submitted.";
@@ -411,6 +465,8 @@ const subjectDecide = (loanState) => {
     return "Loan disbursed.";
   } else if (loanState == 1700) {
     return "Loan repaid successfully, NOC generated";
+  } else if (loanState == -1700) {
+    return "Wallet Balance Low! Add money.";
   } else return "Loan agreement rejected.";
 };
 
@@ -432,6 +488,8 @@ const emailTemplateDecide = (userData, loanState, agentData) => {
     return loanDisburse(userData);
   } else if (loanState == 1700) {
     return loanRepaidUser(userData);
+  } else if (loanState == -1700) {
+    return lowBalanceAlert(userData);
   } else return acceptRejectAgent(agentData, false);
 };
 
