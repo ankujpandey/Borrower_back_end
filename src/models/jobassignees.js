@@ -36,10 +36,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      status: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
       createdBy: {
         allowNull: true,
         type: DataTypes.STRING,

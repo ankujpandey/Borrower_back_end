@@ -456,8 +456,8 @@ const selfDeductTransactionController = async (req) => {
     let tenure = LoanData.loanData.dataValues.tenureApproved;
 
     let borrowingTransactionObject = {};
-    borrowingTransactionObject.uid = LoanData.loanData.dataValues.uid;
-    borrowingTransactionObject.LoanId = LoanData.loanData.dataValues.LoanId;
+    borrowingTransactionObject.uid = LoanData.loanData.uid;
+    borrowingTransactionObject.LoanId = LoanData.loanData.LoanId;
     borrowingTransactionObject.txn_type = "EMI Payment";
     borrowingTransactionObject.txn_flow = "debit";
     borrowingTransactionObject.debit_Amount = LoanData.EMI.EMI;
@@ -480,12 +480,13 @@ const selfDeductTransactionController = async (req) => {
             console.log("Please Add Money".yellow);
             let time = 0;
             let charge = 0;
+
             const j = await schedule.scheduleJob(
               { rule: "*/1 * * * * *" },
               async function () {
-                console.log("5time function called");
+                console.log("5 time function called");
                 charge = (parseFloat(req?.body?.debit_Amount) * 5) / 100;
-                req.body.extraCharge = Charge;
+                req.body.extraCharge = charge;
                 try {
                   // console.log("transaction---->>>>>>>>>>", req.body);
 
@@ -515,10 +516,21 @@ const selfDeductTransactionController = async (req) => {
                     typeof error
                   );
                   if (error.error.message === "Please Add Money!") {
+                    await SendAgreementService.sendAgreementUserService(
+                      LoanData.uid,
+                      LoanData.jobAssignees_id,
+                      -1700
+                    );
                   }
                 }
 
                 if (time === 5) {
+                  if (error.error.message === "Please Add Money!") {
+                    await SendAgreementService.sendEmailAdminService(
+                      true,
+                      LoanData.uid
+                    );
+                  }
                   j.cancel();
                 }
                 time = time + 1;
