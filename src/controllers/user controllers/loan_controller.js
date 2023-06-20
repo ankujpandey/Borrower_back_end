@@ -446,6 +446,7 @@ const loanDisbursementController = async (req, res) => {
 // -----------------------------------
 
 const selfDeductTransactionController = async (req) => {
+  let loan_repaid = false;
   try {
     const LoanData = await loanService.getLoanWithEMIService(req.uid);
     const startTime = new Date(LoanData.loanData.dataValues.updatedAt);
@@ -473,8 +474,20 @@ const selfDeductTransactionController = async (req) => {
             borrowingTransactionObject
           );
 
+          const poolData = {
+            credit_Amount: borrowingTransactionObject.debit_Amount,
+            txn_type: "EMI repayment",
+            poolId: 1,
+          };
+
+          const poolBalance = await poolTxnService.createTransaction(poolData);
+
+          loan_repaid = true;
+
           // console.log("transaction---->>>>>>>>>>", transaction);
         } catch (error) {
+          loan_repaid = false;
+
           console.log("error detected in wallet transaction", error);
           if (error.error.message === "Please Add Money!") {
             console.log("Please Add Money".yellow);
@@ -485,8 +498,12 @@ const selfDeductTransactionController = async (req) => {
               { rule: "*/1 * * * * *" },
               async function () {
                 console.log("5 time function called");
-                charge = (parseFloat(req?.body?.debit_Amount) * 5) / 100;
-                req.body.extraCharge = charge;
+                charge = (parseFloat(LoanData.EMI.EMI) * 5) / 100;
+
+                console.log("charge________>>>>>>>>>>>", charge);
+
+                console.log("charge________>>>>>>>>>>>", LoanData.EMI.EMI);
+                borrowingTransactionObject.extraCharge = charge;
                 try {
                   // console.log("transaction---->>>>>>>>>>", req.body);
 
@@ -494,6 +511,8 @@ const selfDeductTransactionController = async (req) => {
                     await borrowerTxnService.createTransaction(
                       borrowingTransactionObject
                     );
+
+                  loan_repaid = true;
 
                   // generate  response
                   dataReqRes.response = GenerateResponse({
@@ -516,9 +535,10 @@ const selfDeductTransactionController = async (req) => {
                     typeof error
                   );
                   if (error.error.message === "Please Add Money!") {
+                    console.log("hhsahduceu", LoanData.loanData.uid);
                     await SendAgreementService.sendAgreementUserService(
-                      LoanData.uid,
-                      LoanData.jobAssignees_id,
+                      LoanData.loanData.uid,
+                      LoanData.loanData.jobAssignees_id,
                       -1700
                     );
                   }
@@ -528,7 +548,7 @@ const selfDeductTransactionController = async (req) => {
                   if (error.error.message === "Please Add Money!") {
                     await SendAgreementService.sendEmailAdminService(
                       true,
-                      LoanData.uid
+                      LoanData.loanData.uid
                     );
                   }
                   j.cancel();
@@ -540,8 +560,10 @@ const selfDeductTransactionController = async (req) => {
         }
         tenure = tenure - 1;
         if (tenure === 0) {
-          borrowingTransactionObject.Loan_state = 1700;
-          await loanRepaid(borrowingTransactionObject.uid);
+          if (loan_repaid) {
+            borrowingTransactionObject.Loan_state = 1700;
+            await loanRepaid(borrowingTransactionObject.uid);
+          }
           job.cancel();
         }
       }

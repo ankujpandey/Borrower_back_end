@@ -211,6 +211,7 @@ class SendAgreement_service {
     console.log("mailList", mailList);
 
     if (emiIssue) {
+      console.log("uid", uid);
       const usersRepoResult = await this.usersRepository.getUserDataEmail(uid);
 
       const userInfoRepoResult =

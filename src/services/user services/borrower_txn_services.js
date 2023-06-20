@@ -10,7 +10,7 @@ class borrowerTxn_Service {
   // -------------------------------------------
 
   async createTransaction(data) {
-    console.log("Borrower Transaction Service", data);
+    console.log("Borrower Transaction Service---->>>", data);
 
     try {
       const wallet = await this.borrowerwalletRepo.getWallet(data.uid);
@@ -30,9 +30,16 @@ class borrowerTxn_Service {
         throw new Error("Please Add Money!");
       } else {
         data.txn_flow = "debit";
-        var walletBalance =
-          parseFloat(wallet?.dataValues?.wallet_balance) -
-          parseFloat(data?.debit_Amount);
+
+        if (data.extraCharge) {
+          var walletBalance =
+            parseFloat(wallet?.dataValues?.wallet_balance) -
+            (parseFloat(data?.debit_Amount) + extraCharge);
+        } else {
+          var walletBalance =
+            parseFloat(wallet?.dataValues?.wallet_balance) -
+            parseFloat(data?.debit_Amount);
+        }
       }
 
       data.running_Amount = walletBalance;
