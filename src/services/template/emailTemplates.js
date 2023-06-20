@@ -224,10 +224,21 @@ const acceptRejectUser = (userData, loanState) => {
 	
 		   The loan agreement provided to you has been ${
          loanState ? "accepted" : "rejected"
-       } by you. Kindly visit your dashboard for more details.
-
+       } by you. 
 	   <br/>
-	   You can find the attachment of the agreement with this email.
+	   ${
+       loanState
+         ? "Kindly visit your dashboard for more details."
+         : "You can now apply for loan again."
+     }
+     <br>
+
+	 ${
+     loanState
+       ? "You can find the attachment of the agreement with this email."
+       : ""
+   }
+	   
 
 	   <br/>
 		   
@@ -432,7 +443,12 @@ const emailTemplateDecide = (userData, loanState, agentData) => {
     return loanDisburse(userData);
   } else if (loanState == 1700) {
     return loanRepaidUser(userData);
-  } else return acceptRejectAgent(agentData, false);
+  } else if (loanState == -1000) {
+    const userTemplate = acceptRejectUser(userData, false);
+    const agentTemplate = acceptRejectAgent(agentData, false);
+
+    return { userTemplate, agentTemplate };
+  }
 };
 
 module.exports = {
